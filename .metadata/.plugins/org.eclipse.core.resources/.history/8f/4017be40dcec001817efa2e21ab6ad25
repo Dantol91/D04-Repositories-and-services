@@ -19,22 +19,21 @@ import domain.Sponsorship;
 public class SponsorshipService {
 
 	// Managed repository
-
+	
 	@Autowired
 	private SponsorshipRepository	sponsorshipRepository;
 
 	// Supporting services
-
+	
 	@Autowired
-	private AdministratorService	administratorService;
+	private AdministratorService administratorService;
 	@Autowired
-	private ActorService			actorService;
+	private ActorService actorService;
 	@Autowired
-	private CreditCardService		creditCardService;
-
+	private CreditCardService creditCardService;
 
 	// Constructor
-
+	
 	public SponsorshipService() {
 		super();
 	}
@@ -43,12 +42,12 @@ public class SponsorshipService {
 	public Sponsorship create() {
 		Sponsorship result;
 		Sponsor s;
-
+		
 		result = new Sponsorship();
-		s = (Sponsor) this.actorService.findByPrincipal();
-
+		s = (Sponsor) actorService.findByPrincipal();
+		
 		result.setSponsor(s);
-
+		
 		return result;
 	}
 
@@ -56,18 +55,16 @@ public class SponsorshipService {
 		Assert.notNull(sponsorship);
 		Sponsorship result;
 		CreditCard ccSaved;
-
-		ccSaved = this.creditCardService.save(sponsorship.getCreditCard());
-
+		
+		ccSaved = creditCardService.save(sponsorship.getCreditCard());
+		
 		sponsorship.setCreditCard(ccSaved);
 		result = this.sponsorshipRepository.save(sponsorship);
-
-		/*
-		 * //Comprobamos si es spam
-		 * administratorService.checkIsSpam(sponsorship.getBannerURL());
-		 * administratorService.checkIsSpam(sponsorship.getInfoPageLink());
-		 */
-
+		
+		//Comprobamos si es spam
+		administratorService.checkIsSpam(sponsorship.getBannerURL());
+		administratorService.checkIsSpam(sponsorship.getInfoPageLink());
+		
 		return result;
 	}
 
@@ -89,34 +86,35 @@ public class SponsorshipService {
 		result = this.sponsorshipRepository.findOne(sponsorshipId);
 		return result;
 	}
-
+	
 	public Sponsorship findOneToEdit(final int sponsorshipId) {
 		Sponsorship result;
 		result = this.sponsorshipRepository.findOne(sponsorshipId);
-		this.checkPrincipal(result);
+		checkPrincipal(result);
 		return result;
 	}
-
+	
 	//Other business methods
-
-	public void checkPrincipal(final Sponsorship s) {
+	
+	public void checkPrincipal(Sponsorship s){
 		Sponsor sponsor;
-
-		sponsor = (Sponsor) this.actorService.findByPrincipal();
-
+		
+		sponsor = (Sponsor) actorService.findByPrincipal();
+		
 		Assert.isTrue(sponsor.getSponsorships().contains(s));
 	}
-
-	public Sponsorship randomSponsorship() {
+	
+	public Sponsorship randomSponsorship(){
 		Sponsorship sponsorship = null;
-
-		final int size = this.findAll().size();
-		final int item = new Random().nextInt(size);
+		
+		int size = this.findAll().size();
+		int item = new Random().nextInt(size);
 		int i = 0;
-		for (final Sponsorship s : this.findAll()) {
-			if (i == item)
-				sponsorship = s;
-			i++;
+		for(Sponsorship s : this.findAll()){
+		    if (i == item){
+		        sponsorship = s;
+		    }
+		    i++;
 		}
 		return sponsorship;
 	}

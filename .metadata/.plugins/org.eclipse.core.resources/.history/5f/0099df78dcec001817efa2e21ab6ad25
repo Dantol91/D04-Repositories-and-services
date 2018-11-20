@@ -31,7 +31,7 @@ public class SponsorService {
 	@Autowired
 	private UserAccountService		userAccountService;
 	@Autowired
-	private BoxService				boxService;
+	private FolderService			folderService;
 	@Autowired
 	private ConfigurationService	configurationService;
 
@@ -44,7 +44,7 @@ public class SponsorService {
 	// Simple CRUD methods
 
 	public Sponsor create() {
-		final Collection<SocialProfile> socialProfiles = new ArrayList<SocialProfile>();
+		final Collection<SocialProfile> socialIdentities = new ArrayList<SocialProfile>();
 		Sponsor s;
 		UserAccount ua;
 		Authority auth;
@@ -56,7 +56,7 @@ public class SponsorService {
 		auth.setAuthority("SPONSOR");
 		ua.addAuthority(auth);
 		s.setUserAccount(ua);
-		s.setSocialProfiles(socialProfiles);
+		s.setSocialIdentities(socialIdentities);
 		s.setSuspicious(false);
 
 		return s;
@@ -92,11 +92,11 @@ public class SponsorService {
 			sponsor.setPhone(tlf);
 		}
 		if (sponsor.getId() == 0)
-			sponsor.getUserAccount().setBanned(false);
+			sponsor.getUserAccount().setBanned(true);
 
 		sponsor = this.sponsorRepository.save(sponsor);
 		if (create)
-			this.boxService.createSystemFolders(sponsor);
+			this.folderService.createSystemFolders(sponsor);
 
 		return sponsor;
 	}

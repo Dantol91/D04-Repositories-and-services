@@ -44,7 +44,7 @@ public class SponsorService {
 	// Simple CRUD methods
 
 	public Sponsor create() {
-		final Collection<SocialProfile> socialProfiles = new ArrayList<SocialProfile>();
+		final Collection<SocialProfile> socialIdentities = new ArrayList<SocialProfile>();
 		Sponsor s;
 		UserAccount ua;
 		Authority auth;
@@ -56,7 +56,7 @@ public class SponsorService {
 		auth.setAuthority("SPONSOR");
 		ua.addAuthority(auth);
 		s.setUserAccount(ua);
-		s.setSocialProfiles(socialProfiles);
+		s.setSocialIdentities(socialIdentities);
 		s.setSuspicious(false);
 
 		return s;

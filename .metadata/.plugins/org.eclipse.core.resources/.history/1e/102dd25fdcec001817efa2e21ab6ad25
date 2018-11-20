@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -14,6 +13,8 @@ import repositories.SponsorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import security.UserAccountService;
+import domain.SocialIdentity;
 import domain.SocialProfile;
 import domain.Sponsor;
 
@@ -22,19 +23,18 @@ import domain.Sponsor;
 public class SponsorService {
 
 	// Managed repository
-
+	
 	@Autowired
-	private SponsorRepository		sponsorRepository;
+	private SponsorRepository sponsorRepository;
 
 	// Supporting services
-
+	
 	@Autowired
-	private UserAccountService		userAccountService;
+	private UserAccountService userAccountService;
 	@Autowired
-	private BoxService				boxService;
+	private FolderService folderService;
 	@Autowired
-	private ConfigurationService	configurationService;
-
+	private ConfigurationService configurationService;
 
 	// Constructor
 	public SponsorService() {
@@ -42,40 +42,43 @@ public class SponsorService {
 	}
 
 	// Simple CRUD methods
-
+	
 	public Sponsor create() {
-		final Collection<SocialProfile> socialProfiles = new ArrayList<SocialProfile>();
+		Collection<SocialProfile> socialIdentities = new ArrayList<SocialProfile>();
 		Sponsor s;
 		UserAccount ua;
 		Authority auth;
 
 		s = new Sponsor();
-		ua = this.userAccountService.create();
+		ua = userAccountService.create();
 		auth = new Authority();
 
 		auth.setAuthority("SPONSOR");
 		ua.addAuthority(auth);
 		s.setUserAccount(ua);
-		s.setSocialProfiles(socialProfiles);
+		s.setSocialIdentities(socialIdentities);
 		s.setSuspicious(false);
 
 		return s;
 	}
 
 	public Collection<Sponsor> findAll() {
-		return this.sponsorRepository.findAll();
+		return sponsorRepository.findAll();
 	}
 
-	public Sponsor findOne(final int sponsorId) {
+	public Sponsor findOne(int sponsorId) {
 		Sponsor result;
-		result = this.sponsorRepository.findOne(sponsorId);
+		result = sponsorRepository.findOne(sponsorId);
 		return result;
 	}
 
 	public Sponsor save(Sponsor sponsor) {
 		Assert.notNull(sponsor);
-		if (sponsor.getId() == 0)
-			Assert.isTrue(this.userAccountService.findByUsername(sponsor.getUserAccount().getUsername()) == null, "message.error.duplicatedUser");
+		if (sponsor.getId() == 0) {
+			Assert.isTrue(userAccountService.findByUsername(sponsor
+					.getUserAccount().getUsername()) == null,
+					"message.error.duplicatedUser");
+		}
 		Boolean create = false;
 
 		// Comprobamos si se está creando el user
@@ -84,24 +87,29 @@ public class SponsorService {
 			Md5PasswordEncoder encoder;
 
 			encoder = new Md5PasswordEncoder();
-			sponsor.getUserAccount().setPassword(encoder.encodePassword(sponsor.getUserAccount().getPassword(), null));
+			sponsor.getUserAccount().setPassword(
+					encoder.encodePassword(sponsor.getUserAccount()
+							.getPassword(), null));
 		}
 
-		if (sponsor.getPhone() != null) {
-			final String tlf = this.configurationService.checkPhoneNumber(sponsor.getPhone());
-			sponsor.setPhone(tlf);
+		if(sponsor.getPhone()!=null){
+		String tlf = configurationService.checkPhoneNumber(sponsor
+				.getPhoneNumber());
+		sponsor.setPhoneNumber(tlf);
 		}
-		if (sponsor.getId() == 0)
-			sponsor.getUserAccount().setBanned(false);
+		if (sponsor.getId() == 0) {
+			sponsor.getUserAccount().setEnabled(true);
+		}
 
-		sponsor = this.sponsorRepository.save(sponsor);
-		if (create)
-			this.boxService.createSystemFolders(sponsor);
+		sponsor = sponsorRepository.save(sponsor);
+		if (create) {
+			folderService.createSystemFolders(sponsor);
+		}
 
 		return sponsor;
 	}
 
-	public void delete(final Sponsor sponsor) {
+	public void delete(Sponsor sponsor) {
 		Assert.notNull(sponsor);
 		Assert.isTrue(sponsor.getId() != 0);
 		// Collection<Folder> folders = sponsor.getFolders();
@@ -109,7 +117,7 @@ public class SponsorService {
 		// Collection<Message> sentMessages = sponsor.getSentMessages();
 		// Collection<SocialIdentity> socialIdentities = sponsor
 		// .getSocialIdentities();
-		this.sponsorRepository.delete(sponsor);
+		sponsorRepository.delete(sponsor);
 		// folderService.delete(folders);
 		// messageService.delete(receivedMessages);
 		// messageService.delete(sentMessages);
@@ -125,20 +133,20 @@ public class SponsorService {
 
 		userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
-		res = this.findByUserAccount(userAccount);
+		res = findByUserAccount(userAccount);
 		Assert.notNull(res);
 		return res;
 	}
 
-	public Sponsor findByUserAccount(final UserAccount userAccount) {
+	public Sponsor findByUserAccount(UserAccount userAccount) {
 		Assert.notNull(userAccount);
 		Sponsor res;
-		res = this.sponsorRepository.findByUserAccountId(userAccount.getId());
+		res = sponsorRepository.findByUserAccountId(userAccount.getId());
 		return res;
 	}
 
-	public Sponsor findByUserAccountId(final int userAccountId) {
-		return this.sponsorRepository.findByUserAccountId(userAccountId);
+	public Sponsor findByUserAccountId(int userAccountId) {
+		return sponsorRepository.findByUserAccountId(userAccountId);
 	}
 
 }

@@ -32,7 +32,7 @@ import domain.DomainEntity;
 @Access(AccessType.PROPERTY)
 public class UserAccount extends DomainEntity implements UserDetails {
 
-	// Constructors -----------------------------------------------------------
+	// Constructors 
 
 	private static final long	serialVersionUID	= 7254823034213841482L;
 
@@ -44,9 +44,9 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	}
 
 
-	// Attributes -------------------------------------------------------------
+	// Attributes 
 
-	// UserDetails interface --------------------------------------------------
+	// UserDetails interface 
 
 	private String					username;
 	private String					password;
