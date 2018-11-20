@@ -33,7 +33,7 @@ public class ActorService {
 	@Autowired
 	private BoxService				boxService;
 	@Autowired
-	private SocialIdentityService	socialProfileService;
+	private SocialProfileService	socialProfileService;
 	@Autowired
 	private MessageService			messageService;
 

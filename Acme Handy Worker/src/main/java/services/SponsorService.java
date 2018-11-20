@@ -14,6 +14,7 @@ import repositories.SponsorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import security.UserAccountService;
 import domain.SocialProfile;
 import domain.Sponsor;
 
@@ -117,7 +118,7 @@ public class SponsorService {
 
 	}
 
-	// Other business methods --------------------
+	// Other business methods 
 
 	public Sponsor findByPrincipal() {
 		Sponsor res;

@@ -130,4 +130,9 @@ public class AdministratorService {
 		return this.administratorRepository.findByUserAccountId(userAccountId);
 	}
 
+	public void checkIsSpam(final String nick) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
