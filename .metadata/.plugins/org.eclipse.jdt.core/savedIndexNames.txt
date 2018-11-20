@@ -58,7 +58,6 @@ INDEX VERSION 1.126+E:\D04-Repositories-and-services\.metadata\.plugins\org.ecli
 720578469.index
 3546293074.index
 1012337571.index
-478106862.index
 4090135219.index
 493924255.index
 4059142251.index
