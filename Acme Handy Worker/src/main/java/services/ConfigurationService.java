@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -13,94 +14,94 @@ import domain.Configuration;
 @Service
 @Transactional
 public class ConfigurationService {
-	
-	// MANAGED REPOSITORY ---------------
-	
+
+	// Managed repository
+
 	@Autowired
-	private ConfigurationRepository configurationRepository;
-	
-	// SUPPORTING SERVICES -------------
-	
-	
-	// CONSTRUCTOR ---------------
-	
-	public ConfigurationService(){
+	private ConfigurationRepository	configurationRepository;
+
+
+	// Supporting services
+
+	// Constructor
+
+	public ConfigurationService() {
 		super();
 	}
-	
-	// TODO SIMPLE CRUD METHODS -----------
-	public Configuration create(){
+
+	// Simple CRUD Methods 
+
+	public Configuration create() {
 		Configuration c;
-		
+
 		c = new Configuration();
-		
+
 		return c;
 	}
 
-	public Configuration save(Configuration config){
+	public Configuration save(final Configuration config) {
 		Assert.notNull(config);
-		
+
 		Configuration c;
-		
-		c = configurationRepository.save(config);
-		
+
+		c = this.configurationRepository.save(config);
+
 		return c;
 	}
-	
-	public void delete(Configuration config){
+
+	public void delete(final Configuration config) {
 		Assert.notNull(config);
-		
-		configurationRepository.delete(config);
+
+		this.configurationRepository.delete(config);
 	}
-	
-	public Configuration findOne(int configurationId) {
+
+	public Configuration findOne(final int configurationId) {
 		Configuration result;
 
-		result = configurationRepository.findOne(configurationId);
+		result = this.configurationRepository.findOne(configurationId);
 
 		return result;
 	}
-	
+
 	public Collection<Configuration> findAll() {
 		Collection<Configuration> result;
 
-		result = configurationRepository.findAll();
+		result = this.configurationRepository.findAll();
 		Assert.notNull(result);
 
 		return result;
 	}
-	
-	// OTHER BUSSINES METHODS -------------------------------
-	
-	public Collection<String> getSpamWords(){
-		return configurationRepository.getSpamWords();
+
+	// Other Bussines Methods
+
+	public Collection<String> getSpamWords() {
+		return this.configurationRepository.getSpamWords();
 	}
-	
-	public double getTax(){
-		return configurationRepository.getTax();
+
+	public double getTax() {
+		return this.configurationRepository.getTax();
 	}
-	
-	public String getBannerURL(){
-		return configurationRepository.getBannerURL();
+
+	public String getBannerURL() {
+		return this.configurationRepository.getBannerURL();
 	}
-	
-	public Configuration getConfiguration(){
-		return configurationRepository.getConfiguration();
+
+	public Configuration getConfiguration() {
+		return this.configurationRepository.getConfiguration();
 	}
-	
+
 	public String checkPhoneNumber(String tlf) {
 
-		if (!tlf.startsWith("+") && tlf.length() > 4) {
+		if (!tlf.startsWith("+") && tlf.length() > 4)
 			tlf = this.getConfiguration().getCountryCode() + " " + tlf;
-		}
 
 		return tlf;
 
 	}
-	
+
 	// B.17 Los resultados del Finder se almacenan en caché durante una hora por defecto.
 	//El administrator debe poder configurar este tiempo.El minimo es una hora y el máximo es 24 horas.
-	
+
 	// B.17 El máximo numero de resultados que un finder devuelve es 10 por defecto. El admin
 	//debe poder cambiar este parametro. El maximo es 100 resultados.
 }

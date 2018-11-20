@@ -35,6 +35,7 @@ public class ApplicationService {
 
 	@Autowired
 	private CreditCardService		creditCardService;
+
 	@Autowired
 	private FixUpTaskService		fixUpTaskService;
 	@Autowired

@@ -28,8 +28,8 @@ public class Finder extends DomainEntity {
 	// Attributes
 
 	private String	keyword;
-	private double	maxPrice;
-	private double	minPrice;
+	private Double	maxPrice;
+	private Double	minPrice;
 	private Date	startDate;
 	private Date	endDate;
 
@@ -43,20 +43,20 @@ public class Finder extends DomainEntity {
 	}
 
 	@Valid
-	public double getMaxPrice() {
+	public Double getMaxPrice() {
 		return this.maxPrice;
 	}
 
-	public void setMaxPrice(final double maxPrice) {
+	public void setMaxPrice(final Double maxPrice) {
 		this.maxPrice = maxPrice;
 	}
 
 	@Valid
-	public double getMinPrice() {
+	public Double getMinPrice() {
 		return this.minPrice;
 	}
 
-	public void setMinPrice(final double minPrice) {
+	public void setMinPrice(final Double minPrice) {
 		this.minPrice = minPrice;
 	}
 

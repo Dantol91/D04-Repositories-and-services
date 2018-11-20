@@ -18,40 +18,39 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import repositories.FixUpTaskRepository;
 import domain.Application;
 import domain.Category;
-import domain.HandyWorker;
 import domain.Note;
 import domain.Sponsorship;
-import domain.FixUpTask;
 
 @Service
 @Transactional
-public class FixUpTaskService {
+public class TripService {
 
-	// Managed repository
+	// MANAGED REPOSITORY ---------------
 
 	@Autowired
-	private FixUpTaskRepository		fixUpTaskRepository;
+	private TripRepository			tripRepository;
 
 	// SUPPORTING SERVICES -------------
-
 	@Autowired
 	private ActorService			actorService;
-
 	@Autowired
-	private HandyWorkerService		handyWorkerService;
-
+	private ManagerService			managerService;
 	@Autowired
 	private ConfigurationService	configurationService;
-
 	@Autowired
 	private CategoryService			categoryService;
-
+	@Autowired
+	private LegalTextService		legalTextService;
+	@Autowired
+	private ValueService			valueService;
+	@Autowired
+	private StageService			stageService;
+	@Autowired
+	private RangerService			rangerService;
 	@Autowired
 	private AdministratorService	administratorService;
-
 	@Autowired
 	private ApplicationService		applicationService;
 
