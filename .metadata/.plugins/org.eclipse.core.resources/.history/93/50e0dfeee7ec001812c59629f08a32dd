@@ -1,0 +1,19 @@
+
+package repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import domain.HandyWorker;
+
+@Repository
+public interface HandyWorkerRepository extends JpaRepository<HandyWorker, Integer> {
+
+	@Query("select h from HandyWorkr h where h.userAccount.id = ?1")
+	Explorer findByUserAccountId(int userAccountId);
+	
+	@Query("select e from Explorer e join e.applications a where a.id = ?1")
+	Explorer findByApplicationId(int applicatioId);
+
+	
+}

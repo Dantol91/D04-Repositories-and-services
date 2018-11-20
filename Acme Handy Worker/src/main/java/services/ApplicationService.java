@@ -11,10 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ApplicationRepository;
-import security.LoginService;
 import domain.Application;
 import domain.CreditCard;
-import domain.Customer;
 import domain.HandyWorker;
 
 @Service
@@ -36,8 +34,9 @@ public class ApplicationService {
 	@Autowired
 	private CreditCardService		creditCardService;
 
-	@Autowired
-	private FixUpTaskService		fixUpTaskService;
+	//@Autowired
+	//private FixUpTaskService		fixUpTaskService;
+
 	@Autowired
 	private MessageService			messageService;
 
@@ -53,15 +52,15 @@ public class ApplicationService {
 
 		Application result;
 		Date moment;
-		Explorer e;
+		HandyWorker h;
 
 		result = new Application();
 		moment = new Date(System.currentTimeMillis() - 1);
-		e = (Explorer) this.actorService.findByPrincipal();
+		h = (HandyWorker) this.actorService.findByPrincipal();
 
-		result.setCreationMoment(moment);
+		result.setRegisterMoment(moment);
 		result.setStatus("PENDING");
-		result.setExplorer(e);
+		result.setHandyWorker(h);
 
 		return result;
 	}
@@ -71,16 +70,16 @@ public class ApplicationService {
 
 		Application result;
 		Collection<Application> applications;
-		Explorer e;
+		final HandyWorker h;
 
-		e = (Explorer) this.actorService.findByPrincipal();
+		h = (HandyWorker) this.actorService.findByPrincipal();
 
-		if (application.getCreditCard() != null) {
-			final CreditCard c = this.creditCardService.save(application.getCreditCard());
-			application.setCreditCard(c);
+		if (application.getCreditcard() != null) {
+			final CreditCard c = this.creditCardService.save(application.getCreditcard());
+			application.setCreditcard(c);
 			application.setStatus("ACCEPTED");
 
-			final Manager m = managerService.getManagerFromApplicationId(application.getId());
+			//final Manager m = managerService.getManagerFromApplicationId(application.getId());
 
 			//messageService.sendApplicationNotification(e,m);
 		}
@@ -88,10 +87,10 @@ public class ApplicationService {
 		result = this.applicationRepository.save(application);
 
 		if (application.getId() == 0) {
-			applications = e.getApplications();
+			applications = h.getApplications();
 			applications.add(result);
-			e.setApplications(applications);
-			this.explorerService.save(e);
+			h.setApplications(applications);
+			this.handyWorkerService.save(h);
 		}
 
 		return result;
@@ -125,30 +124,32 @@ public class ApplicationService {
 
 	// Other business methods
 
-	public void checkPrincipal(final Application a) {
-		Assert.notNull(a);
-
-		Manager m = new Manager();
-		Explorer e = new Explorer();
-
-		if (this.actorService.getType(LoginService.getPrincipal()).equals("HANDYWORKER"))
-			m = (HandyWorker) this.actorService.findByPrincipal();
-		else if (this.actorService.getType(LoginService.getPrincipal()).equals("CUSTOMER"))
-			e = (Customer) this.actorService.findByPrincipal();
-
-		if (a.getStatus().equals("PENDING"))
-			Assert.isTrue(m.equals(this.managerService.getManagerFromApplicationId(a.getId())));
-		else if (a.getStatus().equals("ACCEPTED")) {
-			e = this.explorerService.findByApplicationId(a.getId());
-			Assert.isTrue(e.equals(e));
-		}
-	}
+	/*
+	 * public void checkPrincipal(final Application a) {
+	 * Assert.notNull(a);
+	 * 
+	 * Manager m = new Manager();
+	 * HandyWorker h = new HandyWorker();
+	 * 
+	 * if (this.actorService.getType(LoginService.getPrincipal()).equals("HANDYWORKER"))
+	 * m = (HandyWorker) this.actorService.findByPrincipal();
+	 * else if (this.actorService.getType(LoginService.getPrincipal()).equals("CUSTOMER"))
+	 * h = (Customer) this.actorService.findByPrincipal();
+	 * 
+	 * if (a.getStatus().equals("PENDING"))
+	 * Assert.isTrue(m.equals(this.managerService.getManagerFromApplicationId(a.getId())));
+	 * else if (a.getStatus().equals("ACCEPTED")) {
+	 * e = this.handyWorkerService.findByApplicationId(a.getId());
+	 * Assert.isTrue(e.equals(e));
+	 * }
+	 * }
+	 */
 
 	/*
-	 * public Collection<Application> getExplorerApplicationsByStatus() {
+	 * public Collection<Application> getHandyWorkerApplicationsByStatus() {
 	 * final UserAccount userAccount = LoginService.getPrincipal();
 	 * final int id = userAccount.getId();
-	 * return this.applicationRepository.getExplorerApplicationsByStatus(id);
+	 * return this.applicationRepository.getHandyWorkerApplicationsByStatus(id);
 	 * }
 	 * 
 	 * public Collection<Application> getManagerTripsApplications(
@@ -173,7 +174,7 @@ public class ApplicationService {
 	 * return this.applicationRepository.getCancelledRatio();
 	 * }
 	 * 
-	 * // C.13.4 El Explorer puede cancelar una Aplication con status ACCEPTED
+	 * // C.13.4 El HandyWorker puede cancelar una Aplication con status ACCEPTED
 	 * // siempre que la
 	 * // fecha
 	 * // de comienzo no haya pasado
@@ -189,8 +190,8 @@ public class ApplicationService {
 	 * //
 	 * // }
 	 * 
-	 * public Collection<Application> getExplorerApplications(final int explorerId) {
-	 * return this.applicationRepository.getExplorerApplications(explorerId);
+	 * public Collection<Application> getHandyWorkerApplications(final int HandyWorkerId) {
+	 * return this.applicationRepository.getHandyWorkerApplications(HandyWorkerId);
 	 * }
 	 * 
 	 * public void changeStatus(final Application a) {
@@ -207,7 +208,7 @@ public class ApplicationService {
 	 * 
 	 * this.applicationRepository.save(a);
 	 * 
-	 * Explorer e = explorerService.findByApplicationId(a.getId());
+	 * HandyWorker e = HandyWorkerService.findByApplicationId(a.getId());
 	 * 
 	 * //messageService.sendApplicationNotification(e,m);
 	 * }
@@ -226,7 +227,7 @@ public class ApplicationService {
 	 * a.setStatus("CANCELLED");
 	 * this.applicationRepository.save(a);
 	 * 
-	 * Explorer e = explorerService.findByApplicationId(a.getId());
+	 * HandyWorker e = HandyWorkerService.findByApplicationId(a.getId());
 	 * Manager m = managerService.getManagerFromApplicationId(a.getId());
 	 * 
 	 * //messageService.sendApplicationNotification(e,m);
@@ -242,18 +243,18 @@ public class ApplicationService {
 	 * this.applicationRepository.save(a);
 	 * }
 	 * 
-	 * public Collection<String> getSetOfStatus(final int explorerId) {
-	 * return this.applicationRepository.getSetOfStatus(explorerId);
+	 * public Collection<String> getSetOfStatus(final int HandyWorkerId) {
+	 * return this.applicationRepository.getSetOfStatus(HandyWorkerId);
 	 * }
 	 * 
 	 * public Double[] getAvgMinMaxStdevPerTrip() {
 	 * return this.applicationRepository.computeAvgMinMaxStdvPerTrip();
 	 * }
 	 * 
-	 * public Collection<Application> getApplicationsByStatusAndExplorerId(
-	 * final int explorerId, final String status) {
-	 * return this.applicationRepository.getApplicationsByStatusAndExplorerId(
-	 * explorerId, status);
+	 * public Collection<Application> getApplicationsByStatusAndHandyWorkerId(
+	 * final int HandyWorkerId, final String status) {
+	 * return this.applicationRepository.getApplicationsByStatusAndHandyWorkerId(
+	 * HandyWorkerId, status);
 	 * }
 	 * 
 	 * // Cuando un trip es cancelado, todas sus aplicattions pasan a ser

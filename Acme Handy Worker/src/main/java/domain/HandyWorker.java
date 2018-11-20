@@ -20,7 +20,7 @@ public class HandyWorker extends Actor {
 
 	// Constructor
 
-	private HandyWorker() {
+	public HandyWorker() {
 		super();
 	}
 
