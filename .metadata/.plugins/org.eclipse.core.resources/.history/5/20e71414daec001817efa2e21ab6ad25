@@ -1,0 +1,293 @@
+
+package services;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import repositories.BoxRepository;
+import domain.Actor;
+import domain.Box;
+import domain.Message;
+import domain.Notification;
+
+@Service
+@Transactional
+public class BoxService {
+
+	// Managed repository
+	@Autowired
+	private BoxRepository	boxRepository;
+
+	// Supporting services
+	@Autowired
+	private ActorService	actorService;
+
+	@Autowired
+	private MessageService	messageService;
+
+
+	// Constructor
+	public BoxService() {
+		super();
+	}
+
+	// Simple CRUD methods
+
+	public Box create() {
+
+		final Box Box = new Box();
+		Box.setSystemBox(false);
+		Box.setMessages(new ArrayList<Message>());
+		Box.setNotifications(new ArrayList<Notification>());
+		Actor actor;
+		actor = this.actorService.findByPrincipal();
+		final Collection<Box> actorBoxs = actor.getBoxs();
+		actorBoxs.add(Box);
+		actor.setBoxs(actorBoxs);
+		Box.setActor(this.actorService.findByPrincipal());
+		return Box;
+	}
+
+	public Box save(final Box Box) {
+		Assert.notNull(Box);
+		// Assert.isTrue(!Box.getSystemBox());
+		if (Box.getId() != 0)
+			this.checkPrincipal(Box);
+		Actor actor;
+		actor = this.actorService.findByPrincipal();
+		Box.setActor(actor);
+		final Box BoxSaved = BoxRepository.save(Box);
+		final Collection<Box> actorBoxs = actor.getBoxs();
+		actorBoxs.add(BoxSaved);
+		actor.setBoxs(actorBoxs);
+		this.actorService.save(actor);
+
+		return BoxSaved;
+		// actorService.save(actor);
+
+	}
+
+	public void saveToMove(final Box Box, final Box targetBox) {
+
+		Assert.notNull(targetBox);
+		Assert.notNull(Box);
+		Box.setParentBox(targetBox);
+
+		//		Message copy = message;
+		//		this.messageRepository.delete(message.getId());
+		//		Message savedCopy = this.messageRepository.save(copy);
+		//		Box currentBox = BoxService.getBoxFromMessageId(copy
+		//				.getId());
+		//		Collection<Message> currentBoxMessages = currentBox.getMessages();
+		//		currentBoxMessages.remove(copy);
+		//		
+		//		
+		//		currentBox.setMessages(currentBoxMessages);
+		//		BoxService.simpleSave(currentBox);
+		//
+		//		// Message saved = this.messageRepository.save(message);
+		//		Collection<Message> BoxMessages = Box.getMessages();
+		//		BoxMessages.add(savedCopy);
+		//		Box.setMessages(BoxMessages);
+		//		BoxService.simpleSave(Box);
+
+	}
+
+	public Box simpleSave(final Box f) {
+		Assert.notNull(f);
+
+		final Box BoxSaved = BoxRepository.save(f);
+
+		return BoxSaved;
+
+	}
+
+	public Box saveNotificationBox(final Box Box) {
+		Assert.notNull(Box);
+		// Assert.isTrue(!Box.getSystemBox());
+		Actor actor;
+		actor = this.actorService.findByPrincipal();
+		Box.setActor(actor);
+		final Box BoxSaved = BoxRepository.save(Box);
+		final Collection<Box> actorBoxs = actor.getBoxs();
+		actorBoxs.add(BoxSaved);
+		actor.setBoxs(actorBoxs);
+		this.actorService.save(actor);
+
+		return BoxSaved;
+		// actorService.save(actor);
+	}
+
+	public List<Box> save(final Iterable<Box> Boxs) {
+		Assert.notNull(Boxs);
+		return BoxRepository.save(Boxs);
+
+	}
+
+	public Box findOne(final int BoxId) {
+		Assert.notNull(BoxId);
+		Assert.isTrue(BoxId != 0);
+		Box Box;
+		Box = BoxRepository.findOne(BoxId);
+		return Box;
+	}
+
+	public void delete(final Box Box) {
+		Assert.notNull(Box);
+		Assert.isTrue(!Box.getSystemBox());
+		this.checkPrincipal(Box);
+		final Collection<Message> messages = Box.getMessages();
+		final Actor a = this.actorService.findByPrincipal();
+		a.getBoxs().remove(Box);
+		this.actorService.save(a);
+
+		final Collection<Box> childBoxs = BoxRepository.getChildBoxs(Box.getId());
+
+		if (childBoxs.size() > 0)
+			for (final Box child : childBoxs)
+				this.delete(child);
+
+		BoxRepository.delete(Box);
+		this.messageService.delete(messages);
+
+	}
+
+	public void delete(final Iterable<Box> Boxs) {
+		Assert.notNull(Boxs);
+
+		BoxRepository.delete(Boxs);
+	}
+
+	public Collection<Box> findAll() {
+		return BoxRepository.findAll();
+	}
+
+	// Other business methods
+	public void checkPrincipal(final Box Box) {
+		Actor actor;
+		actor = this.actorService.findByPrincipal();
+		Assert.isTrue(actor.getBoxs().contains(Box));
+	}
+
+	// Other business methods
+
+	public void createSystemBoxs(final Actor actor) {
+
+		Box inbox;
+		Box outbox;
+		Box trashbox;
+		Box notificationbox;
+		Box spambox;
+		final Collection<Box> Boxs = new ArrayList<Box>();
+
+		inbox = new Box();
+		inbox.setSystemBox(true);
+		inbox.setName("in box");
+		inbox.setMessages(new ArrayList<Message>());
+		inbox.setActor(actor);
+		// Boxs.add(inbox);
+		// BoxRepository.save(inbox);
+
+		outbox = new Box();
+		outbox.setSystemBox(true);
+		outbox.setName("out box");
+		outbox.setMessages(new ArrayList<Message>());
+		outbox.setActor(actor);
+		// Boxs.add(outbox);
+		// BoxRepository.save(outbox);
+
+		trashbox = new Box();
+		trashbox.setSystemBox(true);
+		trashbox.setName("trash box");
+		trashbox.setMessages(new ArrayList<Message>());
+		trashbox.setActor(actor);
+		// Boxs.add(trashbox);
+		// BoxRepository.save(trashbox);
+
+		notificationbox = new Box();
+		notificationbox.setSystemBox(true);
+		notificationbox.setName("notification box");
+		notificationbox.setMessages(new ArrayList<Message>());
+		notificationbox.setActor(actor);
+		// Boxs.add(notificationbox);
+		// BoxRepository.save(notificationbox);
+
+		spambox = new Box();
+		spambox.setSystemBox(true);
+		spambox.setName("spam box");
+		spambox.setMessages(new ArrayList<Message>());
+		spambox.setActor(actor);
+		// Boxs.add(spambox);
+		// BoxRepository.save(spambox);
+
+		// BoxRepository.save(Boxs);
+		final Box savedinbox = BoxRepository.save(inbox);
+		final Box savedoutbox = BoxRepository.save(outbox);
+		final Box savedtrashbox = BoxRepository.save(trashbox);
+		final Box savednotificationbox = BoxRepository.save(notificationbox);
+		final Box savedspambox = BoxRepository.save(spambox);
+
+		Boxs.add(savedinbox);
+		Boxs.add(savedoutbox);
+		Boxs.add(savedtrashbox);
+		Boxs.add(savednotificationbox);
+		Boxs.add(savedspambox);
+
+		actor.setBoxs(Boxs);
+
+		// BoxRepository.save(Boxs);
+
+		// TODO probar si es necesario hacer esto:
+		// managerService.save((Manager)actor);
+
+	}
+
+	public Box getOutBoxBoxFromActorId(final int id) {
+		return BoxRepository.getOutBoxBoxFromActorId(id);
+	}
+
+	public Box getInBoxBoxFromActorId(final int id) {
+		return BoxRepository.getInBoxBoxFromActorId(id);
+	}
+
+	public Box getSpamBoxBoxFromActorId(final int id) {
+		return BoxRepository.getSpamBoxBoxFromActorId(id);
+	}
+
+	public Box getTrashBoxBoxFromActorId(final int id) {
+		return BoxRepository.getTrashBoxBoxFromActorId(id);
+	}
+
+	public Box getNotificationBoxBoxFromActorId(final int id) {
+		return BoxRepository.getNotificationBoxBoxFromActorId(id);
+	}
+
+	public Collection<Box> getFirstLevelBoxsFromActorId(final int actorId) {
+		return BoxRepository.getFirstLevelBoxsFromActorId(actorId);
+	}
+
+	public Box getBoxFromMessageId(final int messageId) {
+		return BoxRepository.getBoxFromMessageId(messageId);
+	}
+
+	public Collection<Box> getChildBoxs(final int BoxId) {
+		return BoxRepository.getChildBoxes(BoxId);
+	}
+
+	// public Box getBoxFromMessageAndActorId(int messageId,int actorId) {
+	// return
+	// BoxRepository.getBoxFromMessageAndActorId(messageId,actorId);
+	// }
+
+	// public Box getBoxFromMessageAndActorId(int messageId, int actorId){
+	// return BoxRepository.getBoxFromMessageAndActorId(messageId,
+	// actorId);
+	// }
+
+}

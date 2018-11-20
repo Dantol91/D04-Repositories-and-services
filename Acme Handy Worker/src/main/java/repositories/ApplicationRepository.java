@@ -1,8 +1,6 @@
 
 package repositories;
 
-import java.util.Collection;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -28,20 +26,20 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
 	Double getCancelledRatio();
 
 	/*
-	@Query("select a from Explorer e join e.applications a where e.id = ?1 group by a.status")
-	Collection<Application> getExplorerApplicationsByStatus(int explorerId);
+	 * @Query("select a from Explorer e join e.applications a where e.id = ?1 group by a.status")
+	 * Collection<Application> getExplorerApplicationsByStatus(int explorerId);
+	 * 
+	 * @Query("select a from Manager m join m.trips t join t.applications a where m.id = ?1")
+	 * Collection<Application> getManagerTripsApplications(int managerId);
+	 * 
+	 * @Query("select a from Explorer e join e.applications a where e.id = ?1")
+	 * Collection<Application> getExplorerApplications(int explorerId);
+	 * 
+	 * @Query("select distinct a.status from Explorer e join e.applications a where e.id = ?1")
+	 * Collection<String> getSetOfStatus(int explorerId);
+	 * 
+	 * @Query("select a from Explorer e join e.applications a where e.id = ?1 and a.status= ?2")
+	 * Collection<Application> getApplicationsByStatusAndExplorerId(int explorerId, String status);
+	 */
 
-	@Query("select a from Manager m join m.trips t join t.applications a where m.id = ?1")
-	Collection<Application> getManagerTripsApplications(int managerId);
-
-	@Query("select a from Explorer e join e.applications a where e.id = ?1")
-	Collection<Application> getExplorerApplications(int explorerId);
-
-	@Query("select distinct a.status from Explorer e join e.applications a where e.id = ?1")
-	Collection<String> getSetOfStatus(int explorerId);
-
-	@Query("select a from Explorer e join e.applications a where e.id = ?1 and a.status= ?2")
-	Collection<Application> getApplicationsByStatusAndExplorerId(int explorerId, String status);
-	*/
-	
 }
