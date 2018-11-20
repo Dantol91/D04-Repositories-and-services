@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -9,26 +10,26 @@ import org.springframework.util.Assert;
 
 import repositories.EducationRecordRepository;
 import domain.EducationRecord;
-import domain.EndorserRecord;
-import domain.Ranger;
+import domain.HandyWorker;
 
 @Service
 @Transactional
 public class EducationRecordService {
 
 	// MANAGED REPOSITORY 
-	
+
 	@Autowired
-	private EducationRecordRepository educationRecordRepository;
+	private EducationRecordRepository	educationRecordRepository;
 
 	// SUPPORTING SERVICES 
-	
+
 	@Autowired
-	private ActorService actorService;
+	private ActorService				actorService;
 	@Autowired
-	private AdministratorService administratorService;
+	private AdministratorService		administratorService;
 	@Autowired
-	private RangerService rangerService;
+	private HandyWorkerService			handyWorkerService;
+
 
 	// CONSTRUCTOR 
 
@@ -63,41 +64,39 @@ public class EducationRecordService {
 
 		return result;
 	}
-	
+
 	public EducationRecord findOneToEdit(final int educationRecordId) {
 		EducationRecord result;
 
 		result = this.educationRecordRepository.findOne(educationRecordId);
-		
-		checkPrincipal(result);
+
+		this.checkPrincipal(result);
 
 		return result;
 	}
 
 	public EducationRecord save(final EducationRecord educationRecord) {
 		Assert.notNull(educationRecord);
-		if(educationRecord.getEndDate() != null){
-		Assert.isTrue(educationRecord.getStartDate().before(educationRecord.getEndDate()),"message.error.startDateEndDate");
-		}
-		Ranger r;
+		if (educationRecord.getEndDate() != null)
+			Assert.isTrue(educationRecord.getStartDate().before(educationRecord.getEndDate()), "message.error.startDateEndDate");
+
+		final HandyWorker h;
 		Collection<EducationRecord> c;
 		EducationRecord result;
 
 		result = this.educationRecordRepository.save(educationRecord);
-		r = (Ranger) this.actorService.findByPrincipal();
+		h = (HandyWorker) this.actorService.findByPrincipal();
 
-	
-			c = r.getCurriculum().getEducationRecords();
-			if(!c.contains(result)){
-				c.add(result);
-				r.getCurriculum().setEducationRecords(c);
-				rangerService.save(r);
-				}
+		c = h.getCurriculum().getEducationRecords();
+		if (!c.contains(result)) {
+			c.add(result);
+			h.getCurriculum().setEducationRecords(c);
+			this.handyWorkerService.save(h);
+		}
 		// Comprobamos si es spam
-		administratorService.checkIsSpam(educationRecord.getAttachmentURL());
-		administratorService.checkIsSpam(educationRecord.getComment());
-		administratorService.checkIsSpam(educationRecord.getDiplomaTitle());
-		administratorService.checkIsSpam(educationRecord.getInstitutionName());
+		this.administratorService.checkIsSpam(educationRecord.getAttachmentLink());
+		this.administratorService.checkIsSpam(educationRecord.getComment());
+		this.administratorService.checkIsSpam(educationRecord.getDiplomaTitle());
 
 		return result;
 	}
@@ -106,27 +105,27 @@ public class EducationRecordService {
 		Assert.notNull(educationRecord);
 		Assert.isTrue(educationRecord.getId() != 0);
 
-		Ranger r;
+		HandyWorker h;
 		Collection<EducationRecord> c;
 
-		r = (Ranger) this.actorService.findByPrincipal();
+		h = (HandyWorker) this.actorService.findByPrincipal();
 
-		c = r.getCurriculum().getEducationRecords();
+		c = h.getCurriculum().getEducationRecords();
 		c.remove(educationRecord);
-		r.getCurriculum().setEducationRecords(c);
+		h.getCurriculum().setEducationRecords(c);
 
 		this.educationRecordRepository.delete(educationRecord);
 
 	}
 
 	// Other business methods
-	
-	public void checkPrincipal(EducationRecord er) {
-		Ranger r;
 
-		r = (Ranger) actorService.findByPrincipal();
+	public void checkPrincipal(final EducationRecord er) {
+		HandyWorker h;
 
-		Assert.isTrue(r.getCurriculum().getEducationRecords().contains(er));
+		h = (HandyWorker) this.actorService.findByPrincipal();
+
+		Assert.isTrue(h.getCurriculum().getEducationRecords().contains(er));
 	}
 
 }

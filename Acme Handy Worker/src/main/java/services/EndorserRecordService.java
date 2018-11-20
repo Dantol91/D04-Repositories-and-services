@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -9,27 +10,28 @@ import org.springframework.util.Assert;
 
 import repositories.EndorserRecordRepository;
 import domain.EndorserRecord;
-import domain.Ranger;
+import domain.HandyWorker;
 
 @Service
 @Transactional
 public class EndorserRecordService {
 
 	// MANAGED REPOSITORY 
-	
+
 	@Autowired
-	private EndorserRecordRepository endorserRecordRepository;
+	private EndorserRecordRepository	endorserRecordRepository;
 
 	// SUPPORTING SERVICES
-	
+
 	@Autowired
-	private ActorService actorService;
+	private ActorService				actorService;
 	@Autowired
-	private AdministratorService administratorService;
+	private AdministratorService		administratorService;
 	@Autowired
-	private RangerService rangerService;
+	private HandyWorkerService			handyWorkerService;
 	@Autowired
-	private ConfigurationService configurationService;
+	private ConfigurationService		configurationService;
+
 
 	// CONSTRUCTOR 
 
@@ -51,84 +53,83 @@ public class EndorserRecordService {
 	public Collection<EndorserRecord> findAll() {
 		Collection<EndorserRecord> result;
 
-		result = endorserRecordRepository.findAll();
+		result = this.endorserRecordRepository.findAll();
 		Assert.notNull(result);
 
 		return result;
 	}
 
-	public EndorserRecord findOne(int endorserRecordId) {
+	public EndorserRecord findOne(final int endorserRecordId) {
 		EndorserRecord result;
 
-		result = endorserRecordRepository.findOne(endorserRecordId);
+		result = this.endorserRecordRepository.findOne(endorserRecordId);
 
 		return result;
 	}
 
-	public EndorserRecord findOneToEdit(int endorserRecordId) {
+	public EndorserRecord findOneToEdit(final int endorserRecordId) {
 		EndorserRecord result;
 
-		result = endorserRecordRepository.findOne(endorserRecordId);
+		result = this.endorserRecordRepository.findOne(endorserRecordId);
 
-		checkPrincipal(result);
+		this.checkPrincipal(result);
 
 		return result;
 	}
 
-	public EndorserRecord save(EndorserRecord endorserRecord) {
+	public EndorserRecord save(final EndorserRecord endorserRecord) {
 		Assert.notNull(endorserRecord);
 
-		Ranger r;
+		final HandyWorker h;
 		Collection<EndorserRecord> c;
 		EndorserRecord result;
 
 		result = this.endorserRecordRepository.save(endorserRecord);
-		r = (Ranger) this.actorService.findByPrincipal();
+		h = (HandyWorker) this.actorService.findByPrincipal();
 
 		if (endorserRecord.getId() == 0) {
-			c = r.getCurriculum().getEndorserRecords();
+			c = h.getCurriculum().getEndorserRecords();
 			c.add(result);
-			r.getCurriculum().setEndorserRecords(c);
-			rangerService.save(r);
+			h.getCurriculum().setEndorserRecords(c);
+			this.handyWorkerService.save(h);
 		}
-		
+
 		// Comprobamos si es spam
-		administratorService.checkIsSpam(endorserRecord.getComment());
-		administratorService.checkIsSpam(endorserRecord.getEmail());
-		administratorService.checkIsSpam(endorserRecord.getFullName());
-		administratorService
-				.checkIsSpam(endorserRecord.getLinkedInProfileUrl());
-		
-		String tlf = configurationService.checkPhoneNumber(endorserRecord.getPhoneNumber());
-		endorserRecord.setPhoneNumber(tlf);
+		this.administratorService.checkIsSpam(endorserRecord.getComment());
+		this.administratorService.checkIsSpam(endorserRecord.getEmail());
+		this.administratorService.checkIsSpam(endorserRecord.getFullName());
+		this.administratorService.checkIsSpam(endorserRecord.getLinkedInProfile());
+
+		final String tlf = this.configurationService.checkPhoneNumber(endorserRecord.getPhone());
+		endorserRecord.setPhone(tlf);
 
 		return result;
 	}
 
-	public void delete(EndorserRecord endorserRecord) {
+	public void delete(final EndorserRecord endorserRecord) {
 		Assert.notNull(endorserRecord);
 		Assert.isTrue(endorserRecord.getId() != 0);
 
-		Ranger r;
+		HandyWorker h;
 		Collection<EndorserRecord> c;
 
-		r = (Ranger) this.actorService.findByPrincipal();
+		h = (HandyWorker) this.actorService.findByPrincipal();
 
-		c = r.getCurriculum().getEndorserRecords();
+		c = h.getCurriculum().getEndorserRecords();
 		c.remove(endorserRecord);
-		r.getCurriculum().setEndorserRecords(c);
+		h.getCurriculum().setEndorserRecords(c);
 
 		this.endorserRecordRepository.delete(endorserRecord);
 	}
 
 	// Other business methods
 
-	public void checkPrincipal(EndorserRecord er) {
-		Ranger r;
+	public void checkPrincipal(final EndorserRecord er) {
+		HandyWorker h;
 
-		r = (Ranger) actorService.findByPrincipal();
+		h = (HandyWorker) this.actorService.findByPrincipal();
 
-		Assert.isTrue(r.getCurriculum().getEndorserRecords().contains(er));
+		Assert.isTrue(h.getCurriculum().getEndorserRecords().contains(er));
 	}
 
 }

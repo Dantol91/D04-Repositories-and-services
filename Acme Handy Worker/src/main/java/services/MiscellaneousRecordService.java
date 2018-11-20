@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -8,24 +9,28 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.MiscellaneousRecordRepository;
-import domain.EndorserRecord;
+import domain.HandyWorker;
 import domain.MiscellaneousRecord;
-import domain.Ranger;
 
 @Service
 @Transactional
 public class MiscellaneousRecordService {
+
 	// Managed repository
 	@Autowired
-	private MiscellaneousRecordRepository miscellaneousRecordRepository;
+	private MiscellaneousRecordRepository	miscellaneousRecordRepository;
 
 	// Supporting services
+
 	@Autowired
-	private ActorService actorService;
+	private ActorService					actorService;
+
 	@Autowired
-	private AdministratorService administratorService;
+	private AdministratorService			administratorService;
+
 	@Autowired
-	private RangerService rangerService;
+	private HandyWorkerService				handyWorkerService;
+
 
 	// Constructor
 	public MiscellaneousRecordService() {
@@ -46,79 +51,78 @@ public class MiscellaneousRecordService {
 	public Collection<MiscellaneousRecord> findAll() {
 		Collection<MiscellaneousRecord> result;
 
-		result = miscellaneousRecordRepository.findAll();
+		result = this.miscellaneousRecordRepository.findAll();
 		Assert.notNull(result);
 
 		return result;
 	}
 
-	public MiscellaneousRecord findOne(int miscellaneousRecordId) {
+	public MiscellaneousRecord findOne(final int miscellaneousRecordId) {
 		MiscellaneousRecord result;
 
-		result = miscellaneousRecordRepository.findOne(miscellaneousRecordId);
+		result = this.miscellaneousRecordRepository.findOne(miscellaneousRecordId);
 
 		return result;
 	}
 
-	public MiscellaneousRecord findOneToEdit(int miscellaneousRecordId) {
+	public MiscellaneousRecord findOneToEdit(final int miscellaneousRecordId) {
 		MiscellaneousRecord result;
 
-		result = miscellaneousRecordRepository.findOne(miscellaneousRecordId);
+		result = this.miscellaneousRecordRepository.findOne(miscellaneousRecordId);
 
-		checkPrincipal(result);
+		this.checkPrincipal(result);
 
 		return result;
 	}
 
-	public MiscellaneousRecord save(MiscellaneousRecord miscellaneousRecord) {
+	public MiscellaneousRecord save(final MiscellaneousRecord miscellaneousRecord) {
 		Assert.notNull(miscellaneousRecord);
 
-		Ranger r;
+		final HandyWorker h;
 		Collection<MiscellaneousRecord> c;
 		MiscellaneousRecord result;
 
 		result = this.miscellaneousRecordRepository.save(miscellaneousRecord);
-		r = (Ranger) this.actorService.findByPrincipal();
+		h = (HandyWorker) this.actorService.findByPrincipal();
 
 		if (miscellaneousRecord.getId() == 0) {
-			c = r.getCurriculum().getMiscellaneousRecords();
+			c = h.getCurriculum().getMiscellaneousRecords();
 			c.add(result);
-			r.getCurriculum().setMiscellaneousRecords(c);
-			rangerService.save(r);
+			h.getCurriculum().setMiscellaneousRecords(c);
+			this.handyWorkerService.save(h);
 		}
 
 		// Comprobamos si es spam
-		administratorService
-				.checkIsSpam(miscellaneousRecord.getAttachmentURL());
-		administratorService.checkIsSpam(miscellaneousRecord.getComment());
-		administratorService.checkIsSpam(miscellaneousRecord.getTitle());
+		this.administratorService.checkIsSpam(miscellaneousRecord.getAttachmentLink());
+		this.administratorService.checkIsSpam(miscellaneousRecord.getComment());
+		this.administratorService.checkIsSpam(miscellaneousRecord.getTitle());
 
 		return result;
 	}
 
-	public void delete(MiscellaneousRecord miscellaneousRecord) {
+	public void delete(final MiscellaneousRecord miscellaneousRecord) {
 		Assert.notNull(miscellaneousRecord);
 		Assert.isTrue(miscellaneousRecord.getId() != 0);
 
-		Ranger r;
+		HandyWorker h;
 		Collection<MiscellaneousRecord> c;
 
-		r = (Ranger) this.actorService.findByPrincipal();
+		h = (HandyWorker) this.actorService.findByPrincipal();
 
-		c = r.getCurriculum().getMiscellaneousRecords();
+		c = h.getCurriculum().getMiscellaneousRecords();
 		c.remove(miscellaneousRecord);
-		r.getCurriculum().setMiscellaneousRecords(c);
+		h.getCurriculum().setMiscellaneousRecords(c);
 
-		miscellaneousRecordRepository.delete(miscellaneousRecord);
+		this.miscellaneousRecordRepository.delete(miscellaneousRecord);
 	}
 
 	// Other business methods
 
-	public void checkPrincipal(MiscellaneousRecord mr) {
-		Ranger r;
+	public void checkPrincipal(final MiscellaneousRecord mr) {
+		HandyWorker h;
 
-		r = (Ranger) actorService.findByPrincipal();
+		h = (HandyWorker) this.actorService.findByPrincipal();
 
-		Assert.isTrue(r.getCurriculum().getMiscellaneousRecords().contains(mr));
+		Assert.isTrue(h.getCurriculum().getMiscellaneousRecords().contains(mr));
 	}
 }

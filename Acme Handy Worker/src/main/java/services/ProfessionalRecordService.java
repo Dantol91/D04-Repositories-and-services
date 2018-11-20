@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -8,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ProfessionalRecordRepository;
+import domain.HandyWorker;
 import domain.ProfessionalRecord;
-import domain.Ranger;
 
 @Service
 @Transactional
@@ -18,16 +19,17 @@ public class ProfessionalRecordService {
 	// MANAGED REPOSITORY 
 
 	@Autowired
-	private ProfessionalRecordRepository professionalRecordRepository;
+	private ProfessionalRecordRepository	professionalRecordRepository;
 
 	// SUPPORTING SERVICES 
-	
+
 	@Autowired
-	private ActorService actorService;
+	private ActorService					actorService;
 	@Autowired
-	private RangerService rangerService;
+	private HandyWorkerService				handyWorkerService;
 	@Autowired
-	private AdministratorService administratorService;
+	private AdministratorService			administratorService;
+
 
 	// CONSTRUCTOR 
 
@@ -36,7 +38,7 @@ public class ProfessionalRecordService {
 	}
 
 	// SIMPLE CRUD METHODS 
-	
+
 	public ProfessionalRecord create() {
 
 		ProfessionalRecord pr;
@@ -64,40 +66,40 @@ public class ProfessionalRecordService {
 		return result;
 	}
 
-	public ProfessionalRecord findOneToEdit(int EducationRecordId) {
+	public ProfessionalRecord findOneToEdit(final int EducationRecordId) {
 		ProfessionalRecord result;
 
 		result = this.professionalRecordRepository.findOne(EducationRecordId);
 
-		checkPrincipal(result);
+		this.checkPrincipal(result);
 
 		return result;
 	}
 
 	public ProfessionalRecord save(final ProfessionalRecord pr) {
 		Assert.notNull(pr);
-		if(pr.getEndDate() != null){
-		Assert.isTrue(pr.getStartDate().before(pr.getEndDate()),"message.error.startDateEndDate");
-		}
-		Ranger r;
+		if (pr.getEndDate() != null)
+			Assert.isTrue(pr.getStartDate().before(pr.getEndDate()), "message.error.startDateEndDate");
+
+		final HandyWorker h;
 		Collection<ProfessionalRecord> c;
 		ProfessionalRecord result;
 
 		result = this.professionalRecordRepository.save(pr);
-		r = (Ranger) this.actorService.findByPrincipal();
+		h = (HandyWorker) this.actorService.findByPrincipal();
 
 		if (pr.getId() == 0) {
-			c = r.getCurriculum().getProfessionalRecords();
+			c = h.getCurriculum().getProfessionalRecords();
 			c.add(pr);
-			r.getCurriculum().setProfessionalRecords(c);
-			rangerService.save(r);
+			h.getCurriculum().setProfessionalRecords(c);
+			this.handyWorkerService.save(h);
 		}
 
 		// Comprobamos si es spam
-		administratorService.checkIsSpam(pr.getAttachmentURL());
-		administratorService.checkIsSpam(pr.getComment());
-		administratorService.checkIsSpam(pr.getCompanyName());
-		administratorService.checkIsSpam(pr.getPlayedRole());
+		this.administratorService.checkIsSpam(pr.getAttachmentLink());
+		this.administratorService.checkIsSpam(pr.getComment());
+		this.administratorService.checkIsSpam(pr.getCompanyName());
+		this.administratorService.checkIsSpam(pr.getRole());
 
 		return result;
 	}
@@ -106,26 +108,26 @@ public class ProfessionalRecordService {
 		Assert.notNull(professionalRecord);
 		Assert.isTrue(professionalRecord.getId() != 0);
 
-		Ranger r;
+		HandyWorker h;
 		Collection<ProfessionalRecord> c;
 
-		r = (Ranger) this.actorService.findByPrincipal();
+		h = (HandyWorker) this.actorService.findByPrincipal();
 
-		c = r.getCurriculum().getProfessionalRecords();
+		c = h.getCurriculum().getProfessionalRecords();
 		c.remove(professionalRecord);
-		r.getCurriculum().setProfessionalRecords(c);
+		h.getCurriculum().setProfessionalRecords(c);
 
 		this.professionalRecordRepository.delete(professionalRecord);
 	}
 
 	// Other business methods
 
-	public void checkPrincipal(ProfessionalRecord mr) {
-		Ranger r;
+	public void checkPrincipal(final ProfessionalRecord mr) {
+		HandyWorker h;
 
-		r = (Ranger) actorService.findByPrincipal();
+		h = (HandyWorker) this.actorService.findByPrincipal();
 
-		Assert.isTrue(r.getCurriculum().getProfessionalRecords().contains(mr));
+		Assert.isTrue(h.getCurriculum().getProfessionalRecords().contains(mr));
 	}
 
 }
