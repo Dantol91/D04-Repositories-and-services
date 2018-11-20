@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -13,14 +14,8 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
-import domain.Actor;
 import domain.Administrator;
-import domain.Auditor;
-import domain.Explorer;
-import domain.Manager;
-import domain.Ranger;
-import domain.SocialIdentity;
-import domain.Sponsor;
+import domain.SocialProfile;
 
 @Service
 @Transactional
@@ -28,18 +23,15 @@ public class AdministratorService {
 
 	// Managed repository
 	@Autowired
-	private AdministratorRepository administratorRepository;
+	private AdministratorRepository	administratorRepository;
 
 	// Supporting services
-	@Autowired
-	private ConfigurationService configurationService;
-	@Autowired
-	private ActorService actorService;
 
 	@Autowired
-	private FolderService folderService;
+	private BoxService				boxService;
 	@Autowired
-	private UserAccountService userAccountService;
+	private UserAccountService		userAccountService;
+
 
 	// Constructor
 	public AdministratorService() {
@@ -50,38 +42,38 @@ public class AdministratorService {
 	public Administrator create() {
 
 		Administrator a;
-		Collection<SocialIdentity> socialIdentities;
+		final Collection<SocialProfile> socialProfiles;
 		UserAccount ua;
 		Authority auth;
 
 		a = new Administrator();
-		socialIdentities = new ArrayList<SocialIdentity>();
-		ua = userAccountService.create();
+		socialProfiles = new ArrayList<SocialProfile>();
+		ua = this.userAccountService.create();
 		auth = new Authority();
 
 		auth.setAuthority("ADMIN");
 		ua.addAuthority(auth);
 
 		a.setUserAccount(ua);
-		a.setSocialIdentities(socialIdentities);
+		a.setSocialProfiles(socialProfiles);
 		a.setSuspicious(false);
 
 		return a;
 
 	}
 
-	public Administrator save(Administrator administrator) {
+	public Administrator save(final Administrator administrator) {
 		Assert.notNull(administrator);
 
 		Administrator result;
 
-		result = administratorRepository.save(administrator);
-		folderService.createSystemFolders(result);
+		result = this.administratorRepository.save(administrator);
+		this.boxService.createSystemFolders(result);
 
 		return result;
 	}
 
-	public void delete(Administrator administrator) {
+	public void delete(final Administrator administrator) {
 		Assert.notNull(administrator);
 		Assert.isTrue(administrator.getId() != 0);
 		// Collection<Folder> folders = administrator.getFolders();
@@ -90,7 +82,7 @@ public class AdministratorService {
 		// Collection<Message> sentMessages = administrator.getSentMessages();
 		// Collection<SocialIdentity> socialIdentities = administrator
 		// .getSocialIdentities();
-		administratorRepository.delete(administrator);
+		this.administratorRepository.delete(administrator);
 		// folderService.delete(folders);
 		// messageService.delete(receivedMessages);
 		// messageService.delete(sentMessages);
@@ -100,56 +92,21 @@ public class AdministratorService {
 	public Collection<Administrator> findAll() {
 		Collection<Administrator> result;
 
-		result = administratorRepository.findAll();
+		result = this.administratorRepository.findAll();
 		Assert.notNull(result);
 
 		return result;
 	}
 
-	public Administrator findOne(int administratorId) {
+	public Administrator findOne(final int administratorId) {
 		Administrator result;
 
-		result = administratorRepository.findOne(administratorId);
+		result = this.administratorRepository.findOne(administratorId);
 
 		return result;
 	}
 
 	// Other business methods
-	
-	/*
-	public boolean checkIsSpam(String text) {
-		Collection<String> spamWords;
-		Boolean isSpam = false;
-		Actor a = actorService.findByPrincipal();
-		String type = actorService.getType(a.getUserAccount());
-		
-		if (type.equals("EXPLORER")) {
-			a = (Explorer) a;
-		} else if (type.equals("AUDITOR")) {
-			a = (Auditor) a;
-		} else if (type.equals("RANGER")) {
-			a = (Ranger) a;
-		} else if (type.equals("MANAGER")) {
-			a = (Manager) a;
-		} else if (type.equals("SPONSOR")) {
-			a = (Sponsor) a;
-		}
-
-		if (text == null) {
-			return isSpam;
-		} else {
-			text = text.toLowerCase();
-			spamWords = configurationService.getSpamWords();
-			for (String spamword : spamWords) {
-				if (text.contains(spamword)) {
-					isSpam = true;
-					a.setSuspicious(true);
-				}
-			}
-		}
-		return isSpam;
-	}
-	*/
 
 	public Administrator findByPrincipal() {
 		Administrator res;
@@ -157,20 +114,20 @@ public class AdministratorService {
 
 		userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
-		res = findByUserAccount(userAccount);
+		res = this.findByUserAccount(userAccount);
 		Assert.notNull(res);
 		return res;
 	}
 
-	public Administrator findByUserAccount(UserAccount userAccount) {
+	public Administrator findByUserAccount(final UserAccount userAccount) {
 		Assert.notNull(userAccount);
 		Administrator res;
-		res = administratorRepository.findByUserAccountId(userAccount.getId());
+		res = this.administratorRepository.findByUserAccountId(userAccount.getId());
 		return res;
 	}
 
-	public Administrator findByUserAccountId(int userAccountId) {
-		return administratorRepository.findByUserAccountId(userAccountId);
+	public Administrator findByUserAccountId(final int userAccountId) {
+		return this.administratorRepository.findByUserAccountId(userAccountId);
 	}
 
 }

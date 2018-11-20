@@ -1,3 +1,4 @@
+
 package security;
 
 import java.util.Collection;
@@ -13,58 +14,57 @@ import domain.Actor;
 @Transactional
 public class UserAccountService {
 
-	// Managed repository -----------------------------------------------------
+	// Managed repository 
 
 	@Autowired
 	private UserAccountRepository	userAccountRepository;
 
 
-	// Supporting services ----------------------------------------------------
+	// Supporting services 
 
-	// Constructor -----------------------------------------------------------
+	// Constructor 
 
 	public UserAccountService() {
 		super();
 	}
 
-	// Simple CRUD methods ----------------------------------------------------
-	public UserAccount create(){
+	// Simple CRUD methods 
+	public UserAccount create() {
 		UserAccount ua;
-		
+
 		ua = new UserAccount();
-		ua.setEnabled(true);
-		
-		
+		ua.setBanned(false);
+
 		return ua;
 	}
 
-	public void save(UserAccount userAccount){
+	public void save(final UserAccount userAccount) {
 		Assert.notNull(userAccount);
-		
-		userAccountRepository.save(userAccount);
+
+		this.userAccountRepository.save(userAccount);
 	}
 
-	public void delete(UserAccount userAccount){
-		userAccountRepository.delete(userAccount);
+	public void delete(final UserAccount userAccount) {
+		this.userAccountRepository.delete(userAccount);
 	}
-	
-	public Collection<UserAccount> findAll(){
+
+	public Collection<UserAccount> findAll() {
 		Collection<UserAccount> result;
 
-		result = userAccountRepository.findAll();
+		result = this.userAccountRepository.findAll();
 
 		return result;
 	}
 
-	public UserAccount findOne(int userAccountId){
+	public UserAccount findOne(final int userAccountId) {
 		UserAccount result;
 
-		result = userAccountRepository.findOne(userAccountId);
+		result = this.userAccountRepository.findOne(userAccountId);
 
 		return result;
 	}
-	
-	// Other business methods -------------------------------------------------
+
+	// Other business methods 
 	public UserAccount findByActor(final Actor actor) {
 		Assert.notNull(actor);
 
@@ -74,10 +74,9 @@ public class UserAccountService {
 
 		return result;
 	}
-	
-	public UserAccount findByUsername(String username){
-		return userAccountRepository.findByUsername(username);
+
+	public UserAccount findByUsername(final String username) {
+		return this.userAccountRepository.findByUsername(username);
 	}
-	
 
 }

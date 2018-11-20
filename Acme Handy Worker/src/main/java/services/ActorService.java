@@ -1,11 +1,9 @@
+
 package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,18 +24,19 @@ public class ActorService {
 	// Managed repository 
 
 	@Autowired
-	private ActorRepository actorRepository;
+	private ActorRepository			actorRepository;
 
 	// Supporting services 
 
 	@Autowired
-	private UserAccountService userAccountService;
+	private UserAccountService		userAccountService;
 	@Autowired
-	private FolderService boxService;
+	private BoxService				boxService;
 	@Autowired
-	private SocialIdentityService socialProfileService;
+	private SocialIdentityService	socialProfileService;
 	@Autowired
-	private MessageService messageService;
+	private MessageService			messageService;
+
 
 	// Constructors 
 
@@ -46,18 +45,18 @@ public class ActorService {
 	}
 
 	// Simple CRUD methods 
-	
-	public Actor save(Actor actor) {
+
+	public Actor save(final Actor actor) {
 		Assert.notNull(actor);
-		return actorRepository.save(actor);
+		return this.actorRepository.save(actor);
 	}
 
-	public Actor findOne(int actorId) {
+	public Actor findOne(final int actorId) {
 		Assert.isTrue(actorId != 0);
 
 		Actor result;
 
-		result = actorRepository.findOne(actorId);
+		result = this.actorRepository.findOne(actorId);
 
 		return result;
 	}
@@ -65,7 +64,7 @@ public class ActorService {
 	public Collection<Actor> findAll() {
 		Collection<Actor> result;
 
-		result = actorRepository.findAll();
+		result = this.actorRepository.findAll();
 		Assert.notNull(result);
 
 		return result;
@@ -74,7 +73,7 @@ public class ActorService {
 	// Other Busssines Methods 
 
 	public Collection<Actor> getSuspiciousActors() {
-		return actorRepository.getSuspiciousActors();
+		return this.actorRepository.getSuspiciousActors();
 	}
 
 	public Actor findByPrincipal() {
@@ -83,111 +82,54 @@ public class ActorService {
 
 		userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
-		res = findByUserAccount(userAccount);
+		res = this.findByUserAccount(userAccount);
 		Assert.notNull(res);
 		return res;
 	}
 
-	public Actor findByUserAccount(UserAccount userAccount) {
+	public Actor findByUserAccount(final UserAccount userAccount) {
 		Assert.notNull(userAccount);
 		Actor result;
-		
-		result = actorRepository.findByUserAccountId(userAccount.getId());
-		return res;
+
+		result = this.actorRepository.findByUserAccountId(userAccount.getId());
+
+		return result;
 	}
 
-	public Actor findByUserAccountId(int userAccountId) {
-		return actorRepository.findByUserAccountId(userAccountId);
+	public Actor findByUserAccountId(final int userAccountId) {
+		return this.actorRepository.findByUserAccountId(userAccountId);
 	}
 
-	public String getType(UserAccount userAccount) {
+	public String getType(final UserAccount userAccount) {
 
-		List<Authority> authorities = new ArrayList<Authority>(
-				userAccount.getAuthorities());
+		final List<Authority> authorities = new ArrayList<Authority>(userAccount.getAuthorities());
 
 		return authorities.get(0).getAuthority();
 	}
 
 	// B.16.2 Un Admin puede banear un actor que sea sospechoso(desactivar
 	// su cuenta de usuario)
-	
-	public void banActor(Actor actor) {
-		Assert.isTrue(actor.getSuspicious());
-		Assert.isTrue(actor.getUserAccount().banned());
 
-		actor.getUserAccount().setBanned(true);
-		this.save(actor);
-	}
+	/*
+	 * public void banActor(final Actor actor) {
+	 * Assert.isTrue(actor.getSuspicious());
+	 * Assert.isTrue(actor.getUserAccount().banned());
+	 * 
+	 * actor.getUserAccount().setBanned(true);
+	 * this.save(actor);
+	 * }
+	 */
 
 	// B.16.3 Un Admin puede quitar el baneo a un actor(reactivar su
 	// cuenta)
-	
-	public void bannedActor(Actor actor) {
-		Assert.isTrue(!actor.getUserAccount().banned());
 
-		actor.getUserAccount().setBanned(false);
-		this.save(actor);
-	}
-
-	// public String checkTelefono(String tlf) {
-	//
-	// String res = tlf;
-	// String res1 = tlf;
-	// String res2 = tlf;
-	// String result = "";
-	//
-	// Pattern patron = Pattern.compile("\\d{4}");
-	// Matcher encaja = patron.matcher(res);
-	// System.out.println(encaja);
-	// Pattern patron1 = Pattern
-	// .compile("(\\+\\d{1,3}\\s)?(\\(\\d{1,3}\\)\\s)?\\d{4}");
-	// Matcher encaja1 = patron1.matcher(res1);
-	// System.out.println(encaja1);
-	//
-	// Pattern patron2 = Pattern.compile("(\\+\\d{1,3}\\s)?\\d{4}");
-	// Matcher encaja2 = patron2.matcher(res2);
-	// System.out.println(encaja2);
-	//
-	// if (encaja.matches()) {
-	// String nuevo = "";
-	// Random randon = new Random();
-	// Integer i = randon.nextInt(998);
-	// i++;
-	// nuevo = "+" + i.toString() + " " + tlf;
-	// result = nuevo;
-	// } else if (encaja1.matches()) {
-	// result = res1;
-	//
-	// } else if (encaja2.matches()) {
-	// result = res2;
-	//
-	// }
-	//
-	// return result;
-	//
-	// }
-
-//	public void checkPhoneNumber(String tlf) {
-//		
-//		if(!tlf.startsWith("+") && tlf.length()>4){
-//			
-//		}
-
-//		String result = tlf;
-//
-//		Pattern patron = Pattern.compile("\\d{4,100}");
-//		Matcher encaja = patron.matcher(result);
-//
-//		if (encaja.matches()) {
-//			String nuevo = "";
-//			Random randon = new Random();
-//			Integer i = randon.nextInt(998);
-//			i++;
-//			nuevo = "+" + i.toString() + " " + tlf;
-//			result = nuevo;
-//
-//		}
-
-//	}
+	/*
+	 * public void bannedActor(final Actor actor) {
+	 * Assert.isTrue(!actor.getUserAccount().banned());
+	 * 
+	 * actor.getUserAccount().setBanned(false);
+	 * this.save(actor);
+	 * }
+	 */
 
 }
