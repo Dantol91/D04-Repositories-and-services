@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import repositories.BoxRepository;
 import repositories.FolderRepository;
 import domain.Actor;
 import domain.Folder;
@@ -21,14 +23,15 @@ public class BoxService {
 
 	// Managed repository
 	@Autowired
-	private BoxRepository boxRepository;
+	private BoxRepository	boxRepository;
 
 	// Supporting services
 	@Autowired
-	private ActorService actorService;
+	private ActorService	actorService;
 
 	@Autowired
-	private MessageService messageService;
+	private MessageService	messageService;
+
 
 	// Constructor
 	public FolderService() {
@@ -36,104 +39,99 @@ public class BoxService {
 	}
 
 	// Simple CRUD methods
-	
+
 	public Folder create() {
 
-		Folder folder = new Folder();
+		final Folder folder = new Folder();
 		folder.setSystemFolder(false);
 		folder.setMessages(new ArrayList<Message>());
 		folder.setNotifications(new ArrayList<Notification>());
 		Actor actor;
-		actor = actorService.findByPrincipal();
-		Collection<Folder> actorFolders = actor.getFolders();
+		actor = this.actorService.findByPrincipal();
+		final Collection<Folder> actorFolders = actor.getFolders();
 		actorFolders.add(folder);
 		actor.setFolders(actorFolders);
-		folder.setActor(actorService.findByPrincipal());
+		folder.setActor(this.actorService.findByPrincipal());
 		return folder;
 	}
 
-	public Folder save(Folder folder) {
+	public Folder save(final Folder folder) {
 		Assert.notNull(folder);
 		// Assert.isTrue(!folder.getSystemFolder());
-		if (folder.getId() != 0) {
-			checkPrincipal(folder);
-		}
+		if (folder.getId() != 0)
+			this.checkPrincipal(folder);
 		Actor actor;
-		actor = actorService.findByPrincipal();
+		actor = this.actorService.findByPrincipal();
 		folder.setActor(actor);
-		Folder folderSaved = folderRepository.save(folder);
-		Collection<Folder> actorFolders = actor.getFolders();
+		final Folder folderSaved = folderRepository.save(folder);
+		final Collection<Folder> actorFolders = actor.getFolders();
 		actorFolders.add(folderSaved);
 		actor.setFolders(actorFolders);
-		actorService.save(actor);
+		this.actorService.save(actor);
 
 		return folderSaved;
 		// actorService.save(actor);
 
 	}
-	
-	public void saveToMove(Folder folder, Folder targetFolder) {
+
+	public void saveToMove(final Folder folder, final Folder targetFolder) {
 
 		Assert.notNull(targetFolder);
 		Assert.notNull(folder);
 		folder.setParentFolder(targetFolder);
-		
-		
-		
-		
-//		Message copy = message;
-//		this.messageRepository.delete(message.getId());
-//		Message savedCopy = this.messageRepository.save(copy);
-//		Folder currentFolder = folderService.getFolderFromMessageId(copy
-//				.getId());
-//		Collection<Message> currentFolderMessages = currentFolder.getMessages();
-//		currentFolderMessages.remove(copy);
-//		
-//		
-//		currentFolder.setMessages(currentFolderMessages);
-//		folderService.simpleSave(currentFolder);
-//
-//		// Message saved = this.messageRepository.save(message);
-//		Collection<Message> folderMessages = folder.getMessages();
-//		folderMessages.add(savedCopy);
-//		folder.setMessages(folderMessages);
-//		folderService.simpleSave(folder);
+
+		//		Message copy = message;
+		//		this.messageRepository.delete(message.getId());
+		//		Message savedCopy = this.messageRepository.save(copy);
+		//		Folder currentFolder = folderService.getFolderFromMessageId(copy
+		//				.getId());
+		//		Collection<Message> currentFolderMessages = currentFolder.getMessages();
+		//		currentFolderMessages.remove(copy);
+		//		
+		//		
+		//		currentFolder.setMessages(currentFolderMessages);
+		//		folderService.simpleSave(currentFolder);
+		//
+		//		// Message saved = this.messageRepository.save(message);
+		//		Collection<Message> folderMessages = folder.getMessages();
+		//		folderMessages.add(savedCopy);
+		//		folder.setMessages(folderMessages);
+		//		folderService.simpleSave(folder);
 
 	}
-	
-	
-	public Folder simpleSave(Folder f){
+
+	public Folder simpleSave(final Folder f) {
 		Assert.notNull(f);
-		
-		Folder folderSaved = folderRepository.save(f);
-		
+
+		final Folder folderSaved = folderRepository.save(f);
+
 		return folderSaved;
-		
+
 	}
 
-	public Folder saveNotificationBox(Folder folder) {
+	public Folder saveNotificationBox(final Folder folder) {
 		Assert.notNull(folder);
 		// Assert.isTrue(!folder.getSystemFolder());
 		Actor actor;
-		actor = actorService.findByPrincipal();
+		actor = this.actorService.findByPrincipal();
 		folder.setActor(actor);
-		Folder folderSaved = folderRepository.save(folder);
-		Collection<Folder> actorFolders = actor.getFolders();
+		final Folder folderSaved = folderRepository.save(folder);
+		final Collection<Folder> actorFolders = actor.getFolders();
 		actorFolders.add(folderSaved);
 		actor.setFolders(actorFolders);
-		actorService.save(actor);
+		this.actorService.save(actor);
 
 		return folderSaved;
 		// actorService.save(actor);
 	}
 
-	public List<Folder> save(Iterable<Folder> folders) {
+	public List<Folder> save(final Iterable<Folder> folders) {
 		Assert.notNull(folders);
 		return folderRepository.save(folders);
 
 	}
 
-	public Folder findOne(int folderId) {
+	public Folder findOne(final int folderId) {
 		Assert.notNull(folderId);
 		Assert.isTrue(folderId != 0);
 		Folder folder;
@@ -141,30 +139,27 @@ public class BoxService {
 		return folder;
 	}
 
-	public void delete(Folder folder) {
+	public void delete(final Folder folder) {
 		Assert.notNull(folder);
 		Assert.isTrue(!folder.getSystemFolder());
-		checkPrincipal(folder);
-		Collection<Message> messages = folder.getMessages();
-		Actor a = actorService.findByPrincipal();
+		this.checkPrincipal(folder);
+		final Collection<Message> messages = folder.getMessages();
+		final Actor a = this.actorService.findByPrincipal();
 		a.getFolders().remove(folder);
-		actorService.save(a);
+		this.actorService.save(a);
 
-		Collection<Folder> childFolders = folderRepository
-				.getChildFolders(folder.getId());
+		final Collection<Folder> childFolders = folderRepository.getChildFolders(folder.getId());
 
-		if (childFolders.size() > 0) {
-			for (Folder child : childFolders) {
+		if (childFolders.size() > 0)
+			for (final Folder child : childFolders)
 				this.delete(child);
-			}
-		}
 
 		folderRepository.delete(folder);
-		messageService.delete(messages);
+		this.messageService.delete(messages);
 
 	}
 
-	public void delete(Iterable<Folder> folders) {
+	public void delete(final Iterable<Folder> folders) {
 		Assert.notNull(folders);
 
 		folderRepository.delete(folders);
@@ -175,23 +170,22 @@ public class BoxService {
 	}
 
 	// Other business methods
-	public void checkPrincipal(Folder folder) {
+	public void checkPrincipal(final Folder folder) {
 		Actor actor;
-		actor = actorService.findByPrincipal();
+		actor = this.actorService.findByPrincipal();
 		Assert.isTrue(actor.getFolders().contains(folder));
 	}
 
-
 	// Other business methods
 
-	public void createSystemFolders(Actor actor) {
+	public void createSystemFolders(final Actor actor) {
 
 		Folder inbox;
 		Folder outbox;
 		Folder trashbox;
 		Folder notificationbox;
 		Folder spambox;
-		Collection<Folder> folders = new ArrayList<Folder>();
+		final Collection<Folder> folders = new ArrayList<Folder>();
 
 		inbox = new Folder();
 		inbox.setSystemFolder(true);
@@ -234,11 +228,11 @@ public class BoxService {
 		// folderRepository.save(spambox);
 
 		// folderRepository.save(folders);
-		Folder savedinbox = folderRepository.save(inbox);
-		Folder savedoutbox = folderRepository.save(outbox);
-		Folder savedtrashbox = folderRepository.save(trashbox);
-		Folder savednotificationbox = folderRepository.save(notificationbox);
-		Folder savedspambox = folderRepository.save(spambox);
+		final Folder savedinbox = folderRepository.save(inbox);
+		final Folder savedoutbox = folderRepository.save(outbox);
+		final Folder savedtrashbox = folderRepository.save(trashbox);
+		final Folder savednotificationbox = folderRepository.save(notificationbox);
+		final Folder savedspambox = folderRepository.save(spambox);
 
 		folders.add(savedinbox);
 		folders.add(savedoutbox);
@@ -255,35 +249,35 @@ public class BoxService {
 
 	}
 
-	public Box getOutBoxFolderFromActorId(int id) {
+	public Box getOutBoxFolderFromActorId(final int id) {
 		return folderRepository.getOutBoxFolderFromActorId(id);
 	}
 
-	public Folder getInBoxFolderFromActorId(int id) {
+	public Folder getInBoxFolderFromActorId(final int id) {
 		return folderRepository.getInBoxFolderFromActorId(id);
 	}
 
-	public Folder getSpamBoxFolderFromActorId(int id) {
+	public Folder getSpamBoxFolderFromActorId(final int id) {
 		return folderRepository.getSpamBoxFolderFromActorId(id);
 	}
 
-	public Folder getTrashBoxFolderFromActorId(int id) {
+	public Folder getTrashBoxFolderFromActorId(final int id) {
 		return folderRepository.getTrashBoxFolderFromActorId(id);
 	}
 
-	public Folder getNotificationBoxFolderFromActorId(int id) {
+	public Folder getNotificationBoxFolderFromActorId(final int id) {
 		return folderRepository.getNotificationBoxFolderFromActorId(id);
 	}
 
-	public Collection<Folder> getFirstLevelFoldersFromActorId(int actorId) {
+	public Collection<Folder> getFirstLevelFoldersFromActorId(final int actorId) {
 		return folderRepository.getFirstLevelFoldersFromActorId(actorId);
 	}
 
-	public Folder getFolderFromMessageId(int messageId) {
+	public Folder getFolderFromMessageId(final int messageId) {
 		return folderRepository.getFolderFromMessageId(messageId);
 	}
 
-	public Collection<Folder> getChildFolders(int folderId) {
+	public Collection<Folder> getChildFolders(final int folderId) {
 		return folderRepository.getChildFolders(folderId);
 	}
 

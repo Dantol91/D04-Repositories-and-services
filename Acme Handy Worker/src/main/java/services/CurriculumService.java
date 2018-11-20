@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -12,9 +13,9 @@ import repositories.CurriculumRepository;
 import domain.Curriculum;
 import domain.EducationRecord;
 import domain.EndorserRecord;
+import domain.HandyWorker;
 import domain.MiscellaneousRecord;
 import domain.ProfessionalRecord;
-import domain.Ranger;
 
 @Service
 @Transactional
@@ -23,17 +24,22 @@ public class CurriculumService {
 	// Managed Repository 
 
 	@Autowired
-	private CurriculumRepository curriculumRepository;
+	private CurriculumRepository	curriculumRepository;
 
 	// Supporting Services 
-	
+
+	//	@Autowired
+	//	private FixUpTaskService fixUpTaskService;
+
 	@Autowired
-	private FixUpTaskService fixUpTaskService;
+	private CurriculumService		curriculmService;
+
 	@Autowired
-	private CurriculumService curriculmService;
+	private ActorService			actorService;
+
 	@Autowired
-	private ActorService actorService;
-	
+	private HandyWorkerService		handyWorkerService;
+
 
 	// Constructor 
 
@@ -45,20 +51,20 @@ public class CurriculumService {
 
 	public Curriculum create() {
 		Curriculum c;
-		String ticker;
+		final String ticker;
 		Collection<EndorserRecord> endorserRecords;
 		Collection<ProfessionalRecord> professionalRecords;
 		Collection<MiscellaneousRecord> miscellaneousRecords;
 		Collection<EducationRecord> educationRecords;
 
-		ticker = fixUpTaskService.getTicker();
+		//		ticker = fixUpTaskService.getTicker();
 		endorserRecords = new ArrayList<>();
 		professionalRecords = new ArrayList<>();
 		miscellaneousRecords = new ArrayList<>();
 		educationRecords = new ArrayList<>();
 
 		c = new Curriculum();
-		c.setTicker(ticker);
+		//		c.setTicker(ticker);
 		c.setEndorserRecords(endorserRecords);
 		c.setProfessionalRecords(professionalRecords);
 		c.setMiscellaneousRecords(miscellaneousRecords);
@@ -67,80 +73,77 @@ public class CurriculumService {
 		return c;
 	}
 
-	public Curriculum save(Curriculum curriculum) {
+	public Curriculum save(final Curriculum curriculum) {
 		Assert.notNull(curriculum);
-		
-		Ranger r;
-		
-		r = (Ranger) actorService.findByPrincipal();
-		
-		if(curriculum.getId()!=0){
-		checkPrincipal(curriculum.getId());
-		}
-		
-		
-		Curriculum c = curriculumRepository.save(curriculum);
-		
-		r.setCurriculum(c);
-		rangerService.save(r);
-		
+
+		HandyWorker h;
+
+		h = (HandyWorker) this.actorService.findByPrincipal();
+
+		if (curriculum.getId() != 0)
+			this.checkPrincipal(curriculum.getId());
+
+		final Curriculum c = this.curriculumRepository.save(curriculum);
+
+		h.setCurriculum(c);
+		this.handyWorkerService.save(h);
 
 		return c;
 	}
 
-	public void delete(Curriculum curriculum) {
+	public void delete(final Curriculum curriculum) {
 		Assert.notNull(curriculum);
-		checkPrincipal(curriculum.getId());
+		this.checkPrincipal(curriculum.getId());
 		//prService.delete(curriculum.getPersonalRecord());
-		
-		Ranger r;
-		r = (Ranger) actorService.findByPrincipal();
-		r.setCurriculum(null);
-		rangerService.save(r);
-		curriculumRepository.delete(curriculum);
+
+		final HandyWorker h;
+		h = (HandyWorker) this.actorService.findByPrincipal();
+		h.setCurriculum(null);
+		this.handyWorkerService.save(h);
+		this.curriculumRepository.delete(curriculum);
 	}
 
 	public Collection<Curriculum> findAll() {
-		return curriculumRepository.findAll();
+		return this.curriculumRepository.findAll();
 	}
 
-	public Curriculum findOne(int curriculumId) {
+	public Curriculum findOne(final int curriculumId) {
 		Assert.notNull(curriculumId);
-		
+
 		Curriculum c;
-		
-		c = curriculumRepository.findOne(curriculumId);
-		
+
+		c = this.curriculumRepository.findOne(curriculumId);
+
 		return c;
 	}
-	
-	public Curriculum findOneToEdit(int curriculumId) {
+
+	public Curriculum findOneToEdit(final int curriculumId) {
 		Assert.notNull(curriculumId);
-		
+
 		Curriculum c;
-		
-		c = curriculumRepository.findOne(curriculumId);
-		
-		checkPrincipal(c.getId());
-		
+
+		c = this.curriculumRepository.findOne(curriculumId);
+
+		this.checkPrincipal(c.getId());
+
 		return c;
 	}
 
 	// Other business methods
-	
-	public Curriculum getCurriculumByRangerId(int handyWorkerId) {
+
+	public Curriculum getCurriculumByRangerId(final int handyWorkerId) {
 		Assert.notNull(handyWorkerId);
 
-		return curriculumRepository.getCurriculumByRangerId(handyWorkerId);
+		return this.curriculumRepository.getCurriculumByHandyWorkerId(handyWorkerId);
 	}
 
-	public void checkPrincipal(int curriculumId) {
+	public void checkPrincipal(final int curriculumId) {
 		HandyWorker a;
-		HandyWorker r;
+		HandyWorker h;
 
-		a = (HandyWorker) actorService.findByPrincipal();
-		r = rangerService.getHandyWorkersByCurriculumId(curriculumId);
-		Assert.isTrue(a.equals(r));
+		a = (HandyWorker) this.actorService.findByPrincipal();
+		h = this.handyWorkerService.getHandyWorkersByCurriculumId(curriculumId);
+		Assert.isTrue(a.equals(h));
 	}
 
 }

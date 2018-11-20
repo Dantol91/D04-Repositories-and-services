@@ -167,4 +167,9 @@ public class HandyWorkerService {
 
 	}
 
+	public HandyWorker getHandyWorkersByCurriculumId(final int curriculumId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

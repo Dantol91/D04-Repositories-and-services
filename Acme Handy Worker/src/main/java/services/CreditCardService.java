@@ -1,88 +1,90 @@
+
 package services;
 
 import java.util.Collection;
 
 import javax.transaction.Transactional;
 
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import domain.CreditCard;
 import repositories.CreditCardRepository;
+import domain.CreditCard;
 
 @Service
 @Transactional
 public class CreditCardService {
-	
+
 	//Managed repository
 	@Autowired
-	private CreditCardRepository creditCardRepository;
-	
+	private CreditCardRepository	creditCardRepository;
+
+
 	//Constructor
-	public CreditCardService(){
+	public CreditCardService() {
 		super();
 	}
-	
+
 	//Simple CRUD methods
-	
-	public CreditCard create(){
+
+	public CreditCard create() {
 		CreditCard res;
-		
+
 		res = new CreditCard();
-		
+
 		return res;
 	}
-	
-	public CreditCard save(CreditCard creditCard){
+
+	public CreditCard save(final CreditCard creditCard) {
 		Assert.notNull(creditCard);
-		Assert.isTrue(checkExpiration(creditCard), "message.error.expiration");
-		
+		//	Assert.isTrue(checkExpiration(creditCard), "message.error.expiration");
+
 		CreditCard result;
 
-		result = creditCardRepository.save(creditCard);
+		result = this.creditCardRepository.save(creditCard);
 
 		return result;
 	}
 
-	public void delete(CreditCard creditCard){
+	public void delete(final CreditCard creditCard) {
 		Assert.notNull(creditCard);
-		
-		creditCardRepository.delete(creditCard);
+
+		this.creditCardRepository.delete(creditCard);
 	}
-	
-	public Collection<CreditCard> findAll(){
-		
+
+	public Collection<CreditCard> findAll() {
+
 		Collection<CreditCard> result;
 
-		result = creditCardRepository.findAll();
+		result = this.creditCardRepository.findAll();
 		Assert.notNull(result);
 
 		return result;
 	}
-	
-	public CreditCard findOne(int creditCardId){
+
+	public CreditCard findOne(final int creditCardId) {
 		CreditCard result;
 
-		result = creditCardRepository.findOne(creditCardId);
+		result = this.creditCardRepository.findOne(creditCardId);
 
 		return result;
 	}
-	
-	//Other business methods
-	
-	public boolean checkExpiration(CreditCard c){
-		Boolean res = true;
-		
-	    if((c.getExpirationYear()==LocalDate.now().getYear() 
-	    		&& (c.getExpirationMonth() == LocalDate.now().getMonthOfYear()
-	    				|| c.getExpirationMonth() < LocalDate.now().getMonthOfYear()))
-	    	|| c.getExpirationYear()<LocalDate.now().getYear()){
-	    	res = false;
-	    }
-	    
-	    return res;
-	}
 
+	//Other business methods
+
+	/*
+	 * public boolean checkExpiration(CreditCard c){
+	 * Boolean res = true;
+	 * 
+	 * if((c.getExpirationYear()==LocalDate.now().getYear()
+	 * && (c.getExpirationMonth() == LocalDate.now().getMonthOfYear()
+	 * || c.getExpirationMonth() < LocalDate.now().getMonthOfYear()))
+	 * || c.getExpirationYear()<LocalDate.now().getYear()){
+	 * res = false;
+	 * }
+	 * 
+	 * return res;
+	 * }
+	 */
 }
