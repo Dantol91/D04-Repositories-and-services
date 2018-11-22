@@ -1,3 +1,4 @@
+
 package services;
 
 import java.sql.Date;
@@ -16,38 +17,39 @@ import utilities.AbstractTest;
 import domain.EducationRecord;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-		"classpath:spring/config/packages.xml" })
+@ContextConfiguration(locations = {
+	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
+})
 @Transactional
 public class EducationRecordServiceTest extends AbstractTest {
 
 	@Autowired
-	private EducationRecordService educationRecordService;
+	private EducationRecordService	educationRecordService;
+
 
 	@Test
 	public void createSaveDelete() {
-		authenticate("ranger2");
-		
+		this.authenticate("ranger2");
+
 		EducationRecord edRecord, edSaved;
 		Collection<EducationRecord> eBefore, eAfter;
-		
-		edRecord = educationRecordService.create();
+
+		edRecord = this.educationRecordService.create();
 		Assert.notNull(edRecord);
-		
+
 		//Probamos save
 		edRecord.setDiplomaTitle("diploma");
-		edRecord.setInstitutionName("name");
 		edRecord.setStartDate(Date.valueOf("2014-08-08"));
-		edSaved = educationRecordService.save(edRecord);
-		
-		eBefore = educationRecordService.findAll();
+		edSaved = this.educationRecordService.save(edRecord);
+
+		eBefore = this.educationRecordService.findAll();
 		Assert.isTrue(eBefore.contains(edSaved));
-		
+
 		//Probamos delete
-		educationRecordService.delete(edSaved);
-		
-		eAfter = educationRecordService.findAll();
-		
+		this.educationRecordService.delete(edSaved);
+
+		eAfter = this.educationRecordService.findAll();
+
 		Assert.isTrue(!eAfter.contains(edSaved));
 	}
 

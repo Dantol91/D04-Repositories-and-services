@@ -3,36 +3,36 @@
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="237" key="DIALOG_WIDTH"/>
 		<item value="464" key="DIALOG_Y_ORIGIN"/>
-		<item value="362" key="DIALOG_HEIGHT"/>
 		<item value="993" key="DIALOG_X_ORIGIN"/>
+		<item value="362" key="DIALOG_HEIGHT"/>
 		<item value="1|Tahoma|8.25|0|WINDOWS|1|-11|0|0|0|400|0|0|0|1|0|0|0|0|Tahoma" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="isRegEx"/>
 		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="Box" key="selection"/>
+		<item value="socialIdentity" key="selection"/>
 		<list key="findhistory">
-			<item value="Folder"/>
-			<item value="findAll"/>
-			<item value="calculator."/>
-			<item value="setCa"/>
-			<item value="messa"/>
-			<item value="announcement."/>
-			<item value="Acme-Share"/>
-			<item value="Object"/>
+			<item value="SocialIdentity"/>
+			<item value="ha"/>
+			<item value="new"/>
+			<item value="Explorer"/>
+			<item value="imporf"/>
+			<item value="frip"/>
+			<item value="Collecfion"/>
+			<item value="t"/>
 		</list>
 		<list key="replacehistory">
+			<item value="SocialProfile"/>
+			<item value="HandyWorker"/>
+			<item value="import"/>
+			<item value="FixUpTask"/>
+			<item value="Collection"/>
+			<item value="f"/>
 			<item value="Box"/>
 			<item value="this."/>
-			<item value="customer."/>
-			<item value="Sample"/>
-			<item value=".err."/>
-			<item value=""/>
-			<item value="Double"/>
-			<item value=" "/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">

@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -18,117 +19,126 @@ import security.UserAccount;
 import security.UserAccountService;
 import utilities.AbstractTest;
 import domain.Actor;
-import domain.Manager;
+import domain.HandyWorker;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-		"classpath:spring/config/packages.xml" })
+@ContextConfiguration(locations = {
+	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
+})
 @Transactional
 public class ActorServiceTest extends AbstractTest {
 
 	// Service under test ---------------------------------
+
 	@Autowired
-	private ActorService actorService;
+	private ActorService		actorService;
+
 	@Autowired
-	private ManagerService managerService;
+	private HandyWorkerService	handyWorkerService;
+
 	@Autowired
-	private UserAccountService userAccountService;
-	
-	
+	private UserAccountService	userAccountService;
+
+
 	@Test
 	public void testgetSuspiciousActors() {
-		Collection<Actor> suspiciusActors =actorService.getSuspiciousActors();
+		final Collection<Actor> suspiciusActors = this.actorService.getSuspiciousActors();
 		Assert.notEmpty(suspiciusActors);
 	}
 	@Test
 	public void testFindByPrincipal() {
-		authenticate("auditor1");
-		Actor principal =actorService.findByPrincipal();
+		this.authenticate("auditor1");
+		final Actor principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
 	}
 	@Test
 	public void testFindByUserAccount() {
-		List<UserAccount> userAccounts= (List<UserAccount>) userAccountService.findAll();
-		UserAccount userAccount= userAccounts.get(0);
-		Actor user =actorService.findByUserAccount(userAccount);
+		final List<UserAccount> userAccounts = (List<UserAccount>) this.userAccountService.findAll();
+		final UserAccount userAccount = userAccounts.get(0);
+		final Actor user = this.actorService.findByUserAccount(userAccount);
 		Assert.notNull(user);
 	}
 	@Test
 	public void testFindByUserAccountId() {
-		List<UserAccount> userAccounts= (List<UserAccount>) userAccountService.findAll();
-		UserAccount userAccount= userAccounts.get(0);
-		int id=userAccount.getId();
-		Actor user =actorService.findByUserAccountId(id);
+		final List<UserAccount> userAccounts = (List<UserAccount>) this.userAccountService.findAll();
+		final UserAccount userAccount = userAccounts.get(0);
+		final int id = userAccount.getId();
+		final Actor user = this.actorService.findByUserAccountId(id);
 		Assert.notNull(user);
 	}
 	@Test
 	public void testGetType() {
-		List<UserAccount> userAccounts= (List<UserAccount>) userAccountService.findAll();
-		UserAccount userAccount= userAccounts.get(0);
-		
-		String type =actorService.getType(userAccount);
+		final List<UserAccount> userAccounts = (List<UserAccount>) this.userAccountService.findAll();
+		final UserAccount userAccount = userAccounts.get(0);
+
+		final String type = this.actorService.getType(userAccount);
 		Assert.notNull(type);
+
 	}
+
+	/*
+	 * @Test
+	 * public void testBan() {
+	 * final Actor pepon = (Actor) this.actorService.findAll().toArray()[0];
+	 * pepon.setSuspicious(true); //debe ser sospechoso para poder ser baneado
+	 * this.actorService.banActor(pepon);
+	 * }
+	 * 
+	 * 
+	 * @Test
+	 * public void testUnBan() {
+	 * final Actor pepon = (Actor) this.actorService.findAll().toArray()[0];
+	 * pepon.getUserAccount().setEnabled(false);
+	 * this.actorService.unbanActor(pepon);
+	 * }
+	 */
+
 	@Test
-	public void testBan() {
-		Actor pepon= (Actor) actorService.findAll().toArray()[0];
-		pepon.setSuspicious(true); //debe ser sospechoso para poder ser baneado
-		actorService.banActor(pepon);
-	}
-	@Test
-	public void testUnBan() {
-		Actor pepon= (Actor) actorService.findAll().toArray()[0];
-		pepon.getUserAccount().setEnabled(false);
-		actorService.unbanActor(pepon);
-	}
-	@Test
-	public void updatePhone(){
-		
-		Actor pepon= (Actor) actorService.findAll().toArray()[0];
-		System.out.println(pepon.getPhoneNumber());
-		pepon.setPhoneNumber("+100 (666) 10");
-		System.out.println(pepon.getPhoneNumber());
-		
-		
-		
+	public void updatePhone() {
+
+		final Actor pepon = (Actor) this.actorService.findAll().toArray()[0];
+		System.out.println(pepon.getPhone());
+		pepon.setPhone("+100 (666) 10");
+		System.out.println(pepon.getPhone());
+
 	}
 
 	@Test
 	public void testCreateActor() {
 
-		Actor a = managerService.create();
+		final Actor a = this.handyWorkerService.create();
 		Assert.notNull(a);
 
 	}
 
 	@Test
 	public void testSaveActor() {
-		UserAccount u = new UserAccount();
-		Authority a = new Authority();
+		final UserAccount u = new UserAccount();
+		final Authority a = new Authority();
 		a.setAuthority("ADMIN");
-		Collection<Authority> authorities = new ArrayList<Authority>();
+		final Collection<Authority> authorities = new ArrayList<Authority>();
 		authorities.add(a);
 		u.setAuthorities(authorities);
 		Actor saved;
 		Collection<Actor> actors;
-		Manager m = managerService.create();
+		final HandyWorker m = this.handyWorkerService.create();
 		m.setName("Name1");
 		m.setSurname("Surname1");
-		saved = actorService.save(m);
-		actors = actorService.findAll();
+		saved = this.actorService.save(m);
+		actors = this.actorService.findAll();
 		Assert.isTrue(actors.contains(saved));
 
 	}
 
 	@Test
-	public void testFindOneActor(){
+	public void testFindOneActor() {
 		Actor saved;
-		Manager m = managerService.create();
+		final HandyWorker m = this.handyWorkerService.create();
 		m.setName("Name1");
 		m.setSurname("Surname1");
-		saved = actorService.save(m);
-		int actorId = saved.getId();
-		Actor a = actorService.findOne(actorId);
+		saved = this.actorService.save(m);
+		final int actorId = saved.getId();
+		final Actor a = this.actorService.findOne(actorId);
 		Assert.isTrue(a.equals(saved));
 	}
 }

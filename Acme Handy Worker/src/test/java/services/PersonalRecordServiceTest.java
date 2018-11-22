@@ -23,34 +23,35 @@ import domain.PersonalRecord;
 public class PersonalRecordServiceTest extends AbstractTest {
 
 	@Autowired
-	private PersonalRecordService personalRecordService;
+	private PersonalRecordService	personalRecordService;
+
 
 	@Test
 	public void createSaveDelete() {
-		authenticate("ranger2");
-		
+		this.authenticate("ranger2");
+
 		PersonalRecord edRecord, edSaved;
 		Collection<PersonalRecord> eBefore, eAfter;
-		
-		edRecord = personalRecordService.create();
+
+		edRecord = this.personalRecordService.create();
 		Assert.notNull(edRecord);
-		
+
 		//Probamos save
 		edRecord.setEmail("email@email.es");
 		edRecord.setFullName("name");
-		edRecord.setPhoneNumber("131232");
-		edRecord.setPhotoUrl("http://www.foto.jpg");
-		edRecord.setLinkedInProfileUrl("http://www.foto.jpg");
-		edSaved = personalRecordService.save(edRecord);
-		
-		eBefore = personalRecordService.findAll();
+		edRecord.setPhone("131232");
+		edRecord.setPhoto("http://www.foto.jpg");
+		edRecord.setLinkedInProfile("http://www.foto.jpg");
+		edSaved = this.personalRecordService.save(edRecord);
+
+		eBefore = this.personalRecordService.findAll();
 		Assert.isTrue(eBefore.contains(edSaved));
-		
+
 		//Probamos delete
-		personalRecordService.delete(edSaved);
-		
-		eAfter = personalRecordService.findAll();
-		
+		this.personalRecordService.delete(edSaved);
+
+		eAfter = this.personalRecordService.findAll();
+
 		Assert.isTrue(!eAfter.contains(edSaved));
 	}
 

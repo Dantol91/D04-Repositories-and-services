@@ -23,32 +23,33 @@ import domain.EndorserRecord;
 public class EndorserRecordServiceTest extends AbstractTest {
 
 	@Autowired
-	private EndorserRecordService endorserRecordService;
+	private EndorserRecordService	endorserRecordService;
+
 
 	@Test
 	public void createSaveDelete() {
-		authenticate("ranger2");
-		
+		this.authenticate("ranger2");
+
 		EndorserRecord edRecord, edSaved;
 		Collection<EndorserRecord> eBefore, eAfter;
-		
-		edRecord = endorserRecordService.create();
+
+		edRecord = this.endorserRecordService.create();
 		Assert.notNull(edRecord);
-		
+
 		//Probamos save
 		edRecord.setEmail("email@email.es");
 		edRecord.setFullName("name");
-		edRecord.setPhoneNumber("131232");
-		edSaved = endorserRecordService.save(edRecord);
-		
-		eBefore = endorserRecordService.findAll();
+		edRecord.setPhone("131232");
+		edSaved = this.endorserRecordService.save(edRecord);
+
+		eBefore = this.endorserRecordService.findAll();
 		Assert.isTrue(eBefore.contains(edSaved));
-		
+
 		//Probamos delete
-		endorserRecordService.delete(edSaved);
-		
-		eAfter = endorserRecordService.findAll();
-		
+		this.endorserRecordService.delete(edSaved);
+
+		eAfter = this.endorserRecordService.findAll();
+
 		Assert.isTrue(!eAfter.contains(edSaved));
 	}
 }

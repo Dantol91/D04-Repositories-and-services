@@ -24,32 +24,33 @@ import domain.ProfessionalRecord;
 public class ProfessionalRecordServiceTest extends AbstractTest {
 
 	@Autowired
-	private ProfessionalRecordService professionalRecordService;
+	private ProfessionalRecordService	professionalRecordService;
+
 
 	@Test
 	public void createSaveDelete() {
-		authenticate("ranger2");
-		
+		this.authenticate("ranger2");
+
 		ProfessionalRecord edRecord, edSaved;
 		Collection<ProfessionalRecord> eBefore, eAfter;
-		
-		edRecord = professionalRecordService.create();
+
+		edRecord = this.professionalRecordService.create();
 		Assert.notNull(edRecord);
-		
+
 		//Probamos save
-		edRecord.setPlayedRole("asda");
+		edRecord.setRole("asda");
 		edRecord.setCompanyName("name");
 		edRecord.setStartDate(Date.valueOf("2016-06-06"));
-		edSaved = professionalRecordService.save(edRecord);
-		
-		eBefore = professionalRecordService.findAll();
+		edSaved = this.professionalRecordService.save(edRecord);
+
+		eBefore = this.professionalRecordService.findAll();
 		Assert.isTrue(eBefore.contains(edSaved));
-		
+
 		//Probamos delete
-		professionalRecordService.delete(edSaved);
-		
-		eAfter = professionalRecordService.findAll();
-		
+		this.professionalRecordService.delete(edSaved);
+
+		eAfter = this.professionalRecordService.findAll();
+
 		Assert.isTrue(!eAfter.contains(edSaved));
 	}
 

@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -15,58 +16,58 @@ import utilities.AbstractTest;
 import domain.Curriculum;
 import domain.PersonalRecord;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-		"classpath:spring/config/packages.xml" })
+@ContextConfiguration(locations = {
+	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
+})
 @Transactional
 public class CurriculumServiceTest extends AbstractTest {
 
 	// Service under test ---------------------------------
 	@Autowired
-	private CurriculumService curriculumService;
+	private CurriculumService		curriculumService;
 	@Autowired
-	private TripService tripService;
+	private TripService				tripService;
 
 	@Autowired
-	private PersonalRecordService personalRecordService;
+	private PersonalRecordService	personalRecordService;
+
 
 	// Tests ----------------------------------------------
 	@Test
 	public void testCreateSaveAndDelete() {
-		authenticate("ranger1");
+		this.authenticate("ranger1");
 		Curriculum curriculum, curriculumSaved;
 		PersonalRecord pR;
 		Collection<Curriculum> cBefore, cAfter;
-		
-		curriculum = curriculumService.create();
+
+		curriculum = this.curriculumService.create();
 		Assert.notNull(curriculum);
 
-		
 		//Probamos save
-		pR = personalRecordService.create();
+		pR = this.personalRecordService.create();
 		pR.setEmail("email@email.es");
 		pR.setFullName("name");
-		pR.setLinkedInProfileUrl("https://www.asdas.es");
-		pR.setPhoneNumber("1232");
-		pR.setPhotoUrl("https://www.asdas.es");
-		personalRecordService.save(pR);
-		
+		pR.setLinkedInProfile("https://www.asdas.es");
+		pR.setPhone("1232");
+		pR.setPhoto("https://www.asdas.es");
+		this.personalRecordService.save(pR);
+
 		curriculum.setPersonalRecord(pR);
-		curriculum.setTicker(tripService.getTicker());
-		
-		curriculumSaved = curriculumService.save(curriculum);
+		curriculum.setTicker(this.tripService.getTicker());
+
+		curriculumSaved = this.curriculumService.save(curriculum);
 		Assert.notNull(curriculumSaved);
-		
-		cBefore = curriculumService.findAll();
+
+		cBefore = this.curriculumService.findAll();
 		Assert.isTrue(cBefore.contains(curriculumSaved));
-		
+
 		//Probamos delete
-		curriculumService.delete(curriculumSaved);
-		cAfter = curriculumService.findAll();
-		
+		this.curriculumService.delete(curriculumSaved);
+		cAfter = this.curriculumService.findAll();
+
 		Assert.isTrue(!cAfter.contains(curriculumSaved));
-		
+
 	}
 
 }

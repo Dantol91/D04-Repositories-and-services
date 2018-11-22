@@ -1,6 +1,6 @@
+
 package services;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,66 +15,67 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Application;
-import domain.Trip;
+import domain.FixUpTask;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
 @Transactional
-public class ApplicationServiceTest extends AbstractTest{
-	
+public class ApplicationServiceTest extends AbstractTest {
+
 	// Service under test ---------------------------------
 	@Autowired
 	private ApplicationService	applicationService;
-	@Autowired 
-	private TripService tripService;
+
+
+	//	@Autowired
+	//	private FixUpTaskService	fixUpTaskService;
 
 	// Tests ----------------------------------------------
 	@Test
 	public void testCreateSaveDelete() {
-		authenticate("explorer1");
+		this.authenticate("explorer1");
 
 		Application app;
 		Application appSaved;
-		
-		app = applicationService.create();
+
+		app = this.applicationService.create();
 
 		Assert.notNull(app);
-		Assert.notNull(app.getCreationMoment());
+		Assert.notNull(app.getRegisterMoment());
 		Assert.isTrue(app.getStatus().equals("PENDING"));
-		
-		appSaved = applicationService.save(app);
+
+		appSaved = this.applicationService.save(app);
 		Assert.notNull(appSaved);
-		applicationService.delete(appSaved);
-		
-	}	
-	
+		this.applicationService.delete(appSaved);
+
+	}
+
 	@Test
-	public void cancelApplicationAccepted(){
+	public void cancelApplicationAccepted() {
 		super.authenticate("explorer1");
-		
+
 		Application app;
-		List<Trip> trips = new ArrayList<>();
+		final List<FixUpTask> fixUpTasks = new ArrayList<>();
 		Application appSaved;
-		
-		trips = (List<Trip>) tripService.findAll();
-		app = applicationService.create();
+
+		//	fixUpTasks = (List<FixUpTask>) this.fixUpTaskService.findAll();
+		app = this.applicationService.create();
 
 		app.setStatus("ACCEPTED");
-		app.setCancelReason("");
+		//	app.setCancelReason("");
 		app.setComment("comment");
-		
-		app.setTrip(trips.get(0));
-//		app.getTrip().setStartDate(new Date(System.currentTimeMillis()+10000));
-		
-		appSaved = applicationService.save(app);
-		
-		appSaved.getTrip().setStartDate(Date.valueOf("2020-02-02"));
-		applicationService.cancelApplication(appSaved);
+
+		//		app.setTrip(trips.get(0));
+		//		app.getTrip().setStartDate(new Date(System.currentTimeMillis()+10000));
+
+		appSaved = this.applicationService.save(app);
+
+		//		appSaved.getTrip().setStartDate(Date.valueOf("2020-02-02"));
+		//		this.applicationService.cancelApplication(appSaved);
 		Assert.isTrue(appSaved.getStatus().equals("CANCELLED"));
 		super.authenticate(null);
-		
+
 	}
-	
 }
