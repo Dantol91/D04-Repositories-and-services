@@ -10,50 +10,54 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.NoteRepository;
-import domain.Auditor;
+import domain.Actor;
 import domain.Note;
+import domain.Referee;
 
 @Service
 @Transactional
 public class NoteService {
 
 	// Managed repository
-	
+
 	@Autowired
 	private NoteRepository			noteRepository;
 
 	//Supporting services
+
 	@Autowired
 	private ActorService			actorService;
+
 	@Autowired
-	private AuditorService			auditorService;
+	private RefereeService			refereeService;
+
 	@Autowired
 	private AdministratorService	administratorService;
 
 
 	// Constructor
-	
+
 	public NoteService() {
 		super();
 	}
 
 	// Simple CRUD methods
-	
+
 	public Note create() {
 
 		Note note;
 		Date moment;
-		Collection<Note> notes;
-		Auditor auditor;
+		final Collection<Note> notes;
+		final Referee referee;
 
-		auditor = (Auditor) this.actorService.findByPrincipal();
+		referee = (Referee) this.actorService.findByPrincipal();
 		note = new Note();
 		moment = new Date(System.currentTimeMillis() - 1);
-		notes = auditor.getNotes();
-		notes.add(note);
+		//		notes = referee.getNotes();
+		//	notes.add(note);
 
-		note.setAuditor(auditor);
-		note.setCreationMoment(moment);
+		//		note.setReferee(referee);
+		note.setMoment(moment);
 
 		return note;
 	}
@@ -63,19 +67,19 @@ public class NoteService {
 
 		Note result;
 		Date moment;
-		Collection<Note> notes;
+		final Collection<Note> notes;
 
 		moment = new Date(System.currentTimeMillis() - 1);
 
-		note.setCreationMoment(moment);
+		note.setMoment(moment);
 		result = this.noteRepository.save(note);
-		notes = note.getAuditor().getNotes();
-		notes.add(result);
-		note.getAuditor().setNotes(notes);
-		this.auditorService.save(note.getAuditor());
+		//		notes = note.getReferee().getNotes();
+		//		notes.add(result);
+		//		note.getReferee().setNotes(notes);
+		//		this.refereeService.save(note.getReferee());
 
 		//Comprobamos si es spam
-		this.administratorService.checkIsSpam(note.getRemark());
+		//		this.administratorService.checkIsSpam(note.getRemark());
 
 		return result;
 	}
@@ -98,15 +102,15 @@ public class NoteService {
 	}
 
 	// Other Bussines Methods 
-	
+
 	public void checkPrincipal(final Note note) {
-		Auditor auditor;
-		Auditor actor;
+		final Referee referee;
+		Actor actor;
 
-		auditor = note.getAuditor();
-		actor = (Auditor) this.actorService.findByPrincipal();
+		//		referee = note.getReferee();
+		actor = this.actorService.findByPrincipal();
 
-		Assert.isTrue(auditor.equals(actor));
+		//		Assert.isTrue(referee.equals(actor));
 	}
 
 	//B.13.1 Un Manager puede mostrar las notas que un auditor ha escrito en sus trips

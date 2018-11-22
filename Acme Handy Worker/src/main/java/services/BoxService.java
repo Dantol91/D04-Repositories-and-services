@@ -11,11 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.BoxRepository;
-import repositories.FolderRepository;
 import domain.Actor;
-import domain.Folder;
+import domain.Box;
 import domain.Message;
-import domain.Notification;
 
 @Service
 @Transactional
@@ -34,51 +32,51 @@ public class BoxService {
 
 
 	// Constructor
-	public FolderService() {
+	public BoxService() {
 		super();
 	}
 
 	// Simple CRUD methods
 
-	public Folder create() {
+	public Box create() {
 
-		final Folder folder = new Folder();
-		folder.setSystemFolder(false);
+		final Box folder = new Box();
+		folder.setSystemBox(false);
 		folder.setMessages(new ArrayList<Message>());
-		folder.setNotifications(new ArrayList<Notification>());
+		//	folder.setNotifications(new ArrayList<Notification>());
 		Actor actor;
 		actor = this.actorService.findByPrincipal();
-		final Collection<Folder> actorFolders = actor.getFolders();
+		final Collection<Box> actorFolders = actor.getBoxes();
 		actorFolders.add(folder);
-		actor.setFolders(actorFolders);
+		actor.setBoxes(actorBoxes);
 		folder.setActor(this.actorService.findByPrincipal());
 		return folder;
 	}
 
-	public Folder save(final Folder folder) {
-		Assert.notNull(folder);
+	public Box save(final Box box) {
+		Assert.notNull(box);
 		// Assert.isTrue(!folder.getSystemFolder());
-		if (folder.getId() != 0)
-			this.checkPrincipal(folder);
+		if (box.getId() != 0)
+			this.checkPrincipal(box);
 		Actor actor;
 		actor = this.actorService.findByPrincipal();
-		folder.setActor(actor);
-		final Folder folderSaved = folderRepository.save(folder);
-		final Collection<Folder> actorFolders = actor.getFolders();
-		actorFolders.add(folderSaved);
-		actor.setFolders(actorFolders);
+		box.setActor(actor);
+		final Box boxSaved = this.boxRepository.save(box);
+		final Collection<Box> actorFolders = actor.getBoxes();
+		actorFolders.add(boxSaved);
+		actor.setBoxes(actorFolders);
 		this.actorService.save(actor);
 
-		return folderSaved;
+		return boxSaved;
 		// actorService.save(actor);
 
 	}
 
-	public void saveToMove(final Folder folder, final Folder targetFolder) {
+	public void saveToMove(final Box box, final Box targetBox) {
 
-		Assert.notNull(targetFolder);
-		Assert.notNull(folder);
-		folder.setParentFolder(targetFolder);
+		Assert.notNull(targetBox);
+		Assert.notNull(box);
+		box.setParentBox(targetBox);
 
 		//		Message copy = message;
 		//		this.messageRepository.delete(message.getId());
@@ -100,22 +98,22 @@ public class BoxService {
 
 	}
 
-	public Folder simpleSave(final Folder f) {
-		Assert.notNull(f);
+	public Box simpleSave(final Box b) {
+		Assert.notNull(b);
 
-		final Folder folderSaved = folderRepository.save(f);
+		final Box boxSaved = this.boxRepository.save(b);
 
-		return folderSaved;
+		return boxSaved;
 
 	}
 
-	public Folder saveNotificationBox(final Folder folder) {
-		Assert.notNull(folder);
+	public Box saveNotificationBox(final Box box) {
+		Assert.notNull(box);
 		// Assert.isTrue(!folder.getSystemFolder());
 		Actor actor;
 		actor = this.actorService.findByPrincipal();
-		folder.setActor(actor);
-		final Folder folderSaved = folderRepository.save(folder);
+		box.setActor(actor);
+		final Box boxSaved = this.boxRepository.save(box);
 		final Collection<Folder> actorFolders = actor.getFolders();
 		actorFolders.add(folderSaved);
 		actor.setFolders(actorFolders);
