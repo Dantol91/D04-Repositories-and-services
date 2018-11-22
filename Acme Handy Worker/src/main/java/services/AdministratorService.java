@@ -131,7 +131,6 @@ public class AdministratorService {
 	}
 
 	public void checkIsSpam(final String nick) {
-		// TODO Auto-generated method stub
 
 	}
 

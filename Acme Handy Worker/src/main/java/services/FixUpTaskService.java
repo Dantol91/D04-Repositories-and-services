@@ -25,32 +25,30 @@ import domain.Sponsorship;
 
 @Service
 @Transactional
-public class TripService {
+public class FixUpTaskService {
 
 	// MANAGED REPOSITORY ---------------
 
 	@Autowired
-	private TripRepository			tripRepository;
+	private FixUpTaskService		fixUpTaskRepository;
 
 	// SUPPORTING SERVICES -------------
+
 	@Autowired
 	private ActorService			actorService;
+
 	@Autowired
-	private ManagerService			managerService;
+	private HandyWorkerService		handyWorkerService;
+
 	@Autowired
 	private ConfigurationService	configurationService;
+
 	@Autowired
 	private CategoryService			categoryService;
-	@Autowired
-	private LegalTextService		legalTextService;
-	@Autowired
-	private ValueService			valueService;
-	@Autowired
-	private StageService			stageService;
-	@Autowired
-	private RangerService			rangerService;
+
 	@Autowired
 	private AdministratorService	administratorService;
+
 	@Autowired
 	private ApplicationService		applicationService;
 
@@ -119,7 +117,6 @@ public class TripService {
 			ltTrips.add(result);
 			trip.getLegalText().setTrips(ltTrips);
 
-			this.legalTextService.save(trip.getLegalText());
 		}
 
 		final Collection<Trip> rangerTrips = trip.getRanger().getTrips();

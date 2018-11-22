@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -20,41 +21,40 @@ import domain.CreditCard;
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
 @Transactional
-public class CreditCardServiceTest extends AbstractTest{
-	
+public class CreditCardServiceTest extends AbstractTest {
+
 	// Service under test ---------------------------------
 	@Autowired
-	private CreditCardService creditCardService;
-	
+	private CreditCardService	creditCardService;
+
+
 	@Test
-	public void createSaveAndDelete(){
+	public void createSaveAndDelete() {
 		CreditCard cc;
 		CreditCard ccSaved;
 		Collection<CreditCard> ccBefore = new ArrayList<>();
 		Collection<CreditCard> ccAfter = new ArrayList<>();
-		
-		cc = creditCardService.create();
+
+		cc = this.creditCardService.create();
 		Assert.notNull(cc);
-		
+
 		cc.setBrandName("brandName");
 		cc.setCVV(123);
-		cc.setExpirationMonth(7);
-		cc.setExpirationYear(2018);
+		cc.setExpirationMonth("7");
+		cc.setExpirationYear("2018");
 		cc.setHolderName("holderName");
 		cc.setNumber("4485545928304054");
-		
-		ccSaved = creditCardService.save(cc);
+
+		ccSaved = this.creditCardService.save(cc);
 		Assert.notNull(ccSaved);
-		
-		ccBefore = creditCardService.findAll();
+
+		ccBefore = this.creditCardService.findAll();
 		Assert.isTrue(ccBefore.contains(ccSaved));
-		
-		creditCardService.delete(ccSaved);
-		
-		ccAfter = creditCardService.findAll();
+
+		this.creditCardService.delete(ccSaved);
+
+		ccAfter = this.creditCardService.findAll();
 		Assert.isTrue(!ccAfter.contains(ccSaved));
 	}
-
-	
 
 }

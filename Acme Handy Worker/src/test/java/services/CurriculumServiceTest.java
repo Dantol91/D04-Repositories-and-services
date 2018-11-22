@@ -27,7 +27,7 @@ public class CurriculumServiceTest extends AbstractTest {
 	@Autowired
 	private CurriculumService		curriculumService;
 	@Autowired
-	private TripService				tripService;
+	private FixUpTaskService		fixUpTaskService;
 
 	@Autowired
 	private PersonalRecordService	personalRecordService;
@@ -54,7 +54,7 @@ public class CurriculumServiceTest extends AbstractTest {
 		this.personalRecordService.save(pR);
 
 		curriculum.setPersonalRecord(pR);
-		curriculum.setTicker(this.tripService.getTicker());
+		curriculum.setTicker(this.fixUpTaskService.getTicker());
 
 		curriculumSaved = this.curriculumService.save(curriculum);
 		Assert.notNull(curriculumSaved);

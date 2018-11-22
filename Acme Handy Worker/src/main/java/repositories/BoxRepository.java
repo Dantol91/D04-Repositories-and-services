@@ -39,7 +39,7 @@ public interface BoxRepository extends JpaRepository<Box, Integer> {
 	@Query("select f from Folder f join f.messages m where m.id=?1")
 	Box getFolderFromMessageId(int messageId);
 
-	@Query("select f from Folder f where f.parentFolder.id=?1")
-	Collection<Box> getChildFolders(int folderId);
+	@Query("select f from Box f where f.parentBox.id=?1")
+	Collection<Box> getChildBoxes(int folderId);
 
 }

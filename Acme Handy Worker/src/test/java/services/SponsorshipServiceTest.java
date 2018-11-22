@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -19,60 +20,61 @@ import domain.Sponsor;
 import domain.Sponsorship;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-		"classpath:spring/config/packages.xml" })
+@ContextConfiguration(locations = {
+	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
+})
 @Transactional
 public class SponsorshipServiceTest extends AbstractTest {
 
 	@Autowired
-	private SponsorService sponsorService;
+	private SponsorService		sponsorService;
 	@Autowired
-	private SponsorshipService sponsorshipService;
+	private SponsorshipService	sponsorshipService;
 	@Autowired
-	private TripService tripService;
+	private FixUpTaskService	fixUpTaskService;
 	@Autowired
-	private CreditCardService creditcardService;
+	private CreditCardService	creditcardService;
+
 
 	@Test
 	public void createAndSaveSponsorship() {
-		authenticate("sponsor1");
-		
-		Sponsorship sp = sponsorshipService.create();
+		this.authenticate("sponsor1");
+
+		final Sponsorship sp = this.sponsorshipService.create();
 		sp.setBannerURL("http://marca.com");
-		sp.setInfoPageLink("pagina 1");
+		//		sp.setLink("pagina 1");
 
-		sp.setTrip(tripService.findOne(2534));
+		//		sp.setFixUpTask(this.fixUpTaskService.findOne(2534));
 
-		Collection<CreditCard> cred = creditcardService.findAll();
-		List<CreditCard> spp = new ArrayList<CreditCard>(cred);
-		CreditCard sps = spp.get(0);
-		sp.setCreditCard(creditcardService.findOne(sps.getId()));
-		List<Sponsor> sponsors = new ArrayList<Sponsor>(
-				sponsorService.findAll());
+		final Collection<CreditCard> cred = this.creditcardService.findAll();
+		final List<CreditCard> spp = new ArrayList<CreditCard>(cred);
+		final CreditCard sps = spp.get(0);
+		sp.setCreditCard(this.creditcardService.findOne(sps.getId()));
+		final List<Sponsor> sponsors = new ArrayList<Sponsor>(this.sponsorService.findAll());
 		sp.setSponsor(sponsors.get(0));
 
-		sponsorshipService.save(sp);
+		this.sponsorshipService.save(sp);
 
 	}
 
 	@Test
 	public void searchSponsorship() {
 
-		Collection<Sponsorship> sp = sponsorshipService.findAll();
-		List<Sponsorship> spp = new ArrayList<Sponsorship>(sp);
-		Sponsorship sps = spp.get(0);
-		sponsorshipService.findOne(sps.getId());
+		final Collection<Sponsorship> sp = this.sponsorshipService.findAll();
+		final List<Sponsorship> spp = new ArrayList<Sponsorship>(sp);
+		final Sponsorship sps = spp.get(0);
+		this.sponsorshipService.findOne(sps.getId());
 
 	}
 
 	@Test
 	public void deleteSponsorship() {
-		Collection<Sponsorship> sp = sponsorshipService.findAll();
-		List<Sponsorship> spp = new ArrayList<Sponsorship>(sp);
-		Sponsorship sps = spp.get(0);
-		sponsorshipService.delete(sps);
+		final Collection<Sponsorship> sp = this.sponsorshipService.findAll();
+		final List<Sponsorship> spp = new ArrayList<Sponsorship>(sp);
+		final Sponsorship sps = spp.get(0);
+		this.sponsorshipService.delete(sps);
 
-		Collection<Sponsorship> collafter = sponsorshipService.findAll();
+		final Collection<Sponsorship> collafter = this.sponsorshipService.findAll();
 		Assert.isTrue(!collafter.contains(sps));
 
 	}
