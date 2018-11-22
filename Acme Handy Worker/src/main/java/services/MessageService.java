@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 
 import repositories.MessageRepository;
 import domain.Actor;
+import domain.Box;
 import domain.Message;
 
 @Service
@@ -55,7 +56,7 @@ public class MessageService {
 		// Inicializo el momento en el que se envía
 		Date moment;
 		// Inicializo el Folder del destinatario
-		Folder recipientFolder;
+		final Box recipientBox;
 		// Inicializo el mensaje guardado
 		Message saved = null;
 		// Si el mensaje que me pasan ya había estado guardado en la base de
@@ -76,24 +77,28 @@ public class MessageService {
 		message.setMoment(moment);
 		final Message copiedAndSavedMessage = this.messageRepository.save(copiedMessage);
 
-		// Comprubeo si el mensaje contiene texto marcado como spam
-		// si contiene spam
-		if (this.administratorService.checkIsSpam(saved.getBody()) || this.administratorService.checkIsSpam(saved.getSubject()))
-			// instancio el Folder del destinatario como el spambox
-			recipientFolder = folderService.getSpamBoxFolderFromActorId(saved.getRecipient().getId());
-		else
-			// instancio el Folder del destinatario como inbox
-			recipientFolder = folderService.getInBoxFolderFromActorId(saved.getRecipient().getId());
+		/*
+		 * // Comprubeo si el mensaje contiene texto marcado como spam
+		 * // si contiene spam
+		 * if (this.administratorService.checkIsSpam(saved.getBody()) || this.administratorService.checkIsSpam(saved.getSubject()))
+		 * // instancio el Folder del destinatario como el spambox
+		 * recipientBox = this.boxService.getSpamBoxFolderFromActorId(saved.getRecipient().getId());
+		 * else
+		 * // instancio el Folder del destinatario como inbox
+		 */
+
+		recipientBox = this.boxService.getInBoxFolderFromActorId(saved.getRecipient().getId());
 		// cojo los mensajes del Folder del destinatario
-		final Collection<Message> recipientFolderMessages = recipientFolder.getMessages();
+
+		final Collection<Message> recipientFolderMessages = recipientBox.getMessages();
 		// Añado el mensaje guardado
 		recipientFolderMessages.add(saved);
 		// Actualizo el conjunto de mensajes
-		recipientFolder.setMessages(recipientFolderMessages);
+		recipientBox.setMessages(recipientFolderMessages);
 		// Cojo el sender
 		final Actor sender = this.actorService.findByPrincipal();
 		// Cojo el outbox del sender
-		final Folder senderOutbox = folderService.getOutBoxFolderFromActorId(sender.getId());
+		final Box senderOutbox = this.boxService.getOutBoxFolderFromActorId(sender.getId());
 		// Cojo los mensajes del outbox del sender
 		final Collection<Message> senderOutboxMessages = senderOutbox.getMessages();
 
@@ -101,31 +106,30 @@ public class MessageService {
 		senderOutboxMessages.add(copiedAndSavedMessage);
 		// Actualizo los mensajes del outbox del sender
 		senderOutbox.setMessages(senderOutboxMessages);
-		folderService.save(senderOutbox);
+		this.boxService.save(senderOutbox);
 
 		return saved;
 	}
-
-	public void saveToMove(final Message message, final Folder folder) {
+	public void saveToMove(final Message message, final Box box) {
 
 		Assert.notNull(message);
-		Assert.notNull(folder);
+		Assert.notNull(box);
 
-		final Folder currentFolder = folderService.getFolderFromMessageId(message.getId());
+		final Box currentFolder = this.boxService.getFolderFromMessageId(message.getId());
 		final Collection<Message> currentFolderMessages = currentFolder.getMessages();
 		currentFolderMessages.remove(message);
 		currentFolder.setMessages(currentFolderMessages);
-		folderService.simpleSave(currentFolder);
+		this.boxService.simpleSave(currentFolder);
 
 		//this.messageRepository.delete(message.getId());
 
 		//Message savedCopy = this.messageRepository.save(copy);
 
 		// Message saved = this.messageRepository.save(message);
-		final Collection<Message> folderMessages = folder.getMessages();
+		final Collection<Message> folderMessages = box.getMessages();
 		folderMessages.add(message);
-		folder.setMessages(folderMessages);
-		folderService.simpleSave(folder);
+		box.setMessages(folderMessages);
+		this.boxService.simpleSave(box);
 
 		//this.messageRepository.save(message);
 
@@ -191,20 +195,20 @@ public class MessageService {
 		// Compruebo que el mensaje que me pasan sea del actor que está logueado
 		final String type = this.actorService.getType(actor.getUserAccount());
 
-		if (type.equals("EXPLORER"))
-			actor = (Explorer) actor;
-		else if (type.equals("AUDITOR"))
-			actor = (Auditor) actor;
-		else if (type.equals("RANGER"))
-			actor = (Ranger) actor;
-		else if (type.equals("MANAGER"))
-			actor = (Manager) actor;
+		if (type.equals("HANDYWORKER"))
+			actor = actor;
+		else if (type.equals("CUSTOMER"))
+			actor = actor;
+		else if (type.equals("REFEREE"))
+			actor = actor;
+		else if (type.equals("ADMIN"))
+			actor = actor;
 		else if (type.equals("SPONSOR"))
 			actor = actor;
 
 		this.checkPrincipal(message, actor);
 		// cojo el trashbox del actor logueado
-		final Folder trashbox = folderService.getTrashBoxFolderFromActorId(actor.getId());
+		final Box trashbox = this.boxService.getTrashBoxFolderFromActorId(actor.getId());
 		// Compruebo que el trashbox del actor logueado no sea nulo
 		Assert.notNull(trashbox);
 		// si el mensaje que me pasan está en el trashbox del actor logueado:
@@ -222,7 +226,7 @@ public class MessageService {
 		} else {// si el mensaje que se quiere borrar no está en el trashbox:
 
 			// Borro el mensaje del folder en el que estaba
-			final Folder messageFolder = folderService.getFolderFromMessageId(message.getId());
+			final Box messageFolder = this.boxService.getFolderFromMessageId(message.getId());
 			Assert.notNull(messageFolder);
 			final Collection<Message> messages = messageFolder.getMessages();
 			messages.remove(message);
@@ -303,46 +307,47 @@ public class MessageService {
 
 	// Other business methods
 
-	public void sendApplicationNotification(final Explorer e, final Manager m) {
-		Message managerMessage;
-		Message explorerMessage;
-
-		managerMessage = new Message();
-		explorerMessage = new Message();
-
-		// Enviamos el mensaje al manager
-
-		managerMessage.setSubject("Status change");
-		managerMessage.setBody("An application to one of your trips  has changed its status");
-		managerMessage.setRecipient(m);
-		managerMessage.setSender((Actor) this.administratorService.findAll().toArray()[0]);
-
-		final Date moment = new Date(System.currentTimeMillis() - 1);
-		managerMessage.setMoment(moment);
-		final Message saved = this.messageRepository.save(managerMessage);
-		// Message result = this.save(managerMessage);
-
-		final Folder f = folderService.getNotificationBoxFolderFromActorId(m.getId());
-		f.getMessages().add(saved);
-		folderService.simpleSave(f);
-
-		// Enviamos el mensaje al explorer
-
-		explorerMessage.setSubject("Status change");
-		explorerMessage.setBody("An application to one of your trips  has changed its status");
-		explorerMessage.setRecipient(e);
-		explorerMessage.setSender((Actor) this.administratorService.findAll().toArray()[0]);
-
-		final Date moment2 = new Date(System.currentTimeMillis() - 1);
-		explorerMessage.setMoment(moment2);
-		final Message saved2 = this.messageRepository.save(explorerMessage);
-		// Message result2 = this.save(explorerMessage);
-
-		final Folder f2 = folderService.getNotificationBoxFolderFromActorId(e.getId());
-		f2.getMessages().add(saved2);
-		folderService.simpleSave(f2);
-	}
-
+	/*
+	 * public void sendApplicationNotification(final HandyWorker e, final Manager m) {
+	 * Message managerMessage;
+	 * Message explorerMessage;
+	 * 
+	 * managerMessage = new Message();
+	 * explorerMessage = new Message();
+	 * 
+	 * // Enviamos el mensaje al manager
+	 * 
+	 * managerMessage.setSubject("Status change");
+	 * managerMessage.setBody("An application to one of your trips  has changed its status");
+	 * managerMessage.setRecipient(m);
+	 * managerMessage.setSender((Actor) this.administratorService.findAll().toArray()[0]);
+	 * 
+	 * final Date moment = new Date(System.currentTimeMillis() - 1);
+	 * managerMessage.setMoment(moment);
+	 * final Message saved = this.messageRepository.save(managerMessage);
+	 * // Message result = this.save(managerMessage);
+	 * 
+	 * final Folder f = folderService.getNotificationBoxFolderFromActorId(m.getId());
+	 * f.getMessages().add(saved);
+	 * folderService.simpleSave(f);
+	 * 
+	 * // Enviamos el mensaje al explorer
+	 * 
+	 * explorerMessage.setSubject("Status change");
+	 * explorerMessage.setBody("An application to one of your trips  has changed its status");
+	 * explorerMessage.setRecipient(e);
+	 * explorerMessage.setSender((Actor) this.administratorService.findAll().toArray()[0]);
+	 * 
+	 * final Date moment2 = new Date(System.currentTimeMillis() - 1);
+	 * explorerMessage.setMoment(moment2);
+	 * final Message saved2 = this.messageRepository.save(explorerMessage);
+	 * // Message result2 = this.save(explorerMessage);
+	 * 
+	 * final Folder f2 = folderService.getNotificationBoxFolderFromActorId(e.getId());
+	 * f2.getMessages().add(saved2);
+	 * folderService.simpleSave(f2);
+	 * }
+	 */
 	// public Message sendMessage() {
 	// Message result;
 	// Actor actor;

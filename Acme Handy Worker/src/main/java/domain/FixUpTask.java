@@ -28,7 +28,7 @@ public class FixUpTask extends DomainEntity {
 
 	// Constructors
 
-	private FixUpTask() {
+	public FixUpTask() {
 		super();
 	}
 
