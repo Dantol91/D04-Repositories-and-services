@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 
 import repositories.HandyWorkerRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
 import domain.Finder;
@@ -127,49 +128,36 @@ public class HandyWorkerService {
 
 	// Other business methods
 
-	/*
-	 * public HandyWorker findByApplicationId(final int applicatioId) {
-	 * 
-	 * return this.handyWorkerRepository.findByApplicationId(applicatioId);
-	 * }
-	 */
-	/*
-	 * public HandyWorker findByPrincipal() {
-	 * 
-	 * final HandyWorker result = null;
-	 * UserAccount userAccount;
-	 * 
-	 * userAccount = LoginService.getPrincipal();
-	 * Assert.notNull(userAccount);
-	 * userAccount = this.findByUserAccount(userAccount);
-	 * Assert.notNull(userAccount);
-	 * 
-	 * return result;
-	 * }
-	 */
+	public HandyWorker findByApplicationId(final int applicationId) {
 
-	/*
-	 * private UserAccount findByUserAccount(final UserAccount userAccount) {
-	 * 
-	 * Assert.notNull(userAccount);
-	 * 
-	 * HandyWorker result;
-	 * 
-	 * result = this.handyWorkerRepository.findByUserAccountId(userAccount.getId());
-	 * 
-	 * return result;
-	 * }
-	 */
+		return this.handyWorkerRepository.findByApplicationId(applicationId);
+	}
+
+	public HandyWorker findByPrincipal() {
+		HandyWorker res;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+		res = this.findByUserAccount(userAccount);
+		Assert.notNull(res);
+		return res;
+	}
+
+	public HandyWorker findByUserAccount(final UserAccount userAccount) {
+		Assert.notNull(userAccount);
+		HandyWorker res;
+		res = this.handyWorkerRepository.findByUserAccountId(userAccount.getId());
+		return res;
+	}
 
 	public HandyWorker findByUserAccountId(final int userAccountId) {
-
 		return this.handyWorkerRepository.findByUserAccountId(userAccountId);
-
 	}
 
-	public HandyWorker getHandyWorkersByCurriculumId(final int curriculumId) {
+	public HandyWorker getHandyWorkerByCurriculumId(final int curriculumId) {
+		Assert.notNull(curriculumId);
 
-		return null;
+		return this.handyWorkerRepository.getHandyWorkerByCurriculumId(curriculumId);
 	}
-
 }

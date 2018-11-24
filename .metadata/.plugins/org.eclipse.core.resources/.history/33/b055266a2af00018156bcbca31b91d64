@@ -1,0 +1,41 @@
+
+package repositories;
+
+import java.util.Collection;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import domain.Application;
+
+@Repository
+public interface ApplicationRepository extends JpaRepository<Application, Integer> {
+
+	@Query("select sum(case when a.status = 'PENDING' " + "then 1.0 else 0.0 end)/count(a) as pendingStatus_ratio from Application a")
+	Double getPendingRatio();
+
+	@Query("select sum(case when a.status = 'REJECTED' " + "then 1.0 else 0.0 end)/count(a) as rejectedStatus_ratio from Application a")
+	Double getRejectedRatio();
+
+	@Query("select sum(case when a.status = 'ACCEPTED' " + "then 1.0 else 0.0 end)/count(a) as acceptedStatus_ratio from Application a")
+	Double getAcceptedRatio();
+
+	@Query("select a from HandyWorker h join h.applications a where h.id = ?1")
+	Collection<Application> getHandyWorkerApplications(int handyWorkerId);
+
+	@Query("select a from HandyWorker h join h.applications a where h.id = ?1 group by a.status")
+	Collection<Application> getHandyWorkerApplicationsByStatus(int handyWorkerId);
+
+	@Query("select a from Customer c join c.fixUpTask f join f.applications a where c.id = ?1")
+	Collection<Application> getCustomerFixUpTasksApplications(int customerId);
+
+	@Query("select distinct a.status from HandyWorker e join e.applications a where e.id = ?1")
+	Collection<String> getSetOfStatus(int handyWorkerId);
+
+	/*
+	 * @Query("select a from Explorer e join e.applications a where e.id = ?1 and a.status= ?2")
+	 * Collection<Application> getApplicationsByStatusAndExplorerId(int explorerId, String status);
+	 */
+
+}

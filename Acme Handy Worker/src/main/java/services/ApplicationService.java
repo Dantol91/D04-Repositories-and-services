@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ApplicationRepository;
+import security.LoginService;
+import security.UserAccount;
 import domain.Application;
 import domain.CreditCard;
 import domain.HandyWorker;
@@ -34,12 +36,12 @@ public class ApplicationService {
 	@Autowired
 	private CreditCardService		creditCardService;
 
-	//@Autowired
-	//private FixUpTaskService		fixUpTaskService;
 
-	@Autowired
-	private MessageService			messageService;
+	//	@Autowired
+	//	private FixUpTaskService		fixUpTaskService;
 
+	//	@Autowired
+	//	private CustomerService			customerService;
 
 	// Constructor
 	public ApplicationService() {
@@ -79,7 +81,7 @@ public class ApplicationService {
 			application.setCreditcard(c);
 			application.setStatus("ACCEPTED");
 
-			//final Manager m = managerService.getManagerFromApplicationId(application.getId());
+			//final Customer c = managerService.getCustomerFromApplicationId(application.getId());
 
 			//messageService.sendApplicationNotification(e,m);
 		}
@@ -124,7 +126,84 @@ public class ApplicationService {
 
 	// Other business methods
 
+	// Admin Dashboard
+
+	//C.12.5
+	public Double getPendingRatio() {
+		return this.applicationRepository.getPendingRatio();
+	}
+
+	//C.12.5
+	public Double getRejectedRatio() {
+		return this.applicationRepository.getRejectedRatio();
+	}
+
+	//C.12.5
+	public Double getAcceptedRatio() {
+		return this.applicationRepository.getAcceptedRatio();
+	}
+
+	public Collection<Application> getHandyWorkerApplications(final int HandyWorkerId) {
+
+		return this.applicationRepository.getHandyWorkerApplications(HandyWorkerId);
+	}
+
+	// C El HandyWorker puede cancelar una Aplication con status ACCEPTED
+	// siempre que la fecha de comienzo no haya pasado
+
+	public void cancelApplicationAccepted(final Application application) {
+		Assert.notNull(application);
+		Assert.isTrue(application.getId() != 0);
+		// La fecha de comienzo no debe haber pasado
+		final Date currentDate = new Date(System.currentTimeMillis());
+		Assert.isTrue(currentDate.before(application.getFixUpTask().getStartDate()));
+		// Solo si tiene status ACCEPTED
+		Assert.isTrue(application.getStatus().equals("ACCEPTED"));
+		application.setStatus("CANCELLED");
+	}
+
+	public Collection<Application> getHandyWorkerApplicationsByStatus() {
+		final UserAccount userAccount = LoginService.getPrincipal();
+		final int id = userAccount.getId();
+		return this.applicationRepository.getHandyWorkerApplicationsByStatus(id);
+	}
+
+	public Collection<Application> getCustomerFixUpTasksApplications(final int customerId) {
+
+		return this.applicationRepository.getCustomerFixUpTasksApplications(customerId);
+	}
+
+	public Collection<String> getSetOfStatus(final int handyWorkerId) {
+		return this.applicationRepository.getSetOfStatus(handyWorkerId);
+	}
+
+	public Collection<Application> getApplicationsByStatusAndHandyWorkerId(final int handyWorkerId, final String status) {
+
+		return this.applicationRepository.getApplicationsByStatusAndHandyWorkerId(handyWorkerId, status);
+	}
+
 	/*
+	 * public void changeStatus(final Application a) {
+	 * Assert.notNull(a);
+	 * Customer c = new Customer();
+	 * 
+	 * c = (Customer) this.actorService.findByPrincipal();
+	 * 
+	 * if (a.getStatus().equals("REJECTED"))
+	 * //Assert.isTrue(!a.getReasonDenied().isEmpty(), "message.error.cancelReason");
+	 * 
+	 * // Assert.isTrue(m.equals(this.customerService.getCustomerFromApplicationId(a.getId())));
+	 * 
+	 * this.applicationRepository.save(a);
+	 * 
+	 * final HandyWorker h = this.handyWorkerService.findByApplicationId(a.getId());
+	 * 
+	 * //messageService.sendApplicationNotification(e,m);
+	 * }
+	 */
+
+	/*------------------------------------------------------------------
+
 	 * public void checkPrincipal(final Application a) {
 	 * Assert.notNull(a);
 	 * 
@@ -146,73 +225,6 @@ public class ApplicationService {
 	 */
 
 	/*
-	 * public Collection<Application> getHandyWorkerApplicationsByStatus() {
-	 * final UserAccount userAccount = LoginService.getPrincipal();
-	 * final int id = userAccount.getId();
-	 * return this.applicationRepository.getHandyWorkerApplicationsByStatus(id);
-	 * }
-	 * 
-	 * public Collection<Application> getManagerTripsApplications(
-	 * final int managerId) {
-	 * return this.applicationRepository
-	 * .getManagerTripsApplications(managerId);
-	 * }
-	 * 
-	 * public Double getPendingRatio() {
-	 * return this.applicationRepository.getPendingRatio();
-	 * }
-	 * 
-	 * public Double getDueRatio() {
-	 * return this.applicationRepository.getDueRatio();
-	 * }
-	 * 
-	 * public Double getAcceptedRatio() {
-	 * return this.applicationRepository.getAcceptedRatio();
-	 * }
-	 * 
-	 * public Double getCancelledRatio() {
-	 * return this.applicationRepository.getCancelledRatio();
-	 * }
-	 * 
-	 * // C.13.4 El HandyWorker puede cancelar una Aplication con status ACCEPTED
-	 * // siempre que la
-	 * // fecha
-	 * // de comienzo no haya pasado
-	 * // public void cancelApplicationAccepted(final Application application) {
-	 * // Assert.notNull(application);
-	 * // Assert.isTrue(application.getId() != 0);
-	 * // // La fecha de comienzo no debe haber pasado
-	 * // final Date currentDate = new Date(System.currentTimeMillis());
-	 * // Assert.isTrue(currentDate.before(application.getTrip().getStartDate()));
-	 * // // Solo si tiene status ACCEPTED
-	 * // Assert.isTrue(application.getStatus().equals("ACCEPTED"));
-	 * // application.setStatus("CANCELLED");
-	 * //
-	 * // }
-	 * 
-	 * public Collection<Application> getHandyWorkerApplications(final int HandyWorkerId) {
-	 * return this.applicationRepository.getHandyWorkerApplications(HandyWorkerId);
-	 * }
-	 * 
-	 * public void changeStatus(final Application a) {
-	 * Assert.notNull(a);
-	 * Manager m = new Manager();
-	 * 
-	 * m = (Manager) this.actorService.findByPrincipal();
-	 * 
-	 * if (a.getStatus().equals("REJECTED"))
-	 * Assert.isTrue(!a.getCancelReason().isEmpty(),"message.error.cancelReason");
-	 * 
-	 * Assert.isTrue(m.equals(this.managerService
-	 * .getManagerFromApplicationId(a.getId())));
-	 * 
-	 * this.applicationRepository.save(a);
-	 * 
-	 * HandyWorker e = HandyWorkerService.findByApplicationId(a.getId());
-	 * 
-	 * //messageService.sendApplicationNotification(e,m);
-	 * }
-	 * 
 	 * public void cancelApplication(final Application a) {
 	 * Assert.notNull(a);
 	 * Assert.isTrue(a.getStatus().equals("ACCEPTED"));
@@ -243,31 +255,10 @@ public class ApplicationService {
 	 * this.applicationRepository.save(a);
 	 * }
 	 * 
-	 * public Collection<String> getSetOfStatus(final int HandyWorkerId) {
-	 * return this.applicationRepository.getSetOfStatus(HandyWorkerId);
-	 * }
 	 * 
 	 * public Double[] getAvgMinMaxStdevPerTrip() {
 	 * return this.applicationRepository.computeAvgMinMaxStdvPerTrip();
 	 * }
-	 * 
-	 * public Collection<Application> getApplicationsByStatusAndHandyWorkerId(
-	 * final int HandyWorkerId, final String status) {
-	 * return this.applicationRepository.getApplicationsByStatusAndHandyWorkerId(
-	 * HandyWorkerId, status);
-	 * }
-	 * 
-	 * // Cuando un trip es cancelado, todas sus aplicattions pasan a ser
-	 * // canceladas
-	 * 
-	 * public void cancelApplications(Trip t) {
-	 * Collection<Application> apps = t.getApplications();
-	 * 
-	 * for (Application a : apps) {
-	 * a.setStatus("CANCELLED");
-	 * a.setCancelReason("Trip has been cancelled");
-	 * applicationRepository.save(a);
-	 * }
-	 * }
 	 */
+
 }

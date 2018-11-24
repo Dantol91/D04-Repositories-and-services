@@ -19,9 +19,6 @@ import org.springframework.util.Assert;
 import domain.Application;
 import domain.Category;
 import domain.FixUpTask;
-import domain.HandyWorker;
-import domain.Note;
-import domain.Sponsorship;
 
 @Service
 @Transactional
@@ -34,11 +31,11 @@ public class FixUpTaskService {
 
 	// SUPPORTING SERVICES -------------
 
-	@Autowired
-	private ActorService			actorService;
+	//	@Autowired
+	//	private ActorService			actorService;
 
-	@Autowired
-	private HandyWorkerService		handyWorkerService;
+	//	@Autowired
+	//	private HandyWorkerService		handyWorkerService;
 
 	@Autowired
 	private ConfigurationService	configurationService;
@@ -46,33 +43,33 @@ public class FixUpTaskService {
 	@Autowired
 	private CategoryService			categoryService;
 
-	@Autowired
-	private AdministratorService	administratorService;
 
-	@Autowired
-	private ApplicationService		applicationService;
+	//	@Autowired
+	//	private AdministratorService	administratorService;
 
+	//	@Autowired
+	//	private ApplicationService		applicationService;
 
-	// CONSTRUCTOR ---------------
+	// Constructor
 
 	public FixUpTaskService() {
 		super();
 	}
 
-	// SIMPLE CRUD METHODS -----------
+	// Simple CRUD Methods
 
 	public FixUpTask create() {
 		final FixUpTask f;
 		Collection<Application> apps;
-		final Collection<HandyWorker> handyWorkers;
-		Collection<Note> notes;
-		Collection<Sponsorship> sponsorships;
+		//		final Collection<HandyWorker> handyWorkers;
+		//		Collection<Note> notes;
+		//		Collection<Sponsorship> sponsorships;
 
 		f = new FixUpTask();
 		apps = new ArrayList<>();
-		handyWorkers = new ArrayList<>();
-		notes = new ArrayList<>();
-		sponsorships = new ArrayList<>();
+		//		handyWorkers = new ArrayList<>();
+		//		notes = new ArrayList<>();
+		//		sponsorships = new ArrayList<>();
 
 		f.setApplications(apps);
 		//		f.setHandyWorkers(handyWorkers);
@@ -83,49 +80,7 @@ public class FixUpTaskService {
 
 		return f;
 	}
-	/*
-	 * public FixUpTask saveFromCreate(final FixUpTask fixUpTask) {
-	 * Assert.notNull(trip);
-	 * Assert.isTrue(trip.getPublicationDate().after(new Date(System.currentTimeMillis() - 24 * 3600 * 1000l)), "message.error.publicationDate");
-	 * Assert.isTrue(trip.getStartDate().after(new Date(System.currentTimeMillis())), "message.error.startDate");
-	 * Assert.isTrue(trip.getEndDate().after(new Date(System.currentTimeMillis())), "message.error.endDate");
-	 * Assert.isTrue(trip.getPublicationDate().before(trip.getStartDate()), "message.error.startDatePubliDate");
-	 * Assert.isTrue(trip.getPublicationDate().before(trip.getEndDate()), "message.error.endDatePubliDate");
-	 * Assert.isTrue(trip.getStartDate().before(trip.getEndDate()), "message.error.startDateEndDate");
-	 * 
-	 * Trip result;
-	 * Manager m;
-	 * Collection<Trip> trips;
-	 * 
-	 * m = (Manager) this.actorService.findByPrincipal();
-	 * trips = m.getTrips();
-	 * 
-	 * result = this.tripRepository.save(trip);
-	 * trips.add(result);
-	 * m.setTrips(trips);
-	 * this.managerService.save(m);
-	 * 
-	 * if (trip.getLegalText() != null) {
-	 * Collection<FixUpTask> ltTrips;
-	 * ltTrips = fixUpTask.getLegalText().getTrips();
-	 * ltTrips.add(result);
-	 * fixUpTask.getLegalText().setTrips(ltTrips);
-	 * 
-	 * }
-	 * 
-	 * // final Collection<FixUpTask> rangerTrips = fixUpTask.getRanger().getTrips();
-	 * // rangerTrips.add(result);
-	 * // fixUpTask.getRanger().setTrips(rangerTrips);
-	 * // this.rangerService.save(trip.getRanger());
-	 * 
-	 * // Comprobamos si es spam
-	 * this.administratorService.checkIsSpam(fixUpTask.getDescription());
-	 * // this.administratorService.checkIsSpam(fixUpTask.getExplorerRequirements());
-	 * // this.administratorService.checkIsSpam(fixUpTask.getCancelReason());
-	 * 
-	 * return result;
-	 * }
-	 */
+
 	public FixUpTask save(final FixUpTask fixUpTask) {
 		Assert.notNull(fixUpTask);
 		Assert.isTrue(fixUpTask.getPublicationDate().after(new Date(System.currentTimeMillis() - 24 * 3600 * 1000l)));
@@ -203,15 +158,16 @@ public class FixUpTaskService {
 	 * }
 	 */
 
-	// OTHER BUSSINES METHODS ----------------------------
+	// Other Business Methods
 
-	// B.16.4 Un Admin puede mostrar en el dashboard el ratio de trips con audit
-	public Double getAuditedTrips() {
-		return this.fixUpTaskRepository.getAuditedTrips();
+	// B.38.5 Un Admin puede mostrar en el dashboard el ratio de fix-up tasks con complaint
+	public Double getComplaintFixUpTasks() {
+		return this.fixUpTaskRepository.getComplaintFixUpTasks();
 	}
 
-	// Tickers se generan automaticamente, con el pattern: YYMMDD-WWWW W es
+	// Tickers se generan automaticamente, con el pattern: YYMMDD-XXXXXX, X es
 	// una letra en mayuscula
+
 	public String getTicker() {
 		String res = "";
 		final Calendar c = Calendar.getInstance();
@@ -219,14 +175,15 @@ public class FixUpTaskService {
 		String day = Integer.toString(c.get(Calendar.DATE));
 		if (day.length() == 1)
 			day = "0" + day;
-		String month = Integer.toString(c.get(Calendar.MONTH) + 1); // +1 ya que
-																	// Enero es
-																	// 0
+		String month = Integer.toString(c.get(Calendar.MONTH) + 1); // +1 ya que Enero corresponde al valor 0
+
 		if (month.length() == 1)
 			month = "0" + month;
 		String year = Integer.toString(c.get(Calendar.YEAR));
+
 		// Por el patron solo necesitamos las ultimas 2 cifras del anho
 		year = year.substring(2, 4);
+
 		// Aqui sacamos las 4 letras mayusculas
 		final Random r = new Random();
 		final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -247,27 +204,37 @@ public class FixUpTaskService {
 		return res;
 	}
 
-	public Integer getAcceptedApplicationsByExplorerId(final int explorerId, final int tripId) {
-		return this.fixUpTaskRepository.getAcceptedApplicationsByExplorerId(explorerId, tripId);
+	public Collection<FixUpTask> getAllFixUpTasks() {
+		return this.fixUpTaskRepository.getAllFixUpTasks();
 	}
 
-	public Collection<FixUpTask> getAllTrips() {
-		return this.fixUpTaskRepository.getAllTrips();
+	public Collection<FixUpTask> getFixUpTasksByCategory(final int categoryId) {
+		return this.fixUpTaskRepository.getFixUpTasksByCategory(categoryId);
 	}
 
-	public Collection<FixUpTask> getTripsByCategory(final int categoryId) {
-		return this.fixUpTaskRepository.getTripsByCategory(categoryId);
+	public Collection<FixUpTask> fixUpTasksByCategory(final Category category) {
+
+		return this.fixUpTaskRepository.getFixUpTasksByCategory(category.getId());
+
 	}
-	/*
-	 * // C.10.3 --> Buscar trips por palabra clave, que debe estar contenida en
-	 * // sus tickers, titles o descriptions. --> No auth
-	 * public Collection<FixUpTask> tripsByKeyWord(final String keyWord) {
-	 * Assert.notNull(keyWord);
-	 * Collection<FixUpTask> res;
-	 * res = this.fixUpTaskRepository.getTripsByKeyWord(keyWord);
-	 * return res;
-	 * }
-	 */
+
+	public Integer getAcceptedApplicationsByHandyWorkerId(final int handyWorkerId, final int fixUpTaskId) {
+		return this.fixUpTaskRepository.getAcceptedApplicationsByHandyWorkerId(handyWorkerId, fixUpTaskId);
+	}
+
+	// C.11.2 Buscar trips por palabra clave, que debe estar contenida en
+	// su ticker, description o address
+
+	public Collection<FixUpTask> getFixUpTasksByKeyWord(final String keyWord) {
+		Assert.notNull(keyWord);
+
+		Collection<FixUpTask> res;
+		res = this.fixUpTaskRepository.getFixUpTasksByKeyWord(keyWord);
+		return res;
+	}
+
+	/*-------------------------------------------------------------------------
+
 	/*
 	 * // C.14.6 --> Un Administrador debe mostrar estas estadisticas por el
 	 * // dashboard
@@ -291,38 +258,14 @@ public class FixUpTaskService {
 	 * }
 	 */
 
-	// The ratio of trips that have been cancelled versus the total number of
-	// trips that have been organised.
-	public Double ratioTripsCancelled() {
-		return this.fixUpTaskRepository.ratioTripsCancelled();
-	}
-
 	// The listing of trips that have got at least 10% more applications than
 	// the average, ordered by number of applications.
+
+	//The listing of customers who have published at least 10% more fix-up tasks 
+	//than the average, ordered by number of applications.
+
 	public Collection<FixUpTask> tripsMoreAplications() {
 		return this.fixUpTaskRepository.tripsMoreAplications();
-	}
-
-	// Aqui terminan los metodos para el dashboard
-
-	// C.10.4 Devolver lista de trips dada una categoría(explorar la lista de
-	// trips navegando por el árbol de categories) --> No auth
-
-	/*
-	 * public Collection<FixUpTask> tripsByCategory(final Category category) {
-	 * // return this.fixUpTaskRepository.getTripsByCategory(category.getId());
-	 * }
-	 */
-
-	// C.12.3 Un Manager puede cancelar un trip que haya sido publicado pero no
-	// haya comenzado
-	public void cancelTripNotStarted(final FixUpTask fixUpTask) {
-		Assert.notNull(fixUpTask);
-		Assert.isTrue(fixUpTask.getId() != 0);
-		Assert.isTrue(fixUpTask.getPublicationDate().before(new Date(System.currentTimeMillis())));
-		Assert.isTrue(fixUpTask.getStartDate().after(new Date(System.currentTimeMillis())));
-
-		//	fixUpTask.setStatus("CANCELLED");
 	}
 
 	// C.3 Algunos trips podrán ser cancelados después de la fecha de
@@ -335,44 +278,6 @@ public class FixUpTaskService {
 		//		trip.setStatus("CANCELLED");
 		//	fixUpTask.setCancelReason(cancelReason);
 	}
-
-	// ENTENDEMOS QUE EL ENUNCIADO ESTA MAL Y SE REFIERE A UNA APPLICATION, ESTA
-	// EN APPLICATIONSERVICE
-	// C.13.4 El Explorer puede cancelar trip con status ACCEPTED siempre que la
-	// fecha
-	// de comienzo no haya pasado
-	// public void cancelTripAccepted(final Trip trip) {
-	// Assert.notNull(trip);
-	// Assert.isTrue(trip.getId() != 0);
-	// // La fecha de comienzo no debe haber pasado
-	// Date currentDate = new Date(System.currentTimeMillis());
-	// Assert.isTrue(currentDate.before(trip.getStartDate()));
-	// // Sacamaos la application que esta relacionada con nustro trip
-	// final Application app = this.applicationService.create(trip);
-	// // Solo si tiene status ACCEPTED
-	// Assert.isTrue(app.getStatus().equals("ACCEPTED"));
-	//
-	//}
-
-	/*
-	 * public double getTripPrice(final Trip t) {
-	 * Assert.notNull(t);
-	 * 
-	 * double stagesPrice;
-	 * double VATTax;
-	 * double result;
-	 * 
-	 * stagesPrice = 0.0;
-	 * 
-	 * for (final Stage s : t.getStages())
-	 * stagesPrice += s.getPrice();
-	 * 
-	 * VATTax = this.configurationService.getTax();
-	 * result = stagesPrice + stagesPrice * (VATTax / 100);
-	 * 
-	 * return result;
-	 * }
-	 */
 
 	public Collection<FixUpTask> findTripsBySearchCriteria(Double minPrice, Double maxPrice, Date startDate, Date endDate, String keyword) {
 
@@ -518,6 +423,50 @@ public class FixUpTaskService {
 	 * m = (Manager) this.actorService.findByPrincipal();
 	 * 
 	 * Assert.isTrue(m.getTrips().contains(t));
+	 * }
+	 */
+
+	/*
+	 * public FixUpTask saveFromCreate(final FixUpTask fixUpTask) {
+	 * Assert.notNull(trip);
+	 * Assert.isTrue(trip.getPublicationDate().after(new Date(System.currentTimeMillis() - 24 * 3600 * 1000l)), "message.error.publicationDate");
+	 * Assert.isTrue(trip.getStartDate().after(new Date(System.currentTimeMillis())), "message.error.startDate");
+	 * Assert.isTrue(trip.getEndDate().after(new Date(System.currentTimeMillis())), "message.error.endDate");
+	 * Assert.isTrue(trip.getPublicationDate().before(trip.getStartDate()), "message.error.startDatePubliDate");
+	 * Assert.isTrue(trip.getPublicationDate().before(trip.getEndDate()), "message.error.endDatePubliDate");
+	 * Assert.isTrue(trip.getStartDate().before(trip.getEndDate()), "message.error.startDateEndDate");
+	 * 
+	 * Trip result;
+	 * Manager m;
+	 * Collection<Trip> trips;
+	 * 
+	 * m = (Manager) this.actorService.findByPrincipal();
+	 * trips = m.getTrips();
+	 * 
+	 * result = this.tripRepository.save(trip);
+	 * trips.add(result);
+	 * m.setTrips(trips);
+	 * this.managerService.save(m);
+	 * 
+	 * if (trip.getLegalText() != null) {
+	 * Collection<FixUpTask> ltTrips;
+	 * ltTrips = fixUpTask.getLegalText().getTrips();
+	 * ltTrips.add(result);
+	 * fixUpTask.getLegalText().setTrips(ltTrips);
+	 * 
+	 * }
+	 * 
+	 * // final Collection<FixUpTask> rangerTrips = fixUpTask.getRanger().getTrips();
+	 * // rangerTrips.add(result);
+	 * // fixUpTask.getRanger().setTrips(rangerTrips);
+	 * // this.rangerService.save(trip.getRanger());
+	 * 
+	 * // Comprobamos si es spam
+	 * this.administratorService.checkIsSpam(fixUpTask.getDescription());
+	 * // this.administratorService.checkIsSpam(fixUpTask.getExplorerRequirements());
+	 * // this.administratorService.checkIsSpam(fixUpTask.getCancelReason());
+	 * 
+	 * return result;
 	 * }
 	 */
 

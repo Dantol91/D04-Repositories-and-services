@@ -1,0 +1,21 @@
+
+package repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import domain.Customer;
+
+@Repository
+public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+
+	@Query("select c from Customer c where c.userAccount.id = ?1")
+	Customer findByUserAccountId(int userAccountId);
+	
+	// The listing of trips that have got at least 10% more applications than the average, ordered by number of applications.
+	The listing of customers who have published at least 10% more fix-up tasks than the average, ordered by number of applications.
+	@Query("select t from Trip t where t.applications.size >= 1.1*(select avg(f.applications.size) from FixUpTask f) order by f.applications.size")
+	Collection<FixUpTask> tripsMoreAplications();
+
+}

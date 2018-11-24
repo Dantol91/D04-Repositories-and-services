@@ -22,11 +22,11 @@ public class CategoryService {
 	@Autowired
 	private CategoryRepository	categoryRepository;
 
-
 	// Supporting services
 
-	//	@Autowired
-	//	private FixUpTaskService	fixUpTaskService;
+	@Autowired
+	private FixUpTaskService	fixUpTaskService;
+
 
 	// Constructor
 	public CategoryService() {
@@ -63,50 +63,53 @@ public class CategoryService {
 
 		// Comprobamos que no hay dos categorías con misma parentCategory y
 		// mismo nombre
-		//		if (category.getId() != 0) {
+		if (category.getId() != 0) {
 
-		Collection<Category> categories;
+			Collection<Category> categories;
 
-		if (category.getParentCategory() != null) {
+			if (category.getParentCategory() != null) {
 
-			//Comprobamos que una categoría no es padre/hija de sí misma
-			Assert.isTrue(!category.getParentCategory().equals(category), "message.error.parentCategory");
+				//Comprobamos que una categoría no es padre/hija de sí misma
+				Assert.isTrue(!category.getParentCategory().equals(category), "message.error.parentCategory");
 
-			categories = this.categoryRepository.getCategoriesbByParentCategory(category.getParentCategory().getId());
-		} else
-			categories = this.categoryRepository.getParentCategories();
-		for (final Category c : categories)
-			if (c.getId() != category.getId())
-				Assert.isTrue(!c.getName().equals(category.getName()), "message.error.childCategories");
+				categories = this.categoryRepository.getCategoriesbByParentCategory(category.getParentCategory().getId());
+			} else
+				categories = this.categoryRepository.getParentCategories();
+			for (final Category c : categories)
+				if (c.getId() != category.getId())
+					Assert.isTrue(!c.getName().equals(category.getName()), "message.error.childCategories");
 
-		//		}
+		}
 
-		// Actualizamos el padre-----------------------------------
-		//		Collection<Category> aux = category.getParentCategory().getChildCategories();
-		//		aux.add(category);
-		//		category.getParentCategory().setChildCategories(aux);
+		//Actualizamos el padre
+		final Collection<Category> aux = category.getParentCategory().getChildCategories();
+		aux.add(category);
+		category.getParentCategory().setChildCategories(aux);
 
 		//Si estamos poniendo al padre como hijo de uno de sus hijos,
 		// lo ponemos en el nivel en el que estaba el padre
 
-		//		Category parentAux = this.getParent(category.getId());
-		//		category.getParentCategory().setParentCategory(parentAux);
-		//		
-		//		Category parentAuxsaved = categoryRepository.save(category.getParentCategory());
-		//		category.setParentCategory(parentAuxsaved);
+		final Category parentAux = this.getParent(category.getId());
+		category.getParentCategory().setParentCategory(parentAux);
 
-		//Actualizamos las hijas---------------------------------------
+		final Category parentAuxsaved = this.categoryRepository.save(category.getParentCategory());
+		category.setParentCategory(parentAuxsaved);
 
-		//		Collection<Category> childAux = new ArrayList<>();
-		//		Category childSaved;
-		//		
-		//		for(Category c : category.getChildCategories()){
-		//			c.setParentCategory(category);
-		//			childSaved = categoryRepository.save(c);
-		//			childAux.add(childSaved);
-		//		}
-		//		
-		//		category.setChildCategories(childAux);
+		//Actualizamos las hijas
+
+		final Collection<Category> childAux = new ArrayList<>();
+		final Category childSaved;
+
+		for (final Category c : category.getChildCategories()) {
+
+			//this.c.setParentCategory(category);
+
+			//this.childSaved = this.categoryRepository.save(this.c);
+
+			//this.childAux.add(this.childSaved);
+		}
+
+		category.setChildCategories(childAux);
 
 		final Category result = this.categoryRepository.save(category);
 		return result;
@@ -131,21 +134,20 @@ public class CategoryService {
 
 		}
 
-		//	fixUpTasks = this.fixUpTaskService.getTripsByCategory(category.getId());
+		fixUpTasks = this.fixUpTaskService.getFixUpTasksByCategory(category.getId());
 
 		// Al borrar una categoría asignamos a los viajes que tenían la categoría padre
 		// que en el peor de los casos será CATEGORY (equivalente a que el Trip no tiene categoría)
 
-		/*
-		 * if (!fixUpTasks.isEmpty())
-		 * for (final FixUpTask f : fixUpTasks) {
-		 * Category parent;
-		 * 
-		 * parent = this.getParent(f.getCategory().getId());
-		 * f.setCategory(parent);
-		 * this.fixUpTaskService.save(f);
-		 * }
-		 */
+		if (!fixUpTasks.isEmpty())
+			for (final FixUpTask f : fixUpTasks) {
+				final Category parent;
+
+				//			parent = this.getParent(f.getCategories().getId());
+				//			f.setCategories(parent);
+				this.fixUpTaskService.save(f);
+			}
+
 		this.categoryRepository.delete(category);
 
 	}

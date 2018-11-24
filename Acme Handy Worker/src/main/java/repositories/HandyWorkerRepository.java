@@ -16,4 +16,6 @@ public interface HandyWorkerRepository extends JpaRepository<HandyWorker, Intege
 	@Query("select h from HandyWorker h join h.applications a where a.id = ?1")
 	HandyWorker findByApplicationId(int applicatioId);
 
+	@Query("select h from HandyWorker h join h.curriculum c where c.id = ?1")
+	HandyWorker getHandyWorkerByCurriculumId(int curriculumId);
 }

@@ -1,0 +1,29 @@
+
+package repositories;
+
+import java.util.Collection;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import domain.FixUpTask;
+
+@Repository
+public interface FixUpTaskRepository extends JpaRepository<FixUpTask, Integer> {
+
+	@Query("select sum(case when f.complaints.size > 0 then 1.0 else 0.0 end)/count(DISTINCT f) as " + "Complaints_ratio from FixUpTask f")
+	Double getComplaintFixUpTasks();
+
+	@Query("select t from FixUpTask f")
+	Collection<FixUpTask> getAllTrips();
+
+	@Query("select f from FixUpTask f join f.category c where c.id = ?1")
+	Collection<FixUpTask> getFixUpTasksByCategory(int categoryId);
+
+	@Query("select count(a) from HandyWorker h join h.applications a where a.fixUpTask.id = ?1 and h.id = ?2 and a.status = 'ACCEPTED'")
+	Integer getAcceptedApplicationsByHandyWorkerId(int handyWorkerId, int fixUpTaskId);
+
+	@Query("select f from FixUpTask f where t.ticker like CONCAT('%',?1,'%') or t.description like CONCAT('%',?1,'%') or f.address like CONCAT('%',?1,'%') and f.publicationDate >= CURRENT_DATE")
+	Collection<FixUpTask> getFixUpTasksByKeyWord(String keyWord);
+}

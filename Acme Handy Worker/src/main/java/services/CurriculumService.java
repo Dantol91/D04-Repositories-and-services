@@ -28,17 +28,17 @@ public class CurriculumService {
 
 	// Supporting Services 
 
-	//	@Autowired
-	//	private FixUpTaskService fixUpTaskService;
-
 	@Autowired
-	private CurriculumService		curriculmService;
+	private FixUpTaskService		fixUpTaskService;
 
 	@Autowired
 	private ActorService			actorService;
 
 	@Autowired
 	private HandyWorkerService		handyWorkerService;
+
+	@Autowired
+	private PersonalRecordService	personalRecordService;
 
 
 	// Constructor 
@@ -57,14 +57,14 @@ public class CurriculumService {
 		Collection<MiscellaneousRecord> miscellaneousRecords;
 		Collection<EducationRecord> educationRecords;
 
-		//		ticker = fixUpTaskService.getTicker();
+		ticker = this.fixUpTaskService.getTicker();
 		endorserRecords = new ArrayList<>();
 		professionalRecords = new ArrayList<>();
 		miscellaneousRecords = new ArrayList<>();
 		educationRecords = new ArrayList<>();
 
 		c = new Curriculum();
-		//		c.setTicker(ticker);
+		c.setTicker(ticker);
 		c.setEndorserRecords(endorserRecords);
 		c.setProfessionalRecords(professionalRecords);
 		c.setMiscellaneousRecords(miscellaneousRecords);
@@ -93,8 +93,8 @@ public class CurriculumService {
 
 	public void delete(final Curriculum curriculum) {
 		Assert.notNull(curriculum);
-		this.checkPrincipal(curriculum.getId());
-		//prService.delete(curriculum.getPersonalRecord());
+		//this.checkPrincipal(curriculum.getId());
+		this.personalRecordService.delete(curriculum.getPersonalRecord());
 
 		final HandyWorker h;
 		h = (HandyWorker) this.actorService.findByPrincipal();
@@ -142,7 +142,7 @@ public class CurriculumService {
 		HandyWorker h;
 
 		a = (HandyWorker) this.actorService.findByPrincipal();
-		h = this.handyWorkerService.getHandyWorkersByCurriculumId(curriculumId);
+		h = this.handyWorkerService.getHandyWorkerByCurriculumId(curriculumId);
 		Assert.isTrue(a.equals(h));
 	}
 

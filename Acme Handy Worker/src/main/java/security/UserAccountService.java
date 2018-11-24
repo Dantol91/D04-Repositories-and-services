@@ -65,6 +65,7 @@ public class UserAccountService {
 	}
 
 	// Other business methods 
+
 	public UserAccount findByActor(final Actor actor) {
 		Assert.notNull(actor);
 
