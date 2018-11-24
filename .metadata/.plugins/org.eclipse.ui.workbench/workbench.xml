@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="61" version="2.0">
+<workbench progressCount="66" version="2.0">
 <workbenchAdvisor/>
 <window height="768" maximized="true" width="951" x="320" y="75">
 <fastViewData fastViewLocation="1024"/>
@@ -30,7 +30,7 @@
 <coolItem id="org.eclipse.datatools.sqltools.data.internal.ui.editor.tableDataEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.jpt.jpa.ui.internal.editors.PersistenceEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.ui.DefaultTextEditor" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.m2e.editor.MavenPomEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
@@ -41,36 +41,10 @@
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-<part id="1"/>
-<part id="2"/>
-<part id="3"/>
-<part id="4"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ProfessionalRecordService.java" partName="ProfessionalRecordService.java" path="E:/D04-Repositories-and-services/Acme Handy Worker/src/main/java/services/ProfessionalRecordService.java" title="ProfessionalRecordService.java" tooltip="Acme Handy Worker/src/main/java/services/ProfessionalRecordService.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Acme Handy Worker/src/main/java/services/ProfessionalRecordService.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3119" selectionTopPixel="1740"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="PersonalRecordService.java" partName="PersonalRecordService.java" path="E:/D04-Repositories-and-services/Acme Handy Worker/src/main/java/services/PersonalRecordService.java" title="PersonalRecordService.java" tooltip="Acme Handy Worker/src/main/java/services/PersonalRecordService.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Acme Handy Worker/src/main/java/services/PersonalRecordService.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2339" selectionTopPixel="1289"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MiscellaneousRecordService.java" partName="MiscellaneousRecordService.java" path="E:/D04-Repositories-and-services/Acme Handy Worker/src/main/java/services/MiscellaneousRecordService.java" title="MiscellaneousRecordService.java" tooltip="Acme Handy Worker/src/main/java/services/MiscellaneousRecordService.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Acme Handy Worker/src/main/java/services/MiscellaneousRecordService.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3102" selectionTopPixel="1561"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="EndorserRecordService.java" partName="EndorserRecordService.java" path="E:/D04-Repositories-and-services/Acme Handy Worker/src/main/java/services/EndorserRecordService.java" title="EndorserRecordService.java" tooltip="Acme Handy Worker/src/main/java/services/EndorserRecordService.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Acme Handy Worker/src/main/java/services/EndorserRecordService.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3129" selectionTopPixel="1833"/>
-</editor>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="EducationRecordService.java" partName="EducationRecordService.java" path="E:/D04-Repositories-and-services/Acme Handy Worker/src/main/java/services/EducationRecordService.java" title="EducationRecordService.java" tooltip="Acme Handy Worker/src/main/java/services/EducationRecordService.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Acme Handy Worker/src/main/java/services/EducationRecordService.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3077" selectionTopPixel="1483"/>
-</editor>
 </editors>
 <views>
 <view id="org.eclipse.jdt.junit.ResultView" partName="JUnit">
@@ -120,7 +94,6 @@
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
-<category IMemento.internal.id="Warnings"/>
 <category IMemento.internal.id="Errors"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="219" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
@@ -138,7 +111,7 @@
 <viewState CommonNavigator.LINKING_ENABLED="0"/>
 </view>
 </views>
-<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.jst.j2ee.J2EEPerspective">
+<perspectives activePart="org.eclipse.ui.navigator.ProjectExplorer" activePerspective="org.eclipse.jst.j2ee.J2EEPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.jst.j2ee.internal.perspective.J2EEPerspective" id="org.eclipse.jst.j2ee.J2EEPerspective" label="Java EE"/>
 <alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
@@ -197,9 +170,9 @@
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
 <view id="org.eclipse.ui.console.ConsoleView"/>
+<view id="org.eclipse.ui.views.ProgressView"/>
 <view id="org.eclipse.search.ui.views.SearchView"/>
 <view id="org.eclipse.jdt.junit.ResultView"/>
-<view id="org.eclipse.ui.views.ProgressView"/>
 <view id="org.eclipse.ui.navigator.ProjectExplorer"/>
 <view id="org.eclipse.jdt.ui.TypeHierarchy"/>
 <view id="org.eclipse.ui.views.ProblemView"/>
@@ -315,191 +288,12 @@
 </perspective>
 </perspectives>
 <workingSets/>
-<navigationHistory>
-<editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/services/ApplicationService.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/services/HandyWorkerService.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/domain/HandyWorker.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/domain/Sponsor.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/repositories/HandyWorkerRepository.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/services/BoxService.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/services/CategoryService.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/services/CreditCardService.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/services/CurriculumService.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/services/SponsorService.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/services/SocialIdentityService.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/services/SocialProfileService.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/domain/SocialProfile.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/services/AdministratorService.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/services/ProfessionalRecordService.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/services/PersonalRecordService.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/services/MiscellaneousRecordService.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/services/EndorserRecordService.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/services/EducationRecordService.java"/>
-</editors>
-<item historyLabel="ApplicationService.java" index="0">
-<position info="not_deleted" x="2095" y="0"/>
-</item>
-<item historyLabel="HandyWorkerService.java" index="1">
-<position/>
-</item>
-<item historyLabel="ApplicationService.java" index="0">
-<position info="not_deleted" x="3337" y="0"/>
-</item>
-<item historyLabel="HandyWorkerService.java" index="1">
-<position/>
-</item>
-<item historyLabel="HandyWorkerService.java" index="1">
-<position/>
-</item>
-<item historyLabel="HandyWorker.java" index="2">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Sponsor.java" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="HandyWorker.java" index="2">
-<position info="not_deleted" x="527" y="0"/>
-</item>
-<item historyLabel="HandyWorkerService.java" index="1">
-<position/>
-</item>
-<item historyLabel="Sponsor.java" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="HandyWorkerService.java" index="1">
-<position/>
-</item>
-<item historyLabel="ApplicationService.java" index="0">
-<position info="not_deleted" x="3337" y="0"/>
-</item>
-<item historyLabel="HandyWorkerService.java" index="1">
-<position/>
-</item>
-<item historyLabel="HandyWorkerRepository.java" index="4">
-<position info="not_deleted" x="511" y="0"/>
-</item>
-<item historyLabel="HandyWorkerService.java" index="1">
-<position/>
-</item>
-<item historyLabel="ApplicationService.java" index="0">
-<position info="not_deleted" x="3337" y="0"/>
-</item>
-<item historyLabel="BoxService.java" index="5">
-<position info="not_deleted" x="1" y="0"/>
-</item>
-<item historyLabel="CategoryService.java" index="6">
-<position/>
-</item>
-<item historyLabel="CategoryService.java" index="6">
-<position/>
-</item>
-<item historyLabel="BoxService.java" index="5">
-<position info="not_deleted" x="0" y="1"/>
-</item>
-<item historyLabel="CategoryService.java" index="6">
-<position/>
-</item>
-<item historyLabel="CreditCardService.java" index="7">
-<position/>
-</item>
-<item historyLabel="CategoryService.java" index="6">
-<position/>
-</item>
-<item historyLabel="CategoryService.java" index="6">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="CreditCardService.java" index="7">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="CurriculumService.java" index="8">
-<position info="not_deleted" x="3456" y="0"/>
-</item>
-<item historyLabel="HandyWorkerService.java" index="1">
-<position info="not_deleted" x="4094" y="6"/>
-</item>
-<item historyLabel="CurriculumService.java" index="8">
-<position info="not_deleted" x="3456" y="0"/>
-</item>
-<item historyLabel="HandyWorkerService.java" index="1">
-<position info="not_deleted" x="4226" y="0"/>
-</item>
-<item historyLabel="CurriculumService.java" index="8">
-<position info="not_deleted" x="3456" y="0"/>
-</item>
-<item historyLabel="CreditCardService.java" index="7">
-<position info="not_deleted" x="539" y="0"/>
-</item>
-<item historyLabel="CurriculumService.java" index="8">
-<position info="not_deleted" x="3456" y="0"/>
-</item>
-<item historyLabel="SponsorService.java" index="9">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="SocialIdentityService.java" index="10">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="SocialProfileService.java" index="11">
-<position info="not_deleted" x="812" y="0"/>
-</item>
-<item historyLabel="SocialProfile.java" index="12">
-<position/>
-</item>
-<item historyLabel="SocialProfileService.java" index="11">
-<position info="not_deleted" x="873" y="0"/>
-</item>
-<item historyLabel="SocialProfile.java" index="12">
-<position info="not_deleted" x="1173" y="0"/>
-</item>
-<item historyLabel="SocialProfileService.java" index="11">
-<position info="not_deleted" x="1356" y="0"/>
-</item>
-<item historyLabel="AdministratorService.java" index="13">
-<position info="not_deleted" x="3290" y="6"/>
-</item>
-<item historyLabel="SocialProfileService.java" index="11">
-<position info="not_deleted" x="3784" y="0"/>
-</item>
-<item historyLabel="AdministratorService.java" index="13">
-<position info="not_deleted" x="3290" y="6"/>
-</item>
-<item historyLabel="SocialProfileService.java" index="11">
-<position info="not_deleted" x="3784" y="0"/>
-</item>
-<item historyLabel="SponsorService.java" index="9">
-<position info="not_deleted" x="3198" y="0"/>
-</item>
-<item historyLabel="SocialProfileService.java" index="11">
-<position info="not_deleted" x="3784" y="0"/>
-</item>
-<item historyLabel="ProfessionalRecordService.java" index="14">
-<position info="not_deleted" x="3119" y="0"/>
-</item>
-<item historyLabel="PersonalRecordService.java" index="15">
-<position info="not_deleted" x="2339" y="0"/>
-</item>
-<item historyLabel="MiscellaneousRecordService.java" index="16">
-<position info="not_deleted" x="3102" y="0"/>
-</item>
-<item historyLabel="EndorserRecordService.java" index="17">
-<position info="not_deleted" x="3129" y="0"/>
-</item>
-<item active="true" historyLabel="EducationRecordService.java" index="18">
-<position info="not_deleted" x="1" y="0"/>
-</item>
-</navigationHistory>
+<navigationHistory/>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>
 <actionBarAdvisor/>
 <trimLayout>
-<trimArea IMemento.internal.id="16384">
-<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@5c6ae889"/>
-</trimArea>
-<trimArea IMemento.internal.id="131072">
-<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@3edd044d"/>
-<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@42137ac0"/>
-</trimArea>
 <trimArea IMemento.internal.id="128">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
 <trimItem IMemento.internal.id="org.eclipse.mylyn.tasks.ui.trim.container"/>
@@ -508,12 +302,22 @@
 <trimItem IMemento.internal.id="org.eclise.ui.internal.FastViewBar"/>
 <trimItem IMemento.internal.id="org.eclipse.jface.action.StatusLineManager"/>
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.progress.ProgressRegion"/>
-<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@631ebf05"/>
-<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@4c02bc48"/>
 </trimArea>
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="FixUpTask.java" tooltip="Acme Handy Worker/src/main/java/domain/FixUpTask.java">
+<persistable path="/Acme Handy Worker/src/main/java/domain/FixUpTask.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="FixUpTaskService.java" tooltip="Acme Handy Worker/src/main/java/services/FixUpTaskService.java">
+<persistable path="/Acme Handy Worker/src/main/java/services/FixUpTaskService.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MessageService.java" tooltip="Acme Handy Worker/src/main/java/services/MessageService.java">
+<persistable path="/Acme Handy Worker/src/main/java/services/MessageService.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MessageServiceTest.java" tooltip="Acme Handy Worker/src/test/java/services/MessageServiceTest.java">
+<persistable path="/Acme Handy Worker/src/test/java/services/MessageServiceTest.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="EducationRecordService.java" tooltip="Acme Handy Worker/src/main/java/services/EducationRecordService.java">
 <persistable path="/Acme Handy Worker/src/main/java/services/EducationRecordService.java"/>
 </file>
@@ -546,18 +350,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CurriculumService.java" tooltip="Acme Handy Worker/src/main/java/services/CurriculumService.java">
 <persistable path="/Acme Handy Worker/src/main/java/services/CurriculumService.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CreditCardService.java" tooltip="Acme Handy Worker/src/main/java/services/CreditCardService.java">
-<persistable path="/Acme Handy Worker/src/main/java/services/CreditCardService.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CategoryService.java" tooltip="Acme Handy Worker/src/main/java/services/CategoryService.java">
-<persistable path="/Acme Handy Worker/src/main/java/services/CategoryService.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BoxService.java" tooltip="Acme Handy Worker/src/main/java/services/BoxService.java">
-<persistable path="/Acme Handy Worker/src/main/java/services/BoxService.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HandyWorkerRepository.java" tooltip="Acme Handy Worker/src/main/java/repositories/HandyWorkerRepository.java">
-<persistable path="/Acme Handy Worker/src/main/java/repositories/HandyWorkerRepository.java"/>
 </file>
 </mruList>
 </workbench>

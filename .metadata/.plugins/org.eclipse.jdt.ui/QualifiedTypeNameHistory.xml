@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.springframework.beans.BeanUtils"/>
-<fullyQualifiedTypeName name="org.apache.commons.beanutils.BeanUtils"/>
-<fullyQualifiedTypeName name="org.hibernate.annotations.common.AssertionFailure"/>
 <fullyQualifiedTypeName name="repositories.ExamRepository"/>
 <fullyQualifiedTypeName name="java.lang.Thread"/>
 <fullyQualifiedTypeName name="org.junit.After"/>
@@ -60,4 +57,7 @@
 <fullyQualifiedTypeName name="repositories.BoxRepository"/>
 <fullyQualifiedTypeName name="domain.FixUpTask"/>
 <fullyQualifiedTypeName name="security.UserAccountService"/>
+<fullyQualifiedTypeName name="domain.Referee"/>
+<fullyQualifiedTypeName name="domain.Customer"/>
+<fullyQualifiedTypeName name="domain.Administrator"/>
 </qualifiedTypeNameHistroy>
