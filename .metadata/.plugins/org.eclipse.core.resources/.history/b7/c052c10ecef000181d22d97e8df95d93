@@ -95,7 +95,7 @@ public class HandyWorkerService {
 			//		handyWorker.getUserAccount().setEnabled(true);
 			handyWorker = this.handyWorkerRepository.save(handyWorker);
 		if (create) {
-			this.boxService.createSystemBoxes(handyWorker);
+			this.boxService.createSystemFolders(handyWorker);
 			f = this.finderService.create();
 			//	f.setHandyWorker(handyWorker);
 			this.finderService.save(f);

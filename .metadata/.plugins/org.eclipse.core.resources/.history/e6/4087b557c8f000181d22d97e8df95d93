@@ -66,11 +66,4 @@ public class CustomerService {
 		return result;
 	}
 
-	// Other Business Methods
-
-	public Customer getCustomerFromApplicationId(final int applicationId) {
-
-		return this.customerRepository.getCustomerFromApplicationId(applicationId);
-	}
-
 }

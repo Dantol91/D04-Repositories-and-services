@@ -186,9 +186,9 @@ public class ApplicationService {
 		c = (Customer) this.actorService.findByPrincipal();
 
 		if (a.getStatus().equals("REJECTED"))
-			Assert.isTrue(!a.getReasonDenied().isEmpty(), "message.error.cancelReason");
+			//Assert.isTrue(!a.getReasonDenied().isEmpty(), "message.error.cancelReason");
 
-		Assert.isTrue(c.equals(this.customerService.getCustomerFromApplicationId(a.getId())));
+			Assert.isTrue(c.equals(this.customerService.getCustomerFromApplicationId(a.getId())));
 
 		this.applicationRepository.save(a);
 

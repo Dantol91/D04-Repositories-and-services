@@ -11,8 +11,13 @@ import org.springframework.util.Assert;
 
 import repositories.MessageRepository;
 import domain.Actor;
+import domain.Administrator;
 import domain.Box;
+import domain.Customer;
+import domain.HandyWorker;
 import domain.Message;
+import domain.Referee;
+import domain.Sponsor;
 
 @Service
 @Transactional
@@ -80,13 +85,13 @@ public class MessageService {
 		// Comprubeo si el mensaje contiene texto marcado como spam
 		// si contiene spam
 		if (this.administratorService.checkIsSpam(saved.getBody()) || this.administratorService.checkIsSpam(saved.getSubject()))
-
+			
 			// instancio el Folder del destinatario como el spambox
-			recipientBox = this.boxService.getSpamBoxFromActorId(saved.getRecipient().getId());
+			recipientBox = this.boxService.getSpamBoxFolderFromActorId(saved.getRecipient().getId());
 		else
 			// instancio el Folder del destinatario como inbox
 
-			recipientBox = this.boxService.getInBoxFromActorId(saved.getRecipient().getId());
+			recipientBox = this.boxService.getInBoxFolderFromActorId(saved.getRecipient().getId());
 		// cojo los mensajes del Folder del destinatario
 
 		final Collection<Message> recipientFolderMessages = recipientBox.getMessages();
@@ -114,7 +119,7 @@ public class MessageService {
 		Assert.notNull(message);
 		Assert.notNull(box);
 
-		final Box currentFolder = this.boxService.getBoxFromMessageId(message.getId());
+		final Box currentFolder = this.boxService.getFolderFromMessageId(message.getId());
 		final Collection<Message> currentFolderMessages = currentFolder.getMessages();
 		currentFolderMessages.remove(message);
 		currentFolder.setMessages(currentFolderMessages);
@@ -195,15 +200,15 @@ public class MessageService {
 		final String type = this.actorService.getType(actor.getUserAccount());
 
 		if (type.equals("HANDYWORKER"))
-			actor = actor;
+			actor = (HandyWorker) actor;
 		else if (type.equals("CUSTOMER"))
-			actor = actor;
+			actor = (Customer) actor;
 		else if (type.equals("REFEREE"))
-			actor = actor;
+			actor = (Referee) actor;
 		else if (type.equals("ADMIN"))
-			actor = actor;
+			actor = (Administrator) actor;
 		else if (type.equals("SPONSOR"))
-			actor = actor;
+			actor = (Sponsor) actor;
 
 		this.checkPrincipal(message, actor);
 		// cojo el trashbox del actor logueado
@@ -225,7 +230,7 @@ public class MessageService {
 		} else {// si el mensaje que se quiere borrar no está en el trashbox:
 
 			// Borro el mensaje del folder en el que estaba
-			final Box messageFolder = this.boxService.getBoxFromMessageId(message.getId());
+			final Box messageFolder = this.boxService.getFolderFromMessageId(message.getId());
 			Assert.notNull(messageFolder);
 			final Collection<Message> messages = messageFolder.getMessages();
 			messages.remove(message);

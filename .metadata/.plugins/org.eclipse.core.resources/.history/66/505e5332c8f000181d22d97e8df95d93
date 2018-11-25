@@ -37,12 +37,12 @@ public class ApplicationService {
 	@Autowired
 	private CreditCardService		creditCardService;
 
+
 	//	@Autowired
 	//	private FixUpTaskService		fixUpTaskService;
 
-	@Autowired
-	private CustomerService			customerService;
-
+	//	@Autowired
+	//	private CustomerService			customerService;
 
 	// Constructor
 	public ApplicationService() {
@@ -186,11 +186,11 @@ public class ApplicationService {
 		c = (Customer) this.actorService.findByPrincipal();
 
 		if (a.getStatus().equals("REJECTED"))
-			Assert.isTrue(!a.getReasonDenied().isEmpty(), "message.error.cancelReason");
+			//Assert.isTrue(!a.getReasonDenied().isEmpty(), "message.error.cancelReason");
 
-		Assert.isTrue(c.equals(this.customerService.getCustomerFromApplicationId(a.getId())));
+			// Assert.isTrue(m.equals(this.customerService.getCustomerFromApplicationId(a.getId())));
 
-		this.applicationRepository.save(a);
+			this.applicationRepository.save(a);
 
 		final HandyWorker h = this.handyWorkerService.findByApplicationId(a.getId());
 

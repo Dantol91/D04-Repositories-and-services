@@ -17,11 +17,7 @@ import security.UserAccountService;
 import domain.Actor;
 import domain.Administrator;
 import domain.Box;
-import domain.Customer;
-import domain.HandyWorker;
-import domain.Referee;
 import domain.SocialProfile;
-import domain.Sponsor;
 
 @Service
 @Transactional
@@ -153,13 +149,13 @@ public class AdministratorService {
 		final String type = this.actorService.getType(a.getUserAccount());
 
 		if (type.equals("HANDYWORKER"))
-			a = (HandyWorker)a;
+			a = a;
 		else if (type.equals("REFEREE"))
-			a = (Referee) a;
+			a = a;
 		else if (type.equals("CUSTOMER"))
-			a = (Customer) a;
+			a = a;
 		else if (type.equals("SPONSOR"))
-			a = (Sponsor) a;
+			a = a;
 
 		if (text == null)
 			return isSpam;

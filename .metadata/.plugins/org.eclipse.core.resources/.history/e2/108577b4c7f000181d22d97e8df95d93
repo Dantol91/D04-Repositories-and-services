@@ -15,7 +15,6 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Application;
 import domain.CreditCard;
-import domain.Customer;
 import domain.HandyWorker;
 
 @Service
@@ -37,12 +36,12 @@ public class ApplicationService {
 	@Autowired
 	private CreditCardService		creditCardService;
 
+
 	//	@Autowired
 	//	private FixUpTaskService		fixUpTaskService;
 
-	@Autowired
-	private CustomerService			customerService;
-
+	//	@Autowired
+	//	private CustomerService			customerService;
 
 	// Constructor
 	public ApplicationService() {
@@ -52,6 +51,7 @@ public class ApplicationService {
 	// Simple CRUD methods
 
 	public Application create() {
+
 		Application result;
 		Date moment;
 		HandyWorker h;
@@ -81,6 +81,9 @@ public class ApplicationService {
 			application.setCreditcard(c);
 			application.setStatus("ACCEPTED");
 
+			//final Customer c = managerService.getCustomerFromApplicationId(application.getId());
+
+			//messageService.sendApplicationNotification(e,m);
 		}
 
 		result = this.applicationRepository.save(application);
@@ -179,22 +182,25 @@ public class ApplicationService {
 		return this.applicationRepository.getApplicationsByStatusAndHandyWorkerId(handyWorkerId, status);
 	}
 
-	public void changeStatus(final Application a) {
-		Assert.notNull(a);
-		Customer c = new Customer();
-
-		c = (Customer) this.actorService.findByPrincipal();
-
-		if (a.getStatus().equals("REJECTED"))
-			Assert.isTrue(!a.getReasonDenied().isEmpty(), "message.error.cancelReason");
-
-		Assert.isTrue(c.equals(this.customerService.getCustomerFromApplicationId(a.getId())));
-
-		this.applicationRepository.save(a);
-
-		final HandyWorker h = this.handyWorkerService.findByApplicationId(a.getId());
-
-	}
+	/*
+	 * public void changeStatus(final Application a) {
+	 * Assert.notNull(a);
+	 * Customer c = new Customer();
+	 * 
+	 * c = (Customer) this.actorService.findByPrincipal();
+	 * 
+	 * if (a.getStatus().equals("REJECTED"))
+	 * //Assert.isTrue(!a.getReasonDenied().isEmpty(), "message.error.cancelReason");
+	 * 
+	 * // Assert.isTrue(m.equals(this.customerService.getCustomerFromApplicationId(a.getId())));
+	 * 
+	 * this.applicationRepository.save(a);
+	 * 
+	 * final HandyWorker h = this.handyWorkerService.findByApplicationId(a.getId());
+	 * 
+	 * //messageService.sendApplicationNotification(e,m);
+	 * }
+	 */
 
 	/*------------------------------------------------------------------
 

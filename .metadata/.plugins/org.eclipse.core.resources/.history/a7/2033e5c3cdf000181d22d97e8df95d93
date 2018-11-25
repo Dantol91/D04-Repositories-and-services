@@ -103,7 +103,7 @@ public class SponsorService {
 
 		sponsor = this.sponsorRepository.save(sponsor);
 		if (create)
-			this.boxService.createSystemBoxes(sponsor);
+			this.boxService.createSystemFolders(sponsor);
 
 		return sponsor;
 	}

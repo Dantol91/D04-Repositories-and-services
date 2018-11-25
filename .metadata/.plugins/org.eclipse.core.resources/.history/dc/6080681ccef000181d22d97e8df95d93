@@ -82,11 +82,11 @@ public class MessageService {
 		if (this.administratorService.checkIsSpam(saved.getBody()) || this.administratorService.checkIsSpam(saved.getSubject()))
 
 			// instancio el Folder del destinatario como el spambox
-			recipientBox = this.boxService.getSpamBoxFromActorId(saved.getRecipient().getId());
+			recipientBox = this.boxService.getSpamBoxFolderFromActorId(saved.getRecipient().getId());
 		else
 			// instancio el Folder del destinatario como inbox
 
-			recipientBox = this.boxService.getInBoxFromActorId(saved.getRecipient().getId());
+			recipientBox = this.boxService.getInBoxFolderFromActorId(saved.getRecipient().getId());
 		// cojo los mensajes del Folder del destinatario
 
 		final Collection<Message> recipientFolderMessages = recipientBox.getMessages();
@@ -114,7 +114,7 @@ public class MessageService {
 		Assert.notNull(message);
 		Assert.notNull(box);
 
-		final Box currentFolder = this.boxService.getBoxFromMessageId(message.getId());
+		final Box currentFolder = this.boxService.getFolderFromMessageId(message.getId());
 		final Collection<Message> currentFolderMessages = currentFolder.getMessages();
 		currentFolderMessages.remove(message);
 		currentFolder.setMessages(currentFolderMessages);
@@ -225,7 +225,7 @@ public class MessageService {
 		} else {// si el mensaje que se quiere borrar no está en el trashbox:
 
 			// Borro el mensaje del folder en el que estaba
-			final Box messageFolder = this.boxService.getBoxFromMessageId(message.getId());
+			final Box messageFolder = this.boxService.getFolderFromMessageId(message.getId());
 			Assert.notNull(messageFolder);
 			final Collection<Message> messages = messageFolder.getMessages();
 			messages.remove(message);

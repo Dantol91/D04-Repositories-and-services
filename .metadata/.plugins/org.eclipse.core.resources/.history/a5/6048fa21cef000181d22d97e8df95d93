@@ -114,7 +114,7 @@ public class MessageService {
 		Assert.notNull(message);
 		Assert.notNull(box);
 
-		final Box currentFolder = this.boxService.getBoxFromMessageId(message.getId());
+		final Box currentFolder = this.boxService.getFromMessageId(message.getId());
 		final Collection<Message> currentFolderMessages = currentFolder.getMessages();
 		currentFolderMessages.remove(message);
 		currentFolder.setMessages(currentFolderMessages);
@@ -225,7 +225,7 @@ public class MessageService {
 		} else {// si el mensaje que se quiere borrar no está en el trashbox:
 
 			// Borro el mensaje del folder en el que estaba
-			final Box messageFolder = this.boxService.getBoxFromMessageId(message.getId());
+			final Box messageFolder = this.boxService.getFolderFromMessageId(message.getId());
 			Assert.notNull(messageFolder);
 			final Collection<Message> messages = messageFolder.getMessages();
 			messages.remove(message);

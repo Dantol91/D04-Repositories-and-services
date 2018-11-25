@@ -67,10 +67,12 @@ public class CustomerService {
 	}
 
 	// Other Business Methods
-
-	public Customer getCustomerFromApplicationId(final int applicationId) {
-
-		return this.customerRepository.getCustomerFromApplicationId(applicationId);
+	
+	public Customer getCustomerFromApplicationId(int applicationId) {
+	
+		return customerRepository.getCustomerFromApplicationId(applicationId);
 	}
+	
+	
 
 }

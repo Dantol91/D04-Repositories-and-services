@@ -86,7 +86,7 @@ public class AdministratorService {
 		Administrator result;
 
 		result = this.administratorRepository.save(administrator);
-		this.boxService.createSystemBoxes(result);
+		this.boxService.createSystemFolders(result);
 
 		return result;
 	}
