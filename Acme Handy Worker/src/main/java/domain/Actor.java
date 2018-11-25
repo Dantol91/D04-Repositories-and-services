@@ -102,7 +102,7 @@ public class Actor extends DomainEntity {
 		this.Photo = photo;
 	}
 
-	public boolean isSuspicious() {
+	public boolean getSuspicious() {
 		return this.suspicious;
 	}
 

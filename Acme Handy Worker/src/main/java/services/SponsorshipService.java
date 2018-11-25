@@ -62,11 +62,8 @@ public class SponsorshipService {
 		sponsorship.setCreditCard(ccSaved);
 		result = this.sponsorshipRepository.save(sponsorship);
 
-		/*
-		 * //Comprobamos si es spam
-		 * administratorService.checkIsSpam(sponsorship.getBannerURL());
-		 * administratorService.checkIsSpam(sponsorship.getInfoPageLink());
-		 */
+		//Comprobamos si es spam
+		this.administratorService.checkIsSpam(sponsorship.getBannerURL());
 
 		return result;
 	}

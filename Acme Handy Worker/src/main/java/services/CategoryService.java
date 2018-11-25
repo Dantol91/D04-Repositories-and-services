@@ -100,16 +100,10 @@ public class CategoryService {
 		final Collection<Category> childAux = new ArrayList<>();
 		final Category childSaved;
 
-		for (final Category c : category.getChildCategories()) {
+		for (final Category c : category.getChildCategories())
+			//		this.c.setParentCategory(category);
 
-			//this.c.setParentCategory(category);
-
-			//this.childSaved = this.categoryRepository.save(this.c);
-
-			//this.childAux.add(this.childSaved);
-		}
-
-		category.setChildCategories(childAux);
+			category.setChildCategories(childAux);
 
 		final Category result = this.categoryRepository.save(category);
 		return result;

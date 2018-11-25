@@ -15,6 +15,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
+import domain.Box;
 import domain.SocialProfile;
 import domain.Sponsor;
 
@@ -31,10 +32,15 @@ public class SponsorService {
 
 	@Autowired
 	private UserAccountService		userAccountService;
+
 	@Autowired
 	private BoxService				boxService;
+
 	@Autowired
 	private ConfigurationService	configurationService;
+
+	@Autowired
+	private SocialProfileService	socialProfileService;
 
 
 	// Constructor
@@ -105,16 +111,15 @@ public class SponsorService {
 	public void delete(final Sponsor sponsor) {
 		Assert.notNull(sponsor);
 		Assert.isTrue(sponsor.getId() != 0);
-		// Collection<Folder> folders = sponsor.getFolders();
+		final Collection<Box> boxes = sponsor.getBoxes();
 		// Collection<Message> receivedMessages = sponsor.getReceivedMessages();
 		// Collection<Message> sentMessages = sponsor.getSentMessages();
-		// Collection<SocialIdentity> socialIdentities = sponsor
-		// .getSocialIdentities();
+		final Collection<SocialProfile> socialProfiles = sponsor.getSocialProfiles();
 		this.sponsorRepository.delete(sponsor);
-		// folderService.delete(folders);
+		this.boxService.delete(boxes);
 		// messageService.delete(receivedMessages);
 		// messageService.delete(sentMessages);
-		// socialIdentityService.delete(socialIdentities);
+		this.socialProfileService.delete(socialProfiles);
 
 	}
 

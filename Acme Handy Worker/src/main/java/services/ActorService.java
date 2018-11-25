@@ -14,7 +14,6 @@ import repositories.ActorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import security.UserAccountService;
 import domain.Actor;
 
 @Service
@@ -24,19 +23,10 @@ public class ActorService {
 	// Managed repository 
 
 	@Autowired
-	private ActorRepository			actorRepository;
+	private ActorRepository	actorRepository;
+
 
 	// Supporting services 
-
-	@Autowired
-	private UserAccountService		userAccountService;
-	@Autowired
-	private BoxService				boxService;
-	@Autowired
-	private SocialProfileService	socialProfileService;
-	@Autowired
-	private MessageService			messageService;
-
 
 	// Constructors 
 
@@ -70,10 +60,10 @@ public class ActorService {
 		return result;
 	}
 
-	// Other Busssines Methods 
+	// Other Business Methods 
 
-	public Collection<Actor> getSuspiciousActors() {
-		return this.actorRepository.getSuspiciousActors();
+	public Collection<Actor> getSuspiciousActors(final boolean suspicious) {
+		return this.actorRepository.getSuspiciousActors(suspicious);
 	}
 
 	public Actor findByPrincipal() {
@@ -107,29 +97,25 @@ public class ActorService {
 		return authorities.get(0).getAuthority();
 	}
 
-	// B.16.2 Un Admin puede banear un actor que sea sospechoso(desactivar
+	// B.38.3 Un Admin puede banear un actor que sea sospechoso(desactivar
 	// su cuenta de usuario)
 
-	/*
-	 * public void banActor(final Actor actor) {
-	 * Assert.isTrue(actor.getSuspicious());
-	 * Assert.isTrue(actor.getUserAccount().banned());
-	 * 
-	 * actor.getUserAccount().setBanned(true);
-	 * this.save(actor);
-	 * }
-	 */
+	public void banActor(final Actor actor) {
+		Assert.isTrue(actor.getSuspicious());
+		Assert.isTrue(actor.getUserAccount().Banned());
 
-	// B.16.3 Un Admin puede quitar el baneo a un actor(reactivar su
+		actor.getUserAccount().setBanned(true);
+		this.save(actor);
+	}
+
+	// B.38.4 Un Admin puede quitar el baneo a un actor(reactivar su
 	// cuenta)
 
-	/*
-	 * public void bannedActor(final Actor actor) {
-	 * Assert.isTrue(!actor.getUserAccount().banned());
-	 * 
-	 * actor.getUserAccount().setBanned(false);
-	 * this.save(actor);
-	 * }
-	 */
+	public void bannedActor(final Actor actor) {
+		Assert.isTrue(!actor.getUserAccount().Banned());
+
+		actor.getUserAccount().setBanned(false);
+		this.save(actor);
+	}
 
 }

@@ -42,7 +42,7 @@ public class ActorServiceTest extends AbstractTest {
 
 	@Test
 	public void testgetSuspiciousActors() {
-		final Collection<Actor> suspiciusActors = this.actorService.getSuspiciousActors();
+		final Collection<Actor> suspiciusActors = this.actorService.getSuspiciousActors(false);
 		Assert.notEmpty(suspiciusActors);
 	}
 	@Test
