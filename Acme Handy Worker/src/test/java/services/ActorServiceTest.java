@@ -45,9 +45,10 @@ public class ActorServiceTest extends AbstractTest {
 		final Collection<Actor> suspiciusActors = this.actorService.getSuspiciousActors(false);
 		Assert.notEmpty(suspiciusActors);
 	}
+
 	@Test
 	public void testFindByPrincipal() {
-		this.authenticate("auditor1");
+		this.authenticate("handyWorker1");
 		final Actor principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
 	}

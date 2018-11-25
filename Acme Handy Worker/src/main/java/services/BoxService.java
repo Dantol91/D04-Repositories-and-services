@@ -55,7 +55,7 @@ public class BoxService {
 
 	public Box save(final Box box) {
 		Assert.notNull(box);
-		// Assert.isTrue(!folder.getSystemFolder());
+		Assert.isTrue(!box.getSystemBox());
 		if (box.getId() != 0)
 			this.checkPrincipal(box);
 		Actor actor;
@@ -68,7 +68,6 @@ public class BoxService {
 		this.actorService.save(actor);
 
 		return boxSaved;
-		// actorService.save(actor);
 
 	}
 
@@ -109,7 +108,7 @@ public class BoxService {
 
 	public Box saveNotificationBox(final Box box) {
 		Assert.notNull(box);
-		// Assert.isTrue(!folder.getSystemFolder());
+		Assert.isTrue(!box.getSystemBox());
 		Actor actor;
 		actor = this.actorService.findByPrincipal();
 		box.setActor(actor);
@@ -120,7 +119,7 @@ public class BoxService {
 		this.actorService.save(actor);
 
 		return boxSaved;
-		// actorService.save(actor);
+
 	}
 
 	public List<Box> save(final Iterable<Box> boxes) {
@@ -140,7 +139,8 @@ public class BoxService {
 	public void delete(final Box box) {
 		Assert.notNull(box);
 		Assert.isTrue(!box.getSystemBox());
-		//		this.checkPrincipal(box);
+
+		this.checkPrincipal(box);
 		final Collection<Message> messages = box.getMessages();
 		final Actor a = this.actorService.findByPrincipal();
 		a.getBoxes().remove(box);
@@ -168,6 +168,7 @@ public class BoxService {
 	}
 
 	// Other business methods
+
 	public void checkPrincipal(final Box box) {
 		Actor actor;
 		actor = this.actorService.findByPrincipal();
@@ -176,12 +177,11 @@ public class BoxService {
 
 	// Other business methods
 
-	public void createSystemFolders(final Actor actor) {
+	public void createSystemBoxes(final Actor actor) {
 
 		Box inbox;
 		Box outbox;
 		Box trashbox;
-		Box notificationbox;
 		Box spambox;
 		final Collection<Box> boxes = new ArrayList<Box>();
 
@@ -190,101 +190,85 @@ public class BoxService {
 		inbox.setName("in box");
 		inbox.setMessages(new ArrayList<Message>());
 		inbox.setActor(actor);
-		// folders.add(inbox);
-		// folderRepository.save(inbox);
+		boxes.add(inbox);
+		this.boxRepository.save(inbox);
 
 		outbox = new Box();
 		outbox.setSystemBox(true);
 		outbox.setName("out box");
 		outbox.setMessages(new ArrayList<Message>());
 		outbox.setActor(actor);
-		// folders.add(outbox);
-		// folderRepository.save(outbox);
+		boxes.add(outbox);
+		this.boxRepository.save(outbox);
 
 		trashbox = new Box();
 		trashbox.setSystemBox(true);
 		trashbox.setName("trash box");
 		trashbox.setMessages(new ArrayList<Message>());
 		trashbox.setActor(actor);
-		// folders.add(trashbox);
-		// folderRepository.save(trashbox);
-
-		notificationbox = new Box();
-		notificationbox.setSystemBox(true);
-		notificationbox.setName("notification box");
-		notificationbox.setMessages(new ArrayList<Message>());
-		notificationbox.setActor(actor);
-		// folders.add(notificationbox);
-		// folderRepository.save(notificationbox);
+		boxes.add(trashbox);
+		this.boxRepository.save(trashbox);
 
 		spambox = new Box();
 		spambox.setSystemBox(true);
 		spambox.setName("spam box");
 		spambox.setMessages(new ArrayList<Message>());
 		spambox.setActor(actor);
-		// folders.add(spambox);
-		// folderRepository.save(spambox);
+		boxes.add(spambox);
+		this.boxRepository.save(spambox);
 
-		// folderRepository.save(folders);
+		this.boxRepository.save(boxes);
 		final Box savedinbox = this.boxRepository.save(inbox);
 		final Box savedoutbox = this.boxRepository.save(outbox);
 		final Box savedtrashbox = this.boxRepository.save(trashbox);
-		final Box savednotificationbox = this.boxRepository.save(notificationbox);
 		final Box savedspambox = this.boxRepository.save(spambox);
 
 		boxes.add(savedinbox);
 		boxes.add(savedoutbox);
 		boxes.add(savedtrashbox);
-		boxes.add(savednotificationbox);
 		boxes.add(savedspambox);
 
 		actor.setBoxes(boxes);
 
-		// folderRepository.save(folders);
+		this.boxRepository.save(boxes);
 
 		// managerService.save((Manager)actor);
 
 	}
-	public Box getOutBoxFolderFromActorId(final int id) {
+	public Box getOutBoxFromActorId(final int id) {
 		return this.boxRepository.getOutBoxFolderFromActorId(id);
 	}
 
-	public Box getInBoxFolderFromActorId(final int id) {
-		return this.boxRepository.getInBoxFolderFromActorId(id);
+	public Box getInBoxFromActorId(final int id) {
+		return this.boxRepository.getInBoxFromActorId(id);
 	}
 
-	public Box getSpamBoxFolderFromActorId(final int id) {
-		return this.boxRepository.getSpamBoxFolderFromActorId(id);
+	public Box getSpamBoxFromActorId(final int id) {
+		return this.boxRepository.getSpamBoxFromActorId(id);
 	}
 
 	public Box getTrashBoxFolderFromActorId(final int id) {
-		return this.boxRepository.getTrashBoxFolderFromActorId(id);
+		return this.boxRepository.getTrashBoxFromActorId(id);
 	}
 
-	public Box getNotificationBoxFolderFromActorId(final int id) {
-		return this.boxRepository.getNotificationBoxFolderFromActorId(id);
+	public Collection<Box> getFirstLevelBoxFromActorId(final int actorId) {
+
+		return this.boxRepository.getFirstLevelBoxesFromActorId(actorId);
 	}
 
-	public Collection<Box> getFirstLevelFoldersFromActorId(final int actorId) {
-		return this.boxRepository.getFirstLevelFoldersFromActorId(actorId);
-	}
+	public Box getBoxFromMessageId(final int messageId) {
 
-	public Box getFolderFromMessageId(final int messageId) {
-		return this.boxRepository.getFolderFromMessageId(messageId);
+		return this.boxRepository.getBoxFromMessageId(messageId);
 	}
 
 	public Collection<Box> getChildBoxes(final int folderId) {
+
 		return this.boxRepository.getChildBoxes(folderId);
 	}
 
-	// public Folder getFolderFromMessageAndActorId(int messageId,int actorId) {
-	// return
-	// folderRepository.getFolderFromMessageAndActorId(messageId,actorId);
-	// }
+	public Box getBoxFromMessageAndActorId(final int messageId, final int actorId) {
 
-	// public Folder getFolderFromMessageAndActorId(int messageId, int actorId){
-	// return folderRepository.getFolderFromMessageAndActorId(messageId,
-	// actorId);
-	// }
+		return this.boxRepository.getBoxFromMessageAndActorId(messageId, actorId);
+	}
 
 }
