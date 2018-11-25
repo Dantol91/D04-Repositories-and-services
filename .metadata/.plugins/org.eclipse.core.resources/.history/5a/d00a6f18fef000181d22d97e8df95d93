@@ -1,0 +1,69 @@
+
+package services;
+
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import repositories.WarrantyRepository;
+import domain.Phase;
+import domain.Warranty;
+
+@Service
+@Transactional
+public class WarrantyService {
+
+	// Managed repository 
+
+	@Autowired
+	private WarrantyRepository	warrantyRepository;
+
+
+	// Supporting services 
+
+	// Constructors 
+
+	public WarrantyService() {
+		super();
+	}
+
+	// Simple CRUD methods 
+
+	public Warranty create() {
+		final Warranty w;
+
+		w = new Warranty();
+
+		return w;
+	}
+
+	public Phase save(final Warranty warranty) {
+		Assert.notNull(warranty);
+		return this.warrantyRepository.save(warranty);
+	}
+
+	public Phase findOne(final int warrantyId) {
+		Assert.isTrue(warrantyId != 0);
+
+		Warranty result;
+
+		result = this.warrantyRepository.findOne(warrantyId);
+
+		return result;
+	}
+
+	public Collection<Phase> findAll() {
+		Collection<Phase> result;
+
+		result = this.phaseRepository.findAll();
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	// Other Business Methods 
+
+}

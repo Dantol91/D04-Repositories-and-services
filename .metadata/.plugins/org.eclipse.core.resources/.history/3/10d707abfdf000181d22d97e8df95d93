@@ -1,0 +1,81 @@
+package services;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import domain.Category;
+import domain.Phase;
+import repositories.PhaseRepository;
+
+@Service
+@Transactional
+public class PhaseService {
+
+	// Managed repository 
+
+	@Autowired
+	private PhaseRepository	phaseRepository;
+
+
+	// Supporting services 
+
+	// Constructors 
+
+	public PhaseService() {
+		super();
+	}
+
+	// Simple CRUD methods 
+	
+	public Phase create() {
+		final Phase p;
+
+		p = new Phase();
+	
+		return p;
+	}
+
+	public Phase save(final Phase phase) {
+		Assert.notNull(phase);
+		return this.phaseRepository.save(phase);
+	}
+
+	public Actor findOne(final int actorId) {
+		Assert.isTrue(actorId != 0);
+
+		Actor result;
+
+		result = this.actorRepository.findOne(actorId);
+
+		return result;
+	}
+
+	public Collection<Actor> findAll() {
+		Collection<Actor> result;
+
+		result = this.actorRepository.findAll();
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	// Other Business Methods 
+
+public class PhaseService {
+	
+	public Stage create(int tripId) {
+		Stage res = new Stage();
+		
+		Trip trip = tripService.findOne(tripId);
+		res.setTrip(trip);
+		
+		return res;
+	}
+
+	
+}
