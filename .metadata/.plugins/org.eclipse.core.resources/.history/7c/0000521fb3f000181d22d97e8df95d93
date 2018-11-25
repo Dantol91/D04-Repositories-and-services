@@ -45,6 +45,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 
 		final Sponsorship sp = this.sponsorshipService.create();
 		sp.setBannerURL("http://marca.com");
+		//		sp.setLink("pagina 1");
 
 		//		sp.setFixUpTask(this.fixUpTaskService.findOne(2534));
 

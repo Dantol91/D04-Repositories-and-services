@@ -80,13 +80,13 @@ public class BoxServiceTest extends AbstractTest {
 		b.setName("name");
 		b.setMessages(messages);
 		boxSaved = this.boxService.save(b);
-		final Integer boxSavedId = boxSaved.getId();
+		final Integer boxSavedId = boxSavedId.getId();
 		Assert.isTrue(this.boxService.findOne(boxSavedId).equals(boxSaved));
-
-		// Probamos delete
-		this.boxService.delete(boxSaved);
-		final Box b2 = this.boxService.findOne(boxSavedId);
-		Assert.isTrue(this.boxService.findOne(boxSavedId) == null);
+		
+		 // Probamos delete
+		 boxService.delete(boxSaved);
+		 Box b2 = boxService.findOne(boxSavedId);
+		 Assert.isTrue(boxService.findOne(boxSavedId)==null);
 	}
 
 }

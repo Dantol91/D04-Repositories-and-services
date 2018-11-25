@@ -1,8 +1,8 @@
 
 package services;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -25,7 +25,7 @@ import domain.FixUpTask;
 @Transactional
 public class ApplicationServiceTest extends AbstractTest {
 
-	// Service under test 
+	// Service under test ---------------------------------
 	@Autowired
 	private ApplicationService	applicationService;
 

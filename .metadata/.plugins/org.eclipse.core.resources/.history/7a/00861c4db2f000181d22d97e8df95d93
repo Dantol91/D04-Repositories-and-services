@@ -1,7 +1,6 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -15,7 +14,6 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Box;
-import domain.Message;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -62,31 +60,31 @@ public class BoxServiceTest extends AbstractTest {
 		box.setName("box-1");
 		saved = this.boxService.save(box);
 		this.boxService.delete(saved);
-		boxes = this.boxService.findAll();
-		Assert.isTrue(!boxes.contains(saved));
+				boxes = boxService.findAll();
+				Assert.isTrue(!boxes.contains(saved));
 
 	}
 
-	@Test
-	public void createSaveDelete() {
-		this.authenticate("customer1");
-		Box b;
-		final Box boxSaved;
-		final Collection<Message> messages = new ArrayList<>();
-		b = this.boxService.create();
-		Assert.notNull(b);
-
-		// Probamos save
-		b.setName("name");
-		b.setMessages(messages);
-		boxSaved = this.boxService.save(b);
-		final Integer boxSavedId = boxSaved.getId();
-		Assert.isTrue(this.boxService.findOne(boxSavedId).equals(boxSaved));
-
-		// Probamos delete
-		this.boxService.delete(boxSaved);
-		final Box b2 = this.boxService.findOne(boxSavedId);
-		Assert.isTrue(this.boxService.findOne(boxSavedId) == null);
-	}
+	//
+	// @Test
+	// public void createSaveDelete() {
+	// authenticate("manager1");
+	// Folder f, fSaved;
+	// Collection<Message> messages = new ArrayList<>();
+	// f = folderService.create();
+	// Assert.notNull(f);
+	//
+	// // Probamos save
+	// f.setName("name");
+	// f.setMessages(messages);
+	// fSaved = folderService.save(f);
+	// Integer fSavedId = fSaved.getId();
+	// Assert.isTrue(folderService.findOne(fSavedId).equals(fSaved));
+	//
+	// // Probamos delete
+	// folderService.delete(fSaved);
+	// Folder f2 = folderService.findOne(fSavedId);
+	// Assert.isTrue(folderService.findOne(fSavedId)==null);
+	// }
 
 }

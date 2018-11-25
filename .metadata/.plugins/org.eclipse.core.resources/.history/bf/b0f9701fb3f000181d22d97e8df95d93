@@ -46,7 +46,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 		final Sponsorship sp = this.sponsorshipService.create();
 		sp.setBannerURL("http://marca.com");
 
-		//		sp.setFixUpTask(this.fixUpTaskService.findOne(2534));
+				sp.setFixUpTask(this.fixUpTaskService.findOne(2534));
 
 		final Collection<CreditCard> cred = this.creditcardService.findAll();
 		final List<CreditCard> spp = new ArrayList<CreditCard>(cred);
