@@ -1,14 +1,10 @@
 
 package services;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +14,7 @@ import org.springframework.util.Assert;
 
 import domain.Application;
 import domain.Category;
+import domain.Customer;
 import domain.FixUpTask;
 
 @Service
@@ -31,24 +28,18 @@ public class FixUpTaskService {
 
 	// SUPPORTING SERVICES -------------
 
-	//	@Autowired
-	//	private ActorService			actorService;
-
-	//	@Autowired
-	//	private HandyWorkerService		handyWorkerService;
+	@Autowired
+	private ActorService			actorService;
 
 	@Autowired
-	private ConfigurationService	configurationService;
+	private CustomerService			customerService;
 
 	@Autowired
 	private CategoryService			categoryService;
 
+	@Autowired
+	private AdministratorService	administratorService;
 
-	//	@Autowired
-	//	private AdministratorService	administratorService;
-
-	//	@Autowired
-	//	private ApplicationService		applicationService;
 
 	// Constructor
 
@@ -184,7 +175,7 @@ public class FixUpTaskService {
 		// Por el patron solo necesitamos las ultimas 2 cifras del anho
 		year = year.substring(2, 4);
 
-		// Aqui sacamos las 4 letras mayusculas
+		// Aqui obtengo las 4 letras mayusculas
 		final Random r = new Random();
 		final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -195,8 +186,8 @@ public class FixUpTaskService {
 
 		res = year + month + day + "-" + alphabet.charAt(index1) + alphabet.charAt(index2) + alphabet.charAt(index3) + alphabet.charAt(index4);
 
-		// Comprobamos que el ticker sea único
-		// Si existe algún ticker igual, volvemos a calcularlo
+		// Compruebo que el ticker sea único
+		// Si existe algún ticker igual, vuelvo a calcularlo
 
 		for (final FixUpTask t : this.fixUpTaskRepository.findAll())
 			if (t.getTicker().equals(res))
@@ -204,21 +195,13 @@ public class FixUpTaskService {
 		return res;
 	}
 
-	public Collection<FixUpTask> getAllFixUpTasks() {
-		return this.fixUpTaskRepository.getAllFixUpTasks();
-	}
-
 	public Collection<FixUpTask> getFixUpTasksByCategory(final int categoryId) {
+
 		return this.fixUpTaskRepository.getFixUpTasksByCategory(categoryId);
 	}
 
-	public Collection<FixUpTask> fixUpTasksByCategory(final Category category) {
-
-		return this.fixUpTaskRepository.getFixUpTasksByCategory(category.getId());
-
-	}
-
 	public Integer getAcceptedApplicationsByHandyWorkerId(final int handyWorkerId, final int fixUpTaskId) {
+
 		return this.fixUpTaskRepository.getAcceptedApplicationsByHandyWorkerId(handyWorkerId, fixUpTaskId);
 	}
 
@@ -233,41 +216,132 @@ public class FixUpTaskService {
 		return res;
 	}
 
-	/*-------------------------------------------------------------------------
+	// C.12.5 Un Administrador muestra un Dashboard con estas estadisticas: 
 
-	/*
-	 * // C.14.6 --> Un Administrador debe mostrar estas estadisticas por el
-	 * // dashboard
-	 * 
-	 * // The average, the minimum, the maximum, and the standard deviation of the
-	 * // number of trips managed per manager.
-	 * public Double[] tripsPerManagerStats() {
-	 * return this.tripRepository.computeAvgMinMaxStdvPerManager();
-	 * }
-	 * 
-	 * // The average, the minimum, the maximum, and the standard deviation of the
-	 * // price of the trips.
-	 * public Double[] tripsPriceStats() {
-	 * return this.tripRepository.computeAvgMinMaxStdvPerPrice();
-	 * }
-	 * 
-	 * // The average, the minimum, the maximum, and the standard deviation of the
-	 * // number trips guided per ranger.
-	 * public Double[] tripsPerRangerStats() {
-	 * return this.fixUpTaskRepository.computeAvgMaxMinStdvPerRanger();
-	 * }
-	 */
+	//The average, the minimum, the maximum, and the standard deviation of the 
+	//number of fix-up tasks per user.
+	public Double[] computeAvgMinMaxStdvPerUser() {
 
-	// The listing of trips that have got at least 10% more applications than
-	// the average, ordered by number of applications.
-
-	//The listing of customers who have published at least 10% more fix-up tasks 
-	//than the average, ordered by number of applications.
-
-	public Collection<FixUpTask> tripsMoreAplications() {
-		return this.fixUpTaskRepository.tripsMoreAplications();
+		return this.fixUpTaskRepository.computeAvgMinMaxStdvPerUser();
 	}
 
+	//The average, the minimum, the maximum, and the standard deviation 
+	//of the maximum price of the fix-up tasks.
+
+	public Double[] computeAvgMinMaxStdvPerMaxPrice() {
+
+		return this.fixUpTaskRepository.computeAvgMinMaxStdvPerMaxPrice();
+	}
+
+	public Collection<FixUpTask> getNotPublishedFixUpTaks() {
+		return this.fixUpTaskRepository.getNotPublishedFixUpTaks();
+	}
+
+	public Collection<FixUpTask> getHandyWorkerApplicationFixUpTasks(final int handyWorkerId) {
+		return this.fixUpTaskRepository.getHandyWorkerApplicationFixUpTasks(handyWorkerId);
+	}
+
+	public Collection<FixUpTask> getVisibleFixUpTasks() {
+		return this.fixUpTaskRepository.getVisibleFixUpTasks();
+	}
+
+	public Collection<FixUpTask> getWithoutApplicationFixUpTasks(final int handyWorkerId) {
+		final Collection<FixUpTask> handyWorkerFixUpTasks;
+		Collection<FixUpTask> allFixUpTasks;
+
+		handyWorkerFixUpTasks = this.fixUpTaskRepository.getHandyWorkerApplicationFixUpTasks(handyWorkerId);
+		allFixUpTasks = this.fixUpTaskRepository.getVisibleFixUpTasks();
+
+		allFixUpTasks.removeAll(handyWorkerFixUpTasks);
+
+		return allFixUpTasks;
+	}
+
+	public Boolean checkFixUpTaskIsPublished(final FixUpTask fixUpTask) {
+		Boolean isPublished = false;
+
+		if (fixUpTask.getPublicationDate().before(new Date(System.currentTimeMillis())))
+			isPublished = true;
+
+		return isPublished;
+	}
+
+	public Collection<FixUpTask> getEndedFixUpTasks() {
+
+		return this.fixUpTaskRepository.getEndedFixUpTasks();
+
+	}
+
+	public Collection<FixUpTask> getVisibleFixUpTasksByCategory(final int categoryId) {
+
+		return this.fixUpTaskRepository.getVisibleFixUpTasksByCategory(categoryId);
+	}
+
+	public Collection<FixUpTask> showAllFixUpTaskByCategory(final int categoryId, final Collection<FixUpTask> result) {
+
+		Category category;
+
+		category = this.categoryService.findOne(categoryId);
+
+		if (!category.getChildCategories().isEmpty())
+			for (final Category c : category.getChildCategories())
+				this.showAllFixUpTaskByCategory(c.getId(), result);
+
+		result.addAll(this.getVisibleFixUpTasksByCategory(categoryId));
+
+		return result;
+	}
+
+	public FixUpTask getFixUpTaskByApplicationId(final int applicationId) {
+		return this.fixUpTaskRepository.getFixUpTaskByApplicationId(applicationId);
+	}
+
+	public Collection<FixUpTask> getFixUpTasksByCustomerId(final int customerId) {
+		return this.fixUpTaskRepository.getFixUpTasksByCustomerId(customerId);
+	}
+
+	public Collection<FixUpTask> getFixUpTasksHandyWorkerApplication(final int handyWorkerId) {
+		return this.fixUpTaskRepository.getFixUpTasksHandyWorkerApplication(handyWorkerId);
+	}
+
+	public void checkPrincipal(final FixUpTask f) {
+		Customer c;
+
+		c = (Customer) this.actorService.findByPrincipal();
+
+		Assert.isTrue(c.getFixUpTasks().contains(f));
+	}
+
+	public FixUpTask saveFromCreate(final FixUpTask fixUpTask) {
+		Assert.notNull(fixUpTask);
+		Assert.isTrue(fixUpTask.getPublicationDate().after(new Date(System.currentTimeMillis() - 24 * 3600 * 1000l)), "message.error.publicationDate");
+		Assert.isTrue(fixUpTask.getStartDate().after(new Date(System.currentTimeMillis())), "message.error.startDate");
+		Assert.isTrue(fixUpTask.getEndDate().after(new Date(System.currentTimeMillis())), "message.error.endDate");
+		Assert.isTrue(fixUpTask.getPublicationDate().before(fixUpTask.getStartDate()), "message.error.startDatePubliDate");
+		Assert.isTrue(fixUpTask.getPublicationDate().before(fixUpTask.getEndDate()), "message.error.endDatePubliDate");
+		Assert.isTrue(fixUpTask.getStartDate().before(fixUpTask.getEndDate()), "message.error.startDateEndDate");
+
+		FixUpTask result;
+		final Customer c;
+		Collection<FixUpTask> fixUpTasks;
+
+		c = (Customer) this.actorService.findByPrincipal();
+		fixUpTasks = c.getFixUpTasks();
+
+		result = this.fixUpTaskRepository.save(fixUpTask);
+		fixUpTasks.add(result);
+		c.setFixUpTasks(fixUpTasks);
+		this.customerService.save(c);
+
+		// Comprobamos si es spam
+		this.administratorService.checkIsSpam(fixUpTask.getDescription());
+
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------
+
+	
 	// C.3 Algunos trips podrán ser cancelados después de la fecha de
 	// publicación,
 	// en cuyo caso el sistema deberá almacenar el motivo.
@@ -325,148 +399,11 @@ public class FixUpTaskService {
 		return tripsSet;
 	}
 
-	public Collection<FixUpTask> getEndedTrips() {
-		return this.fixUpTaskRepository.getEndedTrips();
-
-	}
-
-	public Collection<FixUpTask> getVisibleTrips() {
-		return this.fixUpTaskRepository.getVisibleTrips();
-	}
-
-	public Collection<FixUpTask> getVisibleAndActiveTrips() {
-		return this.fixUpTaskRepository.getVisibleAndActiveTrips();
-	}
-
-	public Collection<FixUpTask> getVisibleTripsByCategory(final int categoryId) {
-		return this.fixUpTaskRepository.getVisibleTripsByCategory(categoryId);
-	}
-
-	public Collection<FixUpTask> showAllFixUpTaskByCategory(final int categoryId, final Collection<FixUpTask> result) {
-
-		Category category;
-
-		category = this.categoryService.findOne(categoryId);
-
-		if (!category.getChildCategories().isEmpty())
-			for (final Category c : category.getChildCategories())
-				this.showAllFixUpTaskByCategory(c.getId(), result);
-
-		result.addAll(this.getVisibleTripsByCategory(categoryId));
-
-		return result;
-	}
-
-	public FixUpTask getTripByApplicationId(final int applicationId) {
-		return this.fixUpTaskRepository.getTripByApplicationId(applicationId);
-	}
-
-	public Collection<FixUpTask> getTripsByManagerId(final int managerId) {
-		return this.fixUpTaskRepository.getTripsByManagerId(managerId);
-	}
-
+	
 	/*
 	 * public Page<FixUpTask> getTripsByManagerIdPageable(final int managerId, final Integer pageNumber, final Integer pageSize) {
 	 * final PageRequest request = new PageRequest(pageNumber - 1, pageSize);
 	 * return this.fixUpTaskRepository.getTripsByManagerIdPageable(request, managerId);
-	 * }
-	 */
-
-	public Collection<FixUpTask> getNotPublishedTrips() {
-		return this.fixUpTaskRepository.getNotPublishedTrips();
-	}
-
-	public Collection<FixUpTask> getExplorerApplicationTrips(final int explorerId) {
-		return this.fixUpTaskRepository.getExplorerApplicationTrips(explorerId);
-	}
-
-	public Collection<FixUpTask> getWithoutApplicationTrips(final int explorerId) {
-		Collection<FixUpTask> explorerTrips;
-		Collection<FixUpTask> allTrips;
-
-		explorerTrips = this.fixUpTaskRepository.getExplorerApplicationTrips(explorerId);
-		allTrips = this.fixUpTaskRepository.getVisibleTrips();
-
-		allTrips.removeAll(explorerTrips);
-
-		return allTrips;
-	}
-
-	public Collection<FixUpTask> getTripsByValue(final int valueId) {
-		return this.fixUpTaskRepository.getTripsByValue(valueId);
-	}
-
-	public Boolean checkTripIsPublished(final FixUpTask fixUpTask) {
-		Boolean isPublished = false;
-
-		if (fixUpTask.getPublicationDate().before(new Date(System.currentTimeMillis())))
-			isPublished = true;
-
-		return isPublished;
-	}
-
-	public Collection<FixUpTask> getAcceptedTrips(final int explorerId) {
-		return this.fixUpTaskRepository.getAcceptedTrips(explorerId);
-	}
-
-	public Collection<FixUpTask> getTripsExplorerApplication(final int explorerId) {
-		return this.fixUpTaskRepository.getTripsExplorerApplication(explorerId);
-	}
-
-	/*
-	 * public void checkPrincipal(final FixUpTask f) {
-	 * final HandyWorker h;
-	 * 
-	 * if (f.getStatus().equals("CANCELLED"))
-	 * Assert.isTrue(false);
-	 * 
-	 * m = (Manager) this.actorService.findByPrincipal();
-	 * 
-	 * Assert.isTrue(m.getTrips().contains(t));
-	 * }
-	 */
-
-	/*
-	 * public FixUpTask saveFromCreate(final FixUpTask fixUpTask) {
-	 * Assert.notNull(trip);
-	 * Assert.isTrue(trip.getPublicationDate().after(new Date(System.currentTimeMillis() - 24 * 3600 * 1000l)), "message.error.publicationDate");
-	 * Assert.isTrue(trip.getStartDate().after(new Date(System.currentTimeMillis())), "message.error.startDate");
-	 * Assert.isTrue(trip.getEndDate().after(new Date(System.currentTimeMillis())), "message.error.endDate");
-	 * Assert.isTrue(trip.getPublicationDate().before(trip.getStartDate()), "message.error.startDatePubliDate");
-	 * Assert.isTrue(trip.getPublicationDate().before(trip.getEndDate()), "message.error.endDatePubliDate");
-	 * Assert.isTrue(trip.getStartDate().before(trip.getEndDate()), "message.error.startDateEndDate");
-	 * 
-	 * Trip result;
-	 * Manager m;
-	 * Collection<Trip> trips;
-	 * 
-	 * m = (Manager) this.actorService.findByPrincipal();
-	 * trips = m.getTrips();
-	 * 
-	 * result = this.tripRepository.save(trip);
-	 * trips.add(result);
-	 * m.setTrips(trips);
-	 * this.managerService.save(m);
-	 * 
-	 * if (trip.getLegalText() != null) {
-	 * Collection<FixUpTask> ltTrips;
-	 * ltTrips = fixUpTask.getLegalText().getTrips();
-	 * ltTrips.add(result);
-	 * fixUpTask.getLegalText().setTrips(ltTrips);
-	 * 
-	 * }
-	 * 
-	 * // final Collection<FixUpTask> rangerTrips = fixUpTask.getRanger().getTrips();
-	 * // rangerTrips.add(result);
-	 * // fixUpTask.getRanger().setTrips(rangerTrips);
-	 * // this.rangerService.save(trip.getRanger());
-	 * 
-	 * // Comprobamos si es spam
-	 * this.administratorService.checkIsSpam(fixUpTask.getDescription());
-	 * // this.administratorService.checkIsSpam(fixUpTask.getExplorerRequirements());
-	 * // this.administratorService.checkIsSpam(fixUpTask.getCancelReason());
-	 * 
-	 * return result;
 	 * }
 	 */
 
