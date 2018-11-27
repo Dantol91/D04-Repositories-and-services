@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import repositories.FixUpTaskRepository;
 import domain.Application;
 import domain.Category;
 import domain.Customer;
@@ -24,7 +25,7 @@ public class FixUpTaskService {
 	// Managed Repository
 
 	@Autowired
-	private FixUpTaskService		fixUpTaskRepository;
+	private FixUpTaskRepository		fixUpTaskRepository;
 
 	// Supporting Services
 
@@ -255,12 +256,12 @@ public class FixUpTaskService {
 		return this.fixUpTaskRepository.getEndedFixUpTasks();
 
 	}
-
-	public Collection<FixUpTask> getVisibleFixUpTasksByCategory(final int categoryId) {
-
-		return this.fixUpTaskRepository.getVisibleFixUpTasksByCategory(categoryId);
-	}
-
+	/*
+	 * public Collection<FixUpTask> getVisibleFixUpTasksByCategory(final int categoryId) {
+	 * 
+	 * return this.fixUpTaskRepository.getVisibleFixUpTasksByCategory(categoryId);
+	 * }
+	 */
 	public Collection<FixUpTask> showAllFixUpTaskByCategory(final int categoryId, final Collection<FixUpTask> result) {
 
 		Category category;
@@ -271,7 +272,7 @@ public class FixUpTaskService {
 			for (final Category c : category.getChildCategories())
 				this.showAllFixUpTaskByCategory(c.getId(), result);
 
-		result.addAll(this.getVisibleFixUpTasksByCategory(categoryId));
+		//	result.addAll(this.getVisibleFixUpTasksByCategory(categoryId));
 
 		return result;
 	}

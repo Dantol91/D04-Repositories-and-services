@@ -809,11 +809,7 @@
 		<property name="maxPrice" value="200.00" />
 		<property name="startDate" value="14/12/2018" />
 		<property name="endDate" value="14/12/2018" />
-		<property name="categories">
-			<list>
-				<ref bean="category0" />
-			</list>
-		</property>
+		<property name="category" ref="category0" />
 		<property name="warranty" ref="warranty1" />
 		<property name="phases">
 			<list>
@@ -831,11 +827,7 @@
 		<property name="maxPrice" value="149.00" />
 		<property name="startDate" value="14/10/2018" />
 		<property name="endDate" value="14/12/2018" />
-		<property name="categories">
-			<list>
-				<ref bean="category1.1" />
-			</list>
-		</property>
+		<property name="category" ref="category1" />
 		<property name="warranty" ref="warranty2" />
 		<property name="phases">
 			<list>
@@ -852,10 +844,7 @@
 		<property name="maxPrice" value="135.00" />
 		<property name="startDate" value="14/11/2018" />
 		<property name="endDate" value="14/12/2018" />
-		<property name="categories">
-			<list>
-			</list>
-		</property>
+		<property name="category" ref="category2" />
 		<property name="phases">
 			<list>
 			</list>

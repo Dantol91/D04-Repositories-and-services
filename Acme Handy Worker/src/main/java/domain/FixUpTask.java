@@ -9,7 +9,6 @@ import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -122,7 +121,7 @@ public class FixUpTask extends DomainEntity {
 	private Customer				customer;
 	private Collection<Phase>		phases;
 	private Warranty				warranty;
-	private Collection<Category>	categories;
+	private Category				category;
 	private Collection<Complaint>	complaints;
 
 
@@ -169,13 +168,14 @@ public class FixUpTask extends DomainEntity {
 	}
 
 	@NotNull
-	@ManyToMany
-	public Collection<Category> getCategories() {
-		return this.categories;
+	@Valid
+	@ManyToOne(optional = false)
+	public Category getCategory() {
+		return this.category;
 	}
 
-	public void setCategories(final Collection<Category> categories) {
-		this.categories = categories;
+	public void setCategory(final Category category) {
+		this.category = category;
 	}
 
 	@Valid

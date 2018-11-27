@@ -27,13 +27,13 @@ public interface FixUpTaskRepository extends JpaRepository<FixUpTask, Integer> {
 	@Query("select avg(c.fixUpTasks.size),min(c.fixUpTasks.size),max(c.fixUpTasks.size),sqrt(sum(c.fixUpTasks.size*c.fixUpTasks.size)/count(c.fixUpTasks.size)-(avg(c.fixUpTasks.size)*avg(c.fixUpTasks.size))) from Customer c")
 	Double[] computeAvgMinMaxStdvPerUser();
 
-	@Query("select avg(f.maxPrice), min(f.maxPrice) , max(f.maxPrice), sqrt(sum(f.maxPrice*f.maxPrice)/count(f.maxPrice)-(avg(f.maxPrice)*avg(f.maxPrice))) from FixUpTask f;")
+	@Query("select avg(f.maxPrice), min(f.maxPrice) , max(f.maxPrice), sqrt(sum(f.maxPrice*f.maxPrice)/count(f.maxPrice)-(avg(f.maxPrice)*avg(f.maxPrice))) from FixUpTask f")
 	Double[] computeAvgMinMaxStdvPerMaxPrice();
 
 	@Query("select f from FixUpTask f where f.publicationDate > CURRENT_DATE")
 	Collection<FixUpTask> getNotPublishedFixUpTaks();
 
-	@Query("select a.FixUpTask from HandyWorker h join h.applications a where h.id = ?1")
+	@Query("select a.fixUpTask from HandyWorker h join h.applications a where h.id = ?1")
 	Collection<FixUpTask> getHandyWorkerApplicationFixUpTasks(int handyWorkerId);
 
 	@Query("select f from FixUpTask f where f.publicationDate <= CURRENT_DATE")
@@ -43,11 +43,14 @@ public interface FixUpTaskRepository extends JpaRepository<FixUpTask, Integer> {
 	Collection<FixUpTask> getEndedFixUpTasks();
 
 	@Query("select f from FixUpTask f where f.publicationDate <= CURRENT_DATE and f.category.id = ?1")
-	Collection<FixUpTask> getVisibleTripsByCategory(int categoryId);
+	Collection<FixUpTask> getVisibleFixUpTasksByCategory(int categoryId);
 
 	@Query("select f from Customer c join c.fixUpTasks f where c.id = ?1")
 	Collection<FixUpTask> getFixUpTasksByCustomerId(int customerId);
 
-	@Query("select y from HandyWorker h join h.applications x join x.fixUpTask y where x.status = 'ACCEPTED' and e.id=?1")
+	@Query("select y from HandyWorker h join h.applications x join x.fixUpTask y where x.status = 'ACCEPTED' and h.id=?1")
 	Collection<FixUpTask> getFixUpTasksHandyWorkerApplication(int handyWorkerId);
+
+	@Query("select f from FixUpTask f join f.applications a where a.id = ?1")
+	FixUpTask getFixUpTaskByApplicationId(int applicationId);
 }

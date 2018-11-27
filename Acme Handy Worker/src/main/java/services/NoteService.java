@@ -119,27 +119,4 @@ public class NoteService {
 		return this.noteRepository.computeMinMaxAvgStddevNotesPerReport();
 	}
 
-	/*
-	 * 
-	 * //B.13.1 Un Manager puede mostrar las notas que un auditor ha escrito en sus trips
-	 * 
-	 * public Collection<Note> getNotesToManagerTrips(final int managerId) {
-	 * return this.noteRepository.getNotesToManagerTrips(managerId);
-	 * }
-	 * 
-	 * // B.14.1 Un referee puede listar y escribir sus notas en fixUpTasks. Una vez que una nota
-	 * // ha sido escrita, esta no puede ser borrada o modificada
-	 * 
-	 * // B.16.4 Un Admin puede mostrar en el dashboard las estadisticas de notes por fixUpTasks
-	 * 
-	 * public Double[] getMinMaxAvgStddevNotesPerTrip() {
-	 * return this.noteRepository.getMinMaxAvgStddevNotesPerTrip();
-	 * }
-	 * 
-	 * public Collection<Note> getNotesByAuditorId(final int auditorId) {
-	 * return this.noteRepository.getNotesByAuditorId(auditorId);
-	 * 
-	 * }
-	 */
-
 }
