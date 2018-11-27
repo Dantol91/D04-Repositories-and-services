@@ -12,15 +12,10 @@ import domain.Note;
 @Repository
 public interface NoteRepository extends JpaRepository<Note, Integer> {
 
-	//Query B/1:
-	//The minimum, the maximum, the average, and the standard deviation of the number of notes per trip.
+	@Query("select min(r.notes.size), max(r.notes.size), avg(r.notes.size), stddev(r.notes.size) from Report r")
+	Double[] computeMinMaxAvgStddevNotesPerReport();
 
-	@Query("select min(t.notes.size), max(t.notes.size), avg(t.notes.size), stddev(t.notes.size) from Trip t")
-	Double[] getMinMaxAvgStddevNotesPerTrip();
+	@Query("select c from Customer c join c.fixUpTasks f join f.notes n where c.id=?1")
+	Collection<Note> getNotesToCustomerFixUpTasks(int customerId);
 
-	@Query("select n from Manager m join m.trips t join t.notes n where m.id=?1")
-	Collection<Note> getNotesToManagerTrips(int managerId);
-
-	@Query("select n from Auditor a join a.notes n where a.id= ?1")
-	Collection<Note> getNotesByAuditorId(int auditorId);
 }

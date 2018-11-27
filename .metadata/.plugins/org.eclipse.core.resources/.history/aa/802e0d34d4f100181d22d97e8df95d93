@@ -1,0 +1,13 @@
+
+package repositories;
+
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import domain.Complaint;
+import domain.Warranty;
+
+public interface ComplaintRepository {
+
+}

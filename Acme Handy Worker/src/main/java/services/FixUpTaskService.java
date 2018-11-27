@@ -21,12 +21,12 @@ import domain.FixUpTask;
 @Transactional
 public class FixUpTaskService {
 
-	// MANAGED REPOSITORY ---------------
+	// Managed Repository
 
 	@Autowired
 	private FixUpTaskService		fixUpTaskRepository;
 
-	// SUPPORTING SERVICES -------------
+	// Supporting Services
 
 	@Autowired
 	private ActorService			actorService;
@@ -52,21 +52,11 @@ public class FixUpTaskService {
 	public FixUpTask create() {
 		final FixUpTask f;
 		Collection<Application> apps;
-		//		final Collection<HandyWorker> handyWorkers;
-		//		Collection<Note> notes;
-		//		Collection<Sponsorship> sponsorships;
 
 		f = new FixUpTask();
 		apps = new ArrayList<>();
-		//		handyWorkers = new ArrayList<>();
-		//		notes = new ArrayList<>();
-		//		sponsorships = new ArrayList<>();
 
 		f.setApplications(apps);
-		//		f.setHandyWorkers(handyWorkers);
-		//		f.setStatus("ACTIVE");
-		//	f.setNotes(notes);
-		//	f.setSponsorships(sponsorships);
 		f.setTicker(this.getTicker());
 
 		return f;
@@ -80,18 +70,10 @@ public class FixUpTaskService {
 		Assert.isTrue(fixUpTask.getPublicationDate().before(fixUpTask.getStartDate()));
 		Assert.isTrue(fixUpTask.getPublicationDate().before(fixUpTask.getEndDate()));
 		Assert.isTrue(fixUpTask.getStartDate().before(fixUpTask.getEndDate()));
-		//	if (fixUpTask.getStatus().equals("CANCELLED"))
-		//		Assert.isTrue(!fixUpTask.getCancelReason().isEmpty(), "message.error.cancelReason");
 
 		FixUpTask result;
 
-		//	if (fixUpTask.getStages().size() > 0)
-		//	fixUpTask.setPrice(this.getFixUpTaskPrice(fixUpTask));
-
 		result = this.fixUpTaskRepository.save(fixUpTask);
-
-		//	if (result.getStatus().equals("CANCELLED") && result.getApplications() != null)
-		//		this.applicationService.cancelApplications(fixUpTask);
 
 		return result;
 
@@ -153,7 +135,9 @@ public class FixUpTaskService {
 
 	// B.38.5 Un Admin puede mostrar en el dashboard el ratio de fix-up tasks con complaint
 	public Double getComplaintFixUpTasks() {
+
 		return this.fixUpTaskRepository.getComplaintFixUpTasks();
+
 	}
 
 	// Tickers se generan automaticamente, con el pattern: YYMMDD-XXXXXX, X es
@@ -399,12 +383,5 @@ public class FixUpTaskService {
 		return tripsSet;
 	}
 
-	
-	/*
-	 * public Page<FixUpTask> getTripsByManagerIdPageable(final int managerId, final Integer pageNumber, final Integer pageSize) {
-	 * final PageRequest request = new PageRequest(pageNumber - 1, pageSize);
-	 * return this.fixUpTaskRepository.getTripsByManagerIdPageable(request, managerId);
-	 * }
 	 */
-
 }

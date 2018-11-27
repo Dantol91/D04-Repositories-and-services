@@ -160,4 +160,19 @@ public class HandyWorkerService {
 
 		return this.handyWorkerRepository.getHandyWorkerByCurriculumId(curriculumId);
 	}
+
+	public HandyWorker getTopThreeHandyWorkersComplaints() {
+
+		return this.handyWorkerRepository.getTopThreeHandyWorkersComplaints();
+
+	}
+
+	//The listing of handy workers who have got accepted at least 10% more ap-plications than the average,
+	//ordered by number of applications.
+	public Collection<HandyWorker> getHandyWorkerApplications() {
+
+		return this.handyWorkerRepository.getHandyWorkerApplications();
+
+	}
+
 }

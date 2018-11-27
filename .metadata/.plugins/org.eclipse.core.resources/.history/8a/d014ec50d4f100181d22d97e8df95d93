@@ -1,0 +1,64 @@
+package services;
+
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import repositories.ComplaintRepository;
+import domain.Complaint;
+import domain.Warranty;
+
+
+public class ComplaintService {
+
+	// Managed repository 
+
+	@Autowired
+	private ComplaintRepository	complaintRepository;
+
+
+	// Supporting services 
+
+	// Constructors 
+
+	public ComplaintService() {
+			super();
+		}
+	// Simple CRUD methods 
+
+	public Complaint create() {
+			
+		final Complaint c;
+
+		
+		c = new Complaint();
+
+			return c;
+		}
+	public Warranty save(final Warranty warranty) {
+			Assert.notNull(warranty);
+			return this.warrantyRepository.save(warranty);
+		}
+	public Warranty findOne(final int warrantyId) {
+			Assert.isTrue(warrantyId != 0);
+
+			Warranty result;
+
+			result = this.warrantyRepository.findOne(warrantyId);
+
+			return result;
+		}
+	public Collection<Warranty> findAll() {
+			Collection<Warranty> result;
+
+			result = this.warrantyRepository.findAll();
+			Assert.notNull(result);
+
+			return result;
+		}
+	// Other Business Methods 
+
+}
+
+	
+}
