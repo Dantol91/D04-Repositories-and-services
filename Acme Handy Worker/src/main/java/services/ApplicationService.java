@@ -199,7 +199,7 @@ public class ApplicationService {
 
 		this.applicationRepository.save(a);
 
-		final HandyWorker h = this.handyWorkerService.findByApplicationId(a.getId());
+		//		final HandyWorker h = this.handyWorkerService.findByApplicationId(a.getId());
 
 	}
 
@@ -242,8 +242,8 @@ public class ApplicationService {
 		a.setStatus("CANCELLED");
 		this.applicationRepository.save(a);
 
-		final HandyWorker h = this.handyWorkerService.findByApplicationId(a.getId());
-		final Customer c = this.customerService.getCustomerFromApplicationId(a.getId());
+		//	final HandyWorker h = this.handyWorkerService.findByApplicationId(a.getId());
+		//	final Customer c = this.customerService.getCustomerFromApplicationId(a.getId());
 
 	}
 

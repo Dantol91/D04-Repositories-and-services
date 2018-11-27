@@ -98,12 +98,12 @@ public class CategoryService {
 		//Actualizamos las hijas
 
 		final Collection<Category> childAux = new ArrayList<>();
-		final Category childSaved;
+		//		final Category childSaved;
 
 		for (final Category c : category.getChildCategories())
-			//		this.c.setParentCategory(category);
+			c.setParentCategory(category);
 
-			category.setChildCategories(childAux);
+		category.setChildCategories(childAux);
 
 		final Category result = this.categoryRepository.save(category);
 		return result;
@@ -134,13 +134,10 @@ public class CategoryService {
 		// que en el peor de los casos será CATEGORY (equivalente a que el Trip no tiene categoría)
 
 		if (!fixUpTasks.isEmpty())
-			for (final FixUpTask f : fixUpTasks) {
-				final Category parent;
-
+			for (final FixUpTask f : fixUpTasks)
 				//			parent = this.getParent(f.getCategories().getId());
 				//			f.setCategories(parent);
 				this.fixUpTaskService.save(f);
-			}
 
 		this.categoryRepository.delete(category);
 

@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -21,19 +22,19 @@ public class NoteService {
 	// Managed repository
 
 	@Autowired
-	private NoteRepository			noteRepository;
+	private NoteRepository	noteRepository;
 
 	//Supporting services
 
 	@Autowired
-	private ActorService			actorService;
+	private ActorService	actorService;
 
-	@Autowired
-	private RefereeService			refereeService;
 
-	@Autowired
-	private AdministratorService	administratorService;
+	//	@Autowired
+	//	private RefereeService			refereeService;
 
+	//	@Autowired
+	//	private AdministratorService	administratorService;
 
 	// Constructor
 
@@ -48,15 +49,15 @@ public class NoteService {
 		Note note;
 		Date moment;
 		final Collection<Note> notes;
-		final Referee referee;
+		//final Referee referee;
 
-		referee = (Referee) this.actorService.findByPrincipal();
+		//referee = (Referee) this.actorService.findByPrincipal();
 		note = new Note();
 		moment = new Date(System.currentTimeMillis() - 1);
-		//		notes = referee.getNotes();
-		//	notes.add(note);
 
-		//		note.setReferee(referee);
+		notes = new ArrayList<Note>();
+		notes.add(note);
+
 		note.setMoment(moment);
 
 		return note;
@@ -73,10 +74,8 @@ public class NoteService {
 
 		note.setMoment(moment);
 		result = this.noteRepository.save(note);
-		//		notes = note.getReferee().getNotes();
-		//		notes.add(result);
-		//		note.getReferee().setNotes(notes);
-		//		this.refereeService.save(note.getReferee());
+		notes = new ArrayList<Note>();
+		notes.add(result);
 
 		//Comprobamos si es spam
 		//		this.administratorService.checkIsSpam(note.getRemark());

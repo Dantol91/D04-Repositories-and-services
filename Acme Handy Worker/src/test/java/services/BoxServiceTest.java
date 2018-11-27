@@ -85,7 +85,7 @@ public class BoxServiceTest extends AbstractTest {
 
 		// Probamos delete
 		this.boxService.delete(boxSaved);
-		final Box b2 = this.boxService.findOne(boxSavedId);
+		//	final Box b2 = this.boxService.findOne(boxSavedId);
 		Assert.isTrue(this.boxService.findOne(boxSavedId) == null);
 	}
 

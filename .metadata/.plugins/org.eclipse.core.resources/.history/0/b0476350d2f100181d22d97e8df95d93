@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import domain.Application;
+import domain.Category;
+import domain.Customer;
+import domain.FixUpTask;
 
 @Service
 @Transactional
@@ -166,8 +170,8 @@ public class FixUpTaskService {
 
 		res = year + month + day + "-" + alphabet.charAt(index1) + alphabet.charAt(index2) + alphabet.charAt(index3) + alphabet.charAt(index4);
 
-		// Compruebo que el ticker sea ï¿½nico
-		// Si existe algï¿½n ticker igual, vuelvo a calcularlo
+		// Compruebo que el ticker sea único
+		// Si existe algún ticker igual, vuelvo a calcularlo
 
 		for (final FixUpTask t : this.fixUpTaskRepository.findAll())
 			if (t.getTicker().equals(res))
@@ -322,9 +326,9 @@ public class FixUpTaskService {
 	/*-------------------------------------------------------------------------
 
 	
-	// C.3 Algunos trips podrï¿½n ser cancelados despuï¿½s de la fecha de
-	// publicaciï¿½n,
-	// en cuyo caso el sistema deberï¿½ almacenar el motivo.
+	// C.3 Algunos trips podrán ser cancelados después de la fecha de
+	// publicación,
+	// en cuyo caso el sistema deberá almacenar el motivo.
 	public void cancelTripAferPublication(final FixUpTask fixUpTask, final String cancelReason) {
 		Assert.notNull(fixUpTask);
 		Assert.isTrue(fixUpTask.getId() != 0);
@@ -371,9 +375,9 @@ public class FixUpTaskService {
 		fixUpTasks = this.fixUpTaskRepository.findTripsBySearchCriteria(minPrice, maxPrice, startDate, endDate, keyword);
 		List<FixUpTask> tripsSet = new ArrayList<FixUpTask>(fixUpTasks);
 
-		// Si el nï¿½mero de resultados el mayor del indicado en Configuration,
+		// Si el número de resultados el mayor del indicado en Configuration,
 		// creamos
-		// una sublista con ese nï¿½mero de resultados
+		// una sublista con ese número de resultados
 		if (fixUpTasks.size() > this.configurationService.getConfiguration().getFinderReturn())
 			tripsSet = tripsSet.subList(0, this.configurationService.getConfiguration().getFinderReturn());
 		return tripsSet;
