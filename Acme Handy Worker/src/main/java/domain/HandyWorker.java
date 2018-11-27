@@ -55,7 +55,6 @@ public class HandyWorker extends Actor {
 
 	private Collection<Tutorial>	tutorials;
 	private Curriculum				curriculum;
-	private Finder					finder;
 	private Collection<Application>	applications;
 
 
@@ -77,16 +76,6 @@ public class HandyWorker extends Actor {
 
 	public void setCurriculum(final Curriculum curriculum) {
 		this.curriculum = curriculum;
-	}
-
-	@Valid
-	@OneToOne(optional = false)
-	public Finder getFinder() {
-		return this.finder;
-	}
-
-	public void setFinder(final Finder finder) {
-		this.finder = finder;
 	}
 
 	@OneToMany(mappedBy = "handyWorker")

@@ -24,6 +24,7 @@ import domain.HandyWorker;
 public class ApplicationService {
 
 	// Managed repository
+
 	@Autowired
 	private ApplicationRepository	applicationRepository;
 
@@ -172,14 +173,14 @@ public class ApplicationService {
 		return this.applicationRepository.getHandyWorkerApplicationsByStatus(id);
 	}
 
-	public Collection<Application> getCustomerFixUpTasksApplications(final int customerId) {
+	//public Collection<Application> getCustomerFixUpTasksApplications(final int customerId) {
 
-		return this.applicationRepository.getCustomerFixUpTasksApplications(customerId);
-	}
+	//		return this.applicationRepository.getCustomerFixUpTasksApplications(customerId);
+	//		}
 
-	public Collection<String> getSetOfStatus(final int handyWorkerId) {
-		return this.applicationRepository.getSetOfStatus(handyWorkerId);
-	}
+	//public Collection<String> getSetOfStatus(final int handyWorkerId) {
+	//return this.applicationRepository.getSetOfStatus(handyWorkerId);
+	//}
 
 	public Collection<Application> getApplicationsByStatusAndHandyWorkerId(final int handyWorkerId, final String status) {
 

@@ -258,6 +258,105 @@
 		<property name="expirationYear" value="2022" />
 		<property name="CVV" value="874" />
 	</bean>
+	
+		<!-- Handy Workers -->
+
+	<bean id="handyWorker1" class="domain.HandyWorker">
+		<property name="name" value="Sara" />
+		<property name="middleName" value="" />
+		<property name="surname" value="Jimenez" />
+		<property name="photo" value="http://www.photosa.png" />
+		<property name="email" value="handyworkersa@gmail.com" />
+		<property name="phone" value="654123058" />
+		<property name="address" value="Calle Rio 2" />
+		<property name="suspicious" value="false" />
+		<property name="userAccount" ref="userAccount4" />
+		<property name="make" value="Make 1" />
+		<property name="curriculum" ref="curriculum1" />
+	</bean>
+
+	<bean id="handyWorker2" class="domain.HandyWorker">
+		<property name="name" value="Lucia" />
+		<property name="surname" value="Cumplido" />
+		<property name="photo" value="http://www.photocum.es" />
+		<property name="email" value="lucu@outlook.com" />
+		<property name="phone" value="654121078" />
+		<property name="address" value="Calle Torero 14" />
+		<property name="suspicious" value="false" />
+		<property name="userAccount" ref="userAccount5" />
+		<property name="make" value="Make 2" />
+		<property name="score" value="0.5" />
+	</bean>
+
+	<bean id="handyWorker3" class="domain.HandyWorker">
+		<property name="name" value="Salvador" />
+		<property name="surname" value="Cumplido" />
+		<property name="photo" value="http://www.photozem.es" />
+		<property name="email" value="rea@outlook.com" />
+		<property name="phone" value="654111278" />
+		<property name="address" value="Calle Manuel Garcia 14" />
+		<property name="suspicious" value="false" />
+		<property name="userAccount" ref="userAccount2" />
+		<property name="make" value="Make 3" />
+		<property name="score" value="0.5" />
+	</bean>
+
+	<bean id="handyWorker4" class="domain.HandyWorker">
+		<property name="name" value="Manuel" />
+		<property name="surname" value="Gallardo" />
+		<property name="photo" value="http://www.photorer.es" />
+		<property name="email" value="lucu@outlook.com" />
+		<property name="phone" value="654121078" />
+		<property name="address" value="Calle Rojo 14" />
+		<property name="suspicious" value="false" />
+		<property name="userAccount" ref="userAccount11" />
+		<property name="make" value="Make 4" />
+	</bean>
+	
+		<!-- Finder -->
+
+	<bean id="finder1" class="domain.Finder">
+		<property name="keyword" value="keyword 1" />
+		<property name="maxPrice" value="45.00" />
+		<property name="minPrice" value="220.00" />
+		<property name="startDate" value="22/11/2018" />
+		<property name="endDate" value="25/02/2019" />
+		<property name="fixUpTasks">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="handyWorker" ref="handyWorker1" />
+	</bean>
+
+	<bean id="finder2" class="domain.Finder">
+		<property name="fixUpTasks">
+			<list>
+				<ref bean="fixUpTask1" />
+			</list>
+		</property>
+		<property name="handyWorker" ref="handyWorker2" />
+	</bean>
+
+	<bean id="finder3" class="domain.Finder">
+		<property name="fixUpTasks">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="handyWorker" ref="handyWorker4" />
+	</bean>
+	
+	<bean id="finder4" class="domain.Finder">
+		<property name="fixUpTasks">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="handyWorker" ref="handyWorker3" />
+	</bean>
+
+	
 
 	<!-- SocialProfiles -->
 
@@ -274,6 +373,7 @@
 		<property name="link" value="http://www.twitter.com/as" />
 		<property name="actor" ref="handyWorker1" />
 	</bean>
+	
 
 	<!-- Boxes -->
 
@@ -698,44 +798,7 @@
 		</property>
 	</bean>
 
-	<!-- Finder -->
 
-	<bean id="finder1" class="domain.Finder">
-		<property name="keyword" value="keyword 1" />
-		<property name="maxPrice" value="45.00" />
-		<property name="minPrice" value="220.00" />
-		<property name="startDate" value="22/11/2018" />
-		<property name="endDate" value="25/02/2019" />
-		<property name="fixUpTasks">
-			<list>
-				<null></null>
-			</list>
-		</property>
-	</bean>
-
-	<bean id="finder2" class="domain.Finder">
-		<property name="fixUpTasks">
-			<list>
-				<ref bean="fixUpTask1" />
-			</list>
-		</property>
-	</bean>
-
-	<bean id="finder3" class="domain.Finder">
-		<property name="fixUpTasks">
-			<list>
-				<null></null>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="finder4" class="domain.Finder">
-		<property name="fixUpTasks">
-			<list>
-				<null></null>
-			</list>
-		</property>
-	</bean>
 	<!-- FixUpTasks -->
 
 	<bean id="fixUpTask1" class="domain.FixUpTask">
@@ -825,65 +888,10 @@
 		<property name="startMoment" value="14/12/2018" />
 		<property name="endMoment" value="14/12/2019" />
 	</bean>
-
-
-	<!-- Handy Workers -->
-
-	<bean id="handyWorker1" class="domain.HandyWorker">
-		<property name="name" value="Sara" />
-		<property name="middleName" value="" />
-		<property name="surname" value="Jimenez" />
-		<property name="photo" value="http://www.photosa.png" />
-		<property name="email" value="handyworkersa@gmail.com" />
-		<property name="phone" value="654123058" />
-		<property name="address" value="Calle Rio 2" />
-		<property name="suspicious" value="false" />
-		<property name="userAccount" ref="userAccount4" />
-		<property name="make" value="Make 1" />
-		<property name="finder" ref="finder1" />
-		<property name="curriculum" ref="curriculum1" />
-	</bean>
-
-	<bean id="handyWorker2" class="domain.HandyWorker">
-		<property name="name" value="Lucia" />
-		<property name="surname" value="Cumplido" />
-		<property name="photo" value="http://www.photocum.es" />
-		<property name="email" value="lucu@outlook.com" />
-		<property name="phone" value="654121078" />
-		<property name="address" value="Calle Torero 14" />
-		<property name="suspicious" value="false" />
-		<property name="userAccount" ref="userAccount5" />
-		<property name="make" value="Make 2" />
-		<property name="finder" ref="finder2" />
-		<property name="score" value="0.5" />
-	</bean>
-
-	<bean id="handyWorker3" class="domain.HandyWorker">
-		<property name="name" value="Salvador" />
-		<property name="surname" value="Cumplido" />
-		<property name="photo" value="http://www.photozem.es" />
-		<property name="email" value="rea@outlook.com" />
-		<property name="phone" value="654111278" />
-		<property name="address" value="Calle Manuel Garcia 14" />
-		<property name="suspicious" value="false" />
-		<property name="userAccount" ref="userAccount2" />
-		<property name="make" value="Make 3" />
-		<property name="score" value="0.5" />
-		<property name="finder" ref="finder4" />
-	</bean>
-
-	<bean id="handyWorker4" class="domain.HandyWorker">
-		<property name="name" value="Manuel" />
-		<property name="surname" value="Gallardo" />
-		<property name="photo" value="http://www.photorer.es" />
-		<property name="email" value="lucu@outlook.com" />
-		<property name="phone" value="654121078" />
-		<property name="address" value="Calle Rojo 14" />
-		<property name="suspicious" value="false" />
-		<property name="userAccount" ref="userAccount11" />
-		<property name="make" value="Make 4" />
-		<property name="finder" ref="finder3" />
-	</bean>
+	
+	
+	
+	
 
 	<!-- Applications -->
 

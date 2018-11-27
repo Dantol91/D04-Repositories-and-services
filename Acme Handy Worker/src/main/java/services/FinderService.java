@@ -83,14 +83,14 @@ public class FinderService {
 
 	// Other Bussines Methods 
 
-	public Finder getFinderByExplorerId(final int explorerId) {
-		return this.finderRepository.getFinderByExplorerId(explorerId);
+	public Finder getFinderByHandyWorkerId(final int handyWorkerId) {
+		return this.finderRepository.getFinderByHandyWorkerId(handyWorkerId);
 	}
 
 	public Boolean checkSearchIsInCache(final Finder finder) {
 
 		final HandyWorker h;
-		Finder lastFinder;
+		final Finder lastFinder;
 		Long passedTime;
 		Long diffHours;
 		Boolean isInCache = true;
@@ -102,7 +102,7 @@ public class FinderService {
 		//Calculamos cuanto ha pasado desde la última búsqueda
 
 		h = (HandyWorker) this.actorService.findByPrincipal();
-		lastFinder = this.finderRepository.getFinderByExplorerId(h.getId());
+		lastFinder = this.finderRepository.getFinderByHandyWorkerId(h.getId());
 		passedTime = (nowMS - searchMS) / 1000; //Pasamos a segundos
 
 		diffHours = passedTime / 3600; //Pasamos a horas

@@ -27,10 +27,10 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
 	@Query("select a from HandyWorker h join h.applications a where h.id = ?1 group by a.status")
 	Collection<Application> getHandyWorkerApplicationsByStatus(int handyWorkerId);
 
-	@Query("select a from Customer c join c.fixUpTask f join f.applications a where c.id = ?1")
-	Collection<Application> getCustomerFixUpTasksApplications(int customerId);
+	//@Query("select a from Customer c join c.fixUpTask f join f.applications a where c.id = ?1")
+	//Collection<Application> getCustomerFixUpTasksApplications(int customerId);
 
-	@Query("select distinct h.status from HandyWorker h join h.applications a where h.id = ?1")
+	@Query("select distinct a.status from HandyWorker h join h.applications a where h.id = ?1")
 	Collection<String> getSetOfStatus(int handyWorkerId);
 
 	@Query("select a from HandyWorker h join h.applications a where h.id = ?1 and a.status= ?2")
