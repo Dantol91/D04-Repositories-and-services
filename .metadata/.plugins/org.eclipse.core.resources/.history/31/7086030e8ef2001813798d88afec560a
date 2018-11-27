@@ -30,7 +30,7 @@ public class BoxServiceTest extends AbstractTest {
 
 
 	@Test
-	public void testCreateBox() {
+	public void testCreateFolder() {
 		this.authenticate("customer1");
 		Box b = null;
 		b = this.boxService.create();
@@ -39,7 +39,7 @@ public class BoxServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testSaveBox() {
+	public void testSaveFolder() {
 		this.authenticate("handyWorker1");
 		final Box box;
 		Box saved;

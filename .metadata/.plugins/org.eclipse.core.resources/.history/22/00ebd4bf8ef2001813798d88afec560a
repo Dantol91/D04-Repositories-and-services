@@ -44,7 +44,6 @@ public class ActorServiceTest extends AbstractTest {
 	public void testgetSuspiciousActors() {
 		final Collection<Actor> suspiciusActors = this.actorService.getSuspiciousActors(false);
 		Assert.notEmpty(suspiciusActors);
-		System.out.println("Suspicious: " + this.actorService.getSuspiciousActors(false));
 	}
 
 	@Test
@@ -52,7 +51,6 @@ public class ActorServiceTest extends AbstractTest {
 		this.authenticate("handyWorker1");
 		final Actor principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
-		System.out.println("FindByPrincipal: " + this.actorService.findByPrincipal());
 	}
 	@Test
 	public void testFindByUserAccount() {
@@ -60,7 +58,6 @@ public class ActorServiceTest extends AbstractTest {
 		final UserAccount userAccount = userAccounts.get(0);
 		final Actor user = this.actorService.findByUserAccount(userAccount);
 		Assert.notNull(user);
-		System.out.println("testFindByUserAccount: " + this.actorService.findByUserAccount(userAccount));
 	}
 	@Test
 	public void testFindByUserAccountId() {
@@ -69,7 +66,6 @@ public class ActorServiceTest extends AbstractTest {
 		final int id = userAccount.getId();
 		final Actor user = this.actorService.findByUserAccountId(id);
 		Assert.notNull(user);
-		System.out.println("testFindByUser: " + this.actorService.findByUserAccountId(id));
 	}
 	@Test
 	public void testGetType() {
@@ -78,7 +74,7 @@ public class ActorServiceTest extends AbstractTest {
 
 		final String type = this.actorService.getType(userAccount);
 		Assert.notNull(type);
-		System.out.println("Tipo 1 de actor: " + this.actorService.getType(userAccount));
+		System.out.println("Tipo 1 de actor" + this.actorService.getType(userAccount))
 	}
 	/*
 	 * @Test

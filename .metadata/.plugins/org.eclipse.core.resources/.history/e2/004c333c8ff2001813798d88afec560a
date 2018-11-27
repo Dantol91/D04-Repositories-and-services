@@ -52,7 +52,6 @@ public class ActorServiceTest extends AbstractTest {
 		this.authenticate("handyWorker1");
 		final Actor principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
-		System.out.println("FindByPrincipal: " + this.actorService.findByPrincipal());
 	}
 	@Test
 	public void testFindByUserAccount() {

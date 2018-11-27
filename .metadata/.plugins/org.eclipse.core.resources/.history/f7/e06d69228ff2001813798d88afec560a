@@ -44,7 +44,6 @@ public class ActorServiceTest extends AbstractTest {
 	public void testgetSuspiciousActors() {
 		final Collection<Actor> suspiciusActors = this.actorService.getSuspiciousActors(false);
 		Assert.notEmpty(suspiciusActors);
-		System.out.println("Suspicious: " + this.actorService.getSuspiciousActors(false));
 	}
 
 	@Test
@@ -52,7 +51,6 @@ public class ActorServiceTest extends AbstractTest {
 		this.authenticate("handyWorker1");
 		final Actor principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
-		System.out.println("FindByPrincipal: " + this.actorService.findByPrincipal());
 	}
 	@Test
 	public void testFindByUserAccount() {
@@ -60,7 +58,7 @@ public class ActorServiceTest extends AbstractTest {
 		final UserAccount userAccount = userAccounts.get(0);
 		final Actor user = this.actorService.findByUserAccount(userAccount);
 		Assert.notNull(user);
-		System.out.println("testFindByUserAccount: " + this.actorService.findByUserAccount(userAccount));
+		System.out.println("testFindByUserAccount: " + this.actorService.findByUserAccountId(id));
 	}
 	@Test
 	public void testFindByUserAccountId() {
