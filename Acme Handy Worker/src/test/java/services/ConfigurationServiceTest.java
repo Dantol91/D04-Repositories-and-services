@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -12,49 +13,55 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-import domain.Configuration;
-
 import utilities.AbstractTest;
+import domain.Configuration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
 @Transactional
-public class ConfigurationServiceTest extends AbstractTest{
-	
+public class ConfigurationServiceTest extends AbstractTest {
+
 	// SERVICE UNDER TEST ------------------------
 	@Autowired
-	private ConfigurationService configService;
-	
+	private ConfigurationService	configService;
+
+
 	// TESTS -------------------------------------
-	
+
 	@Test
-	public void createAndSaveTest(){
-		Configuration config = configService.create();
+	public void createAndSaveTest() {
+		final Configuration config = this.configService.create();
 		Assert.notNull(config);
-		
-		Collection<Configuration> configsBefore = configService.findAll();
-		
-		Collection<String> spamWords = new ArrayList<String>();
+
+		final Collection<Configuration> configsBefore = this.configService.findAll();
+
+		final Collection<String> spamWords = new ArrayList<String>();
+		final Collection<String> positiveWords = new ArrayList<String>();
+		final Collection<String> negativeWords = new ArrayList<String>();
 		spamWords.add("palabra");
-		
+		positiveWords.add("agradable");
+		negativeWords.add("insulto");
+
 		config.setBannerURL("http://www.banner.es");
 		config.setCountryCode("34");
 		config.setFinderCached(2);
 		config.setFinderReturn(20);
 		config.setSpamWords(spamWords);
+		config.setSpamWords(positiveWords);
+		config.setSpamWords(negativeWords);
 		config.setVATTax(24);
 		config.setWelcomeMessageEN("Welcome");
 		config.setWelcomeMessageES("Welcome");
-		
-		Configuration configSaved = configService.save(config);
-		
-		Collection<Configuration> configsAfter = configService.findAll();
-		
+
+		final Configuration configSaved = this.configService.save(config);
+
+		final Collection<Configuration> configsAfter = this.configService.findAll();
+
 		Assert.isTrue(!configsBefore.contains(configSaved));
 		Assert.isTrue(configsAfter.contains(configSaved));
-		
+
 	}
 
 }

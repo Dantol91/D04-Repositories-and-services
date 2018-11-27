@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="SponsorshipServiceTest" project="Acme Handy Worker" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="services.SponsorshipServiceTest" time="20.906">
+    <testcase name="searchSponsorship" classname="services.SponsorshipServiceTest" time="20.453"/>
+    <testcase name="deleteSponsorship" classname="services.SponsorshipServiceTest" time="0.078"/>
+    <testcase name="createAndSaveSponsorship" classname="services.SponsorshipServiceTest" time="0.375"/>
+  </testsuite>
+</testrun>

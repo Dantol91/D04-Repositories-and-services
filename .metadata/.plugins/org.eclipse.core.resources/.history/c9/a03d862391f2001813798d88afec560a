@@ -1,0 +1,73 @@
+
+package services;
+
+import java.util.Collection;
+
+import javax.transaction.Transactional;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
+
+import utilities.AbstractTest;
+import domain.Curriculum;
+import domain.PersonalRecord;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {
+	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
+})
+@Transactional
+public class CurriculumServiceTest extends AbstractTest {
+
+	// Service under test ---------------------------------
+	@Autowired
+	private CurriculumService		curriculumService;
+	@Autowired
+	private FixUpTaskService		fixUpTaskService;
+
+	@Autowired
+	private PersonalRecordService	personalRecordService;
+
+
+	// Tests 
+	@Test
+	public void testCreateSaveAndDelete() {
+		this.authenticate("ranger1");
+		Curriculum curriculum, curriculumSaved;
+		PersonalRecord pR;
+		Collection<Curriculum> cBefore, cAfter;
+
+		curriculum = this.curriculumService.create();
+		Assert.notNull(curriculum);
+
+		//Probamos save
+		pR = this.personalRecordService.create();
+		pR.setEmail("email@email.es");
+		pR.setFullName("name");
+		pR.setLinkedInProfile("https://www.asdas.es");
+		pR.setPhone("1232");
+		pR.setPhoto("https://www.asdas.es");
+		this.personalRecordService.save(pR);
+
+		curriculum.setPersonalRecord(pR);
+		curriculum.setTicker(this.fixUpTaskService.getTicker());
+
+		curriculumSaved = this.curriculumService.save(curriculum);
+		Assert.notNull(curriculumSaved);
+
+		cBefore = this.curriculumService.findAll();
+		Assert.isTrue(cBefore.contains(curriculumSaved));
+
+		//Probamos delete
+		this.curriculumService.delete(curriculumSaved);
+		cAfter = this.curriculumService.findAll();
+
+		Assert.isTrue(!cAfter.contains(curriculumSaved));
+
+	}
+
+}

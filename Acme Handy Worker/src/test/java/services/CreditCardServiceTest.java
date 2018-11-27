@@ -23,7 +23,7 @@ import domain.CreditCard;
 @Transactional
 public class CreditCardServiceTest extends AbstractTest {
 
-	// Service under test ---------------------------------
+	// Service under test 
 	@Autowired
 	private CreditCardService	creditCardService;
 
@@ -55,6 +55,10 @@ public class CreditCardServiceTest extends AbstractTest {
 
 		ccAfter = this.creditCardService.findAll();
 		Assert.isTrue(!ccAfter.contains(ccSaved));
+
+		System.out.println("Tarjeta de Crédito Create: " + this.creditCardService.create());
+		System.out.println("Tarjeta de Crédito Save: " + this.creditCardService.save(cc));
+		System.out.println("Tarjeta de Crédito FindAll: " + this.creditCardService.findAll());
 	}
 
 }

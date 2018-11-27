@@ -23,7 +23,7 @@ import domain.PersonalRecord;
 @Transactional
 public class CurriculumServiceTest extends AbstractTest {
 
-	// Service under test ---------------------------------
+	// Service under test 
 	@Autowired
 	private CurriculumService		curriculumService;
 	@Autowired
@@ -33,7 +33,7 @@ public class CurriculumServiceTest extends AbstractTest {
 	private PersonalRecordService	personalRecordService;
 
 
-	// Tests ----------------------------------------------
+	// Tests 
 	@Test
 	public void testCreateSaveAndDelete() {
 		this.authenticate("ranger1");
