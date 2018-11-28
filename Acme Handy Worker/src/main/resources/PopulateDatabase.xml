@@ -152,6 +152,34 @@
 		</property>
 		<property name="banned" value="false" />
 	</bean>
+	
+	<bean id="userAccount12" class="security.UserAccount">
+		<property name="username" value="customer3" />
+		<property name="password" value="175d2e7a63f386554x4dd66e865c3e14" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CUSTOMER" />
+				</bean>
+			</list>
+		</property>
+		<property name="banned" value="false" />
+	</bean>
+	
+	
+	<bean id="userAccount13" class="security.UserAccount">
+		<property name="username" value="customer4" />
+		<property name="password" value="175d2e7a63f386551a4dd66e865c3e14" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CUSTOMER" />
+				</bean>
+			</list>
+		</property>
+		<property name="banned" value="false" />
+	</bean>
+	
 
 	<!-- Administrator -->
 
@@ -435,7 +463,7 @@
 			</list>
 		</property>
 		<property name="systemBox" value="True" />
-		<property name="actor" ref="customer1" />
+		<property name="actor" ref="customer4" />
 	</bean>
 
 	<bean id="Box2.1" class="domain.Box">
@@ -588,6 +616,32 @@
 		<property name="suspicious" value="false" />
 		<property name="userAccount" ref="userAccount3" />
 	</bean>
+	
+	<bean id="customer3" class="domain.Customer">
+		<property name="name" value="Daniel" />
+		<property name="middleName" value="Tole" />
+		<property name="surname" value="Toledo" />
+		<property name="photo" value="http://www.photol.jpg" />
+		<property name="email" value="customer3@gmail.com" />
+		<property name="phone" value="632112700" />
+		<property name="address" value="Calle Manuel Ramirez 1" />
+		<property name="suspicious" value="false" />
+		<property name="userAccount" ref="userAccount12" />
+	</bean>
+	
+	
+	<bean id="customer4" class="domain.Customer">
+		<property name="name" value="Maria" />
+		<property name="middleName" value="Luisa" />
+		<property name="surname" value="Ramirez Gomez" />
+		<property name="photo" value="http://www.photomalu.jpg" />
+		<property name="email" value="customer4@gmail.com" />
+		<property name="phone" value="632014721" />
+		<property name="address" value="Calle Rodriguez Ramirez 1" />
+		<property name="suspicious" value="false" />
+		<property name="userAccount" ref="userAccount13" />
+	</bean>
+	
 
 	<!-- Categories -->
 
@@ -817,6 +871,11 @@
 			</list>
 		</property>
 		<property name="customer" ref="customer1" />
+		<property name="applications">
+			<list>
+				<ref bean="application1" />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="fixUpTask2" class="domain.FixUpTask">
@@ -834,10 +893,62 @@
 			</list>
 		</property>
 		<property name="customer" ref="customer2" />
+		<property name="applications">
+			<list>
+				<ref bean="application2" />
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="fixUpTask3" class="domain.FixUpTask">
 		<property name="ticker" value="181022-ABRF" />
+		<property name="publicationDate" value="14/11/2018" />
+		<property name="description" value="Description 3" />
+		<property name="address" value="Address 3" />
+		<property name="maxPrice" value="135.00" />
+		<property name="startDate" value="14/11/2018" />
+		<property name="endDate" value="14/12/2018" />
+		<property name="category" ref="category3" />
+		<property name="phases">
+			<list>
+			</list>
+		</property>
+		<property name="customer" ref="customer3" />
+		<property name="warranty" ref="warranty2" />
+		<property name="applications">
+			<list>
+				<ref bean="application3" />
+			</list>
+		</property>
+	</bean>
+	
+		
+	<bean id="fixUpTask4" class="domain.FixUpTask">
+		<property name="ticker" value="181222-AERF" />
+		<property name="publicationDate" value="13/11/2018" />
+		<property name="description" value="Description 4" />
+		<property name="address" value="Address 4" />
+		<property name="maxPrice" value="155.00" />
+		<property name="startDate" value="15/11/2018" />
+		<property name="endDate" value="11/12/2018" />
+		<property name="category" ref="category4" />
+		<property name="phases">
+			<list>
+			</list>
+		</property>
+		<property name="customer" ref="customer1" />
+		<property name="warranty" ref="warranty1" />
+			<property name="applications">
+			<list>
+				<ref bean="application4" />
+			</list>
+		</property>
+	</bean>
+	
+	
+		
+	<bean id="fixUpTask5" class="domain.FixUpTask">
+		<property name="ticker" value="181022-AXRF" />
 		<property name="publicationDate" value="14/11/2018" />
 		<property name="description" value="Description 3" />
 		<property name="address" value="Address 2" />
@@ -851,7 +962,12 @@
 		</property>
 		<property name="customer" ref="customer1" />
 		<property name="warranty" ref="warranty2" />
+		<property name="applications">
+			<list>
+			</list>
+		</property>
 	</bean>
+	
 
 	<!-- Warranties -->
 
@@ -878,9 +994,6 @@
 		<property name="endMoment" value="14/12/2019" />
 	</bean>
 	
-	
-	
-	
 
 	<!-- Applications -->
 
@@ -906,9 +1019,18 @@
 		<property name="registerMoment" value="10/04/2016" />
 		<property name="status" value="PENDING" />
 		<property name="offeredPrice" value="180.00" />
-		<property name="comment" value="Comment ap2" />
-		<property name="handyWorker" ref="handyWorker2" />
-		<property name="fixUpTask" ref="fixUpTask2" />
+		<property name="comment" value="Comment ap3" />
+		<property name="handyWorker" ref="handyWorker3" />
+		<property name="fixUpTask" ref="fixUpTask3" />
+	</bean>
+	
+	<bean id="application4" class="domain.Application">
+		<property name="registerMoment" value="10/05/2016" />
+		<property name="status" value="ACCEPTED" />
+		<property name="offeredPrice" value="110.00" />
+		<property name="comment" value="Comment ap4" />
+		<property name="handyWorker" ref="handyWorker4" />
+		<property name="fixUpTask" ref="fixUpTask4" />
 	</bean>
 
 	<!-- Curriculums -->
@@ -1103,6 +1225,14 @@
 		<property name="fixUpTask" ref="fixUpTask3" />
 	</bean>
 	
+	<bean id="complaint4" class="domain.Complaint">
+		<property name="ticker" value="170625-RSEF" />
+		<property name="moment" value="12/11/2015" />
+		<property name="description" value="Description c4" />
+		<property name="attachmentLink" value="http://www.attachmentc4.es" />
+		<property name="fixUpTask" ref="fixUpTask4" />
+	</bean>
+	
 
 	<!-- Reports -->
 
@@ -1129,6 +1259,18 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="report3" class="domain.Report">
+		<property name="moment" value="15/09/2016" />
+		<property name="description" value="Description re3" />
+		<property name="attachmentLink" value="http://www.attachmentre3.es" />
+		<property name="finalMode" value="true" />
+		<property name="notes">
+			<list>
+				<ref bean="note3" />
+			</list>
+		</property>
+	</bean>
 
 	<!-- Notes -->
 
@@ -1141,6 +1283,16 @@
 		<property name="moment" value="13/04/2016" />
 		<property name="commentCustomer" value="commentCustomer 2" />
 		<property name="commentReferee" value="commentReferee 2" />
+	</bean>
+	
+	<bean id="note3" class="domain.Note">
+		<property name="moment" value="13/05/2016" />
+		<property name="commentReferee" value="commentReferee 1" />
+	</bean>
+	
+	<bean id="note4" class="domain.Note">
+		<property name="moment" value="10/04/2016" />
+		<property name="commentCustomer" value="commentCustomer 3" />
 	</bean>
 
 	<!-- Referees -->

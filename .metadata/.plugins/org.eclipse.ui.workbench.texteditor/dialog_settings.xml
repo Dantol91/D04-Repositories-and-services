@@ -3,18 +3,19 @@
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="237" key="DIALOG_WIDTH"/>
 		<item value="558" key="DIALOG_Y_ORIGIN"/>
-		<item value="1339" key="DIALOG_X_ORIGIN"/>
 		<item value="362" key="DIALOG_HEIGHT"/>
+		<item value="1339" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Tahoma|8.25|0|WINDOWS|1|-11|0|0|0|400|0|0|0|1|0|0|0|0|Tahoma" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="true" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="FixUpTask" key="selection"/>
+		<item value="Complaint" key="selection"/>
 		<list key="findhistory">
+			<item value="complaint"/>
 			<item value="social"/>
 			<item value="fixUpTask"/>
 			<item value="fixUpTasj"/>
@@ -22,7 +23,6 @@
 			<item value="fixuptask"/>
 			<item value="getVisible"/>
 			<item value="finder"/>
-			<item value="handy"/>
 		</list>
 		<list key="replacehistory">
 			<item value="SocialProfile"/>
