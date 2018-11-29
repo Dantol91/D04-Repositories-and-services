@@ -28,29 +28,75 @@ public class EducationRecordServiceTest extends AbstractTest {
 
 
 	@Test
-	public void createSaveDelete() {
-		this.authenticate("ranger2");
+	public void testCreateEducationRecord() {
+		EducationRecord educationRecord;
 
-		EducationRecord edRecord, edSaved;
-		Collection<EducationRecord> eBefore, eAfter;
+		educationRecord = this.educationRecordService.create();
 
-		edRecord = this.educationRecordService.create();
-		Assert.notNull(edRecord);
+		Assert.notNull(educationRecord);
+		Assert.isNull(educationRecord.getDiplomaTitle());
+		Assert.isNull(educationRecord.getStartDate());
+		Assert.isNull(educationRecord.getEndDate());
+		Assert.isNull(educationRecord.getInstitution());
+		Assert.isNull(educationRecord.getAttachmentLink());
+		Assert.isNull(educationRecord.getComment());
 
-		//Probamos save
-		edRecord.setDiplomaTitle("diploma");
-		edRecord.setStartDate(Date.valueOf("2014-08-08"));
-		edSaved = this.educationRecordService.save(edRecord);
+		System.out.println("EducationRecordCreate: " + this.educationRecordService.create());
+	}
 
-		eBefore = this.educationRecordService.findAll();
-		Assert.isTrue(eBefore.contains(edSaved));
+	@Test
+	public void testSaveEducationRecord() {
+		final EducationRecord educationRecord, saved;
+		final Collection<EducationRecord> educationRecords;
+		final String diplomaTitle, institution, attachmentLink, comment;
+		final Date startDate, endDate;
 
-		//Probamos delete
-		this.educationRecordService.delete(edSaved);
+		super.authenticate("handyworker1");
+		educationRecord = this.educationRecordService.create();
 
-		eAfter = this.educationRecordService.findAll();
+		diplomaTitle = "Diploma B1";
+		institution = "US";
+		startDate = new Date(0);
+		endDate = null;
+		attachmentLink = "http://wwww.us.es";
+		comment = "comment1";
 
-		Assert.isTrue(!eAfter.contains(edSaved));
+		educationRecord.setDiplomaTitle(diplomaTitle);
+		educationRecord.setStartDate(startDate);
+		educationRecord.setEndDate(endDate);
+		educationRecord.setInstitution(institution);
+		educationRecord.setAttachmentLink(attachmentLink);
+		educationRecord.setComment(comment);
+
+		saved = this.educationRecordService.save(educationRecord);
+
+		educationRecords = this.educationRecordService.findAll();
+
+		Assert.isTrue(educationRecords.contains(saved));
+
+		super.authenticate(null);
+
+	}
+
+	@Test
+	public void testDeleteEducationRecord() {
+		EducationRecord educationRecord;
+		Collection<EducationRecord> educationRecords;
+
+		super.authenticate("handyworker1");
+		educationRecord = this.educationRecordService.findOne(super.getEntityId("educationRecord1"));
+		educationRecords = this.educationRecordService.findAll();
+
+		Assert.isTrue(educationRecords.contains(educationRecord));
+
+		this.educationRecordService.delete(educationRecord);
+
+		educationRecords = this.educationRecordService.findAll();
+
+		Assert.isTrue(!(educationRecords.contains(educationRecord)));
+
+		super.authenticate(null);
+
 	}
 
 }

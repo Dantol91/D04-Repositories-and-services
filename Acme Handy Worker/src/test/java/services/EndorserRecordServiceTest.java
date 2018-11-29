@@ -27,29 +27,74 @@ public class EndorserRecordServiceTest extends AbstractTest {
 
 
 	@Test
-	public void createSaveDelete() {
-		this.authenticate("ranger2");
+	public void testCreateEndorserRecord() {
+		EndorserRecord endorserRecord;
 
-		EndorserRecord edRecord, edSaved;
-		Collection<EndorserRecord> eBefore, eAfter;
+		endorserRecord = this.endorserRecordService.create();
 
-		edRecord = this.endorserRecordService.create();
-		Assert.notNull(edRecord);
+		Assert.notNull(endorserRecord);
+		Assert.isNull(endorserRecord.getFullName());
+		Assert.isNull(endorserRecord.getEmail());
+		Assert.isNull(endorserRecord.getPhone());
+		Assert.isNull(endorserRecord.getLinkedInProfile());
+		Assert.isNull(endorserRecord.getComment());
 
-		//Probamos save
-		edRecord.setEmail("email@email.es");
-		edRecord.setFullName("name");
-		edRecord.setPhone("131232");
-		edSaved = this.endorserRecordService.save(edRecord);
-
-		eBefore = this.endorserRecordService.findAll();
-		Assert.isTrue(eBefore.contains(edSaved));
-
-		//Probamos delete
-		this.endorserRecordService.delete(edSaved);
-
-		eAfter = this.endorserRecordService.findAll();
-
-		Assert.isTrue(!eAfter.contains(edSaved));
 	}
+
+	@Test
+	public void testSaveEndorserRecord() {
+		EndorserRecord endorserRecord, saved;
+		Collection<EndorserRecord> endorserRecords;
+		String fullName, email;
+		final String phone;
+		String linkedInProfile;
+		final String comment;
+
+		super.authenticate("handyworker1");
+		endorserRecord = this.endorserRecordService.create();
+
+		fullName = "Ruben Garcia";
+		email = "prueba@gmail.com";
+		phone = "+34 675202928";
+		linkedInProfile = "http://www.linkediner.com";
+		comment = "comment1";
+
+		endorserRecord.setFullName(fullName);
+		endorserRecord.setEmail(email);
+		endorserRecord.setPhone(phone);
+		endorserRecord.setLinkedInProfile(linkedInProfile);
+		endorserRecord.setComment(comment);
+
+		saved = this.endorserRecordService.save(endorserRecord);
+
+		endorserRecords = this.endorserRecordService.findAll();
+
+		Assert.isTrue(endorserRecords.contains(saved));
+
+		super.authenticate(null);
+
+	}
+
+	@Test
+	public void testDeleteEndorserRecord() {
+		EndorserRecord endorserRecord;
+		Collection<EndorserRecord> endorserRecords;
+
+		super.authenticate("handyworker1");
+
+		endorserRecord = this.endorserRecordService.findOne(super.getEntityId("endorserRecord1"));
+		endorserRecords = this.endorserRecordService.findAll();
+
+		Assert.isTrue(endorserRecords.contains(endorserRecord));
+
+		this.endorserRecordService.delete(endorserRecord);
+
+		endorserRecords = this.endorserRecordService.findAll();
+
+		Assert.isTrue(!(endorserRecords.contains(endorserRecord)));
+
+		super.authenticate(null);
+
+	}
+
 }

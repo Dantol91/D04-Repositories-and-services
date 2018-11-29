@@ -1,0 +1,163 @@
+
+package services;
+
+import java.util.Collection;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
+
+import utilities.AbstractTest;
+import domain.Actor;
+import domain.Box;
+import domain.Message;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {
+	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
+})
+@Transactional
+public class MessageServiceTest extends AbstractTest {
+
+	@Autowired
+	private MessageService	messageService;
+	@Autowired
+	private ActorService	actorService;
+
+
+	@Test
+	public void SearchMessage() {
+		final Collection<Message> messages = this.messageService.findAll();
+	
+		final Message message = this.messageService.findOne(1692);
+		
+		System.out.println("Message" + message.getSender());
+		Assert.isTrue(messages.contains(message));
+
+	}
+
+	@Test
+	public void testCreateMessage() {
+		this.authenticate("customer");
+		Message message = null;
+		message = this.messageService.create();
+		System.out.println(message.getSender());
+		Assert.notNull(message);
+		this.authenticate(null);
+
+	}
+	//Mal
+	@Test
+	public void testSaveAndDeleteMessage() {
+		this.authenticate("customer1");
+		Message message, saved;
+		Collection<Message> messages;
+		message = this.messageService.create();
+		message.setSubject("subject1");
+		message.setBody("body1");
+		message.setPriority("HIGH");
+		message.setSender(this.actorService.findByPrincipal());
+		message.setRecipient(this.actorService.findByPrincipal());
+		saved = this.messageService.save(message);
+		Assert.notNull(saved);
+		messages = this.messageService.findAll();
+		Assert.isTrue(messages.contains(saved));
+
+		//Delete
+
+		final Actor customer4 = this.actorService.findByPrincipal();
+		this.messageService.delete(saved);
+		Box trashbox = null;
+		for (final Box b : customer4.getBoxes())
+			if (b.getName().equals("in box"))
+				trashbox = b;
+		Assert.isTrue(trashbox.getMessages().contains(saved));
+		this.messageService.delete(saved);
+		messages = this.messageService.findAll();
+		Assert.isTrue(!messages.contains(saved));
+
+		this.authenticate(null);
+	}
+
+	@Test
+	public void testDeleteMessageFromTrashBox() {
+		this.authenticate("customer1");
+		List<Message> messages;
+		messages = (List<Message>) this.messageService.findAll();
+		final Message message = messages.get(0);
+
+		this.authenticate(null);
+	}
+
+	// @Test
+	// public void createAndSaveMessage() {
+	//
+	// authenticate("explorer1");
+	//
+	// Message message = messageService.create();
+	//
+	// //Probamos save
+	// message.setBody("body 1");
+	// message.setPriority("NEUTRAL");
+	// message.setRecipient((Actor) actorService.findAll().toArray()[0]);
+	// message.setSubject("subject 1");
+	//
+	// Message mSaved = messageService.save(message);
+	// Assert.notNull(message);
+	//
+	// Folder outboxBefore = null;
+	// for(Folder f : actorService.findByPrincipal().getFolders()){
+	// if(f.getName().equals("out box")){
+	// outboxBefore = f;
+	// }
+	// }
+	// Assert.isTrue(outboxBefore.getMessages().contains(mSaved));
+	//
+	// //Probamos delete
+	// // //Ya que el mensaje se encuentra en outbox, al borrarlo se moverá a
+	// trashbox
+	// messageService.delete(mSaved);
+	//
+	// Folder outboxAfter = null;
+	// for(Folder f : actorService.findByPrincipal().getFolders()){
+	// if(f.getName().equals("out box")){
+	// outboxAfter = f;
+	// }
+	// }
+	// Assert.isTrue(!outboxAfter.getMessages().contains(mSaved));
+	//
+	// Folder trashboxBefore = null;
+	// for(Folder f : actorService.findByPrincipal().getFolders()){
+	// if(f.getName().equals("trash box")){
+	// trashboxBefore = f;
+	// }
+	// }
+	// Assert.isTrue(trashboxBefore.getMessages().contains(mSaved));
+	//
+	// //Si volvemos a borrarlo, debe eliminarse de trashbox
+	// messageService.delete(mSaved);
+	// Folder trashboxAfter = null;
+	// for(Folder f : actorService.findByPrincipal().getFolders()){
+	// if(f.getName().equals("trash box")){
+	// trashboxAfter = f;
+	// }
+	// }
+	//
+	// Assert.isTrue(!trashboxAfter.getMessages().contains(mSaved));
+	//
+	// }
+
+	@Test
+	public void DeleteMessage() {
+
+		final Message message = this.messageService.findOne(1692);
+		this.messageService.delete(message);
+	}
+
+}

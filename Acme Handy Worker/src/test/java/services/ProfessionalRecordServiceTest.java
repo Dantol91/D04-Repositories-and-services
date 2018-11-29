@@ -1,7 +1,6 @@
 
 package services;
 
-import java.sql.Date;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -28,30 +27,75 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 
 
 	@Test
-	public void createSaveDelete() {
-		this.authenticate("ranger2");
+	public void testCreateProfessionalRecord() {
+		ProfessionalRecord professionalRecord;
 
-		ProfessionalRecord edRecord, edSaved;
-		Collection<ProfessionalRecord> eBefore, eAfter;
+		professionalRecord = this.professionalRecordService.create();
 
-		edRecord = this.professionalRecordService.create();
-		Assert.notNull(edRecord);
+		Assert.notNull(professionalRecord);
+		Assert.isNull(professionalRecord.getCompanyName());
+		Assert.isNull(professionalRecord.getStartDate());
+		Assert.isNull(professionalRecord.getEndDate());
+		Assert.isNull(professionalRecord.getRole());
+		Assert.isNull(professionalRecord.getAttachmentLink());
+		Assert.isNull(professionalRecord.getComment());
+	}
 
-		//Probamos save
-		edRecord.setRole("asda");
-		edRecord.setCompanyName("name");
-		edRecord.setStartDate(Date.valueOf("2016-06-06"));
-		edSaved = this.professionalRecordService.save(edRecord);
+	/*
+	 * @Test
+	 * public void testSaveProfessionalRecord() {
+	 * final ProfessionalRecord professionalRecord, saved;
+	 * final Collection<ProfessionalRecord> professionalRecords;
+	 * final String companyName, role, attachmentLink, comment;
+	 * final Date startDate, endDate;
+	 * 
+	 * super.authenticate("handyworker1");
+	 * professionalRecord = this.professionalRecordService.create();
+	 * 
+	 * companyName = "Ayesa";
+	 * role = "Salesforce Developer";
+	 * startDate = new Date(1);
+	 * endDate = new Date(4);
+	 * attachmentLink = "http://wwww.ayesa.com";
+	 * comment = "comment1";
+	 * 
+	 * professionalRecord.setCompanyName(companyName);
+	 * professionalRecord.setStartDate(startDate);
+	 * professionalRecord.setEndDate(endDate);
+	 * professionalRecord.setRole(role);
+	 * professionalRecord.setAttachmentLink(attachmentLink);
+	 * professionalRecord.setComment(comment);
+	 * 
+	 * saved = this.professionalRecordService.save(professionalRecord);
+	 * 
+	 * professionalRecords = this.professionalRecordService.findAll();
+	 * 
+	 * Assert.isTrue(professionalRecords.contains(saved));
+	 * 
+	 * super.authenticate(null);
+	 * 
+	 * }
+	 */
 
-		eBefore = this.professionalRecordService.findAll();
-		Assert.isTrue(eBefore.contains(edSaved));
+	@Test
+	public void testDeleteProfessionalRecord() {
+		ProfessionalRecord professionalRecord;
+		Collection<ProfessionalRecord> professionalRecords;
 
-		//Probamos delete
-		this.professionalRecordService.delete(edSaved);
+		super.authenticate("handyworker1");
+		professionalRecord = this.professionalRecordService.findOne(super.getEntityId("professionalRecord1"));
+		professionalRecords = this.professionalRecordService.findAll();
 
-		eAfter = this.professionalRecordService.findAll();
+		Assert.isTrue(professionalRecords.contains(professionalRecord));
 
-		Assert.isTrue(!eAfter.contains(edSaved));
+		this.professionalRecordService.delete(professionalRecord);
+
+		professionalRecords = this.professionalRecordService.findAll();
+
+		Assert.isTrue(!(professionalRecords.contains(professionalRecord)));
+
+		super.authenticate(null);
+
 	}
 
 }

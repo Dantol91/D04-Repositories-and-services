@@ -63,6 +63,12 @@ public class PhaseService {
 		return result;
 	}
 
+	public void delete(final Phase phase) {
+		Assert.notNull(phase);
+
+		this.phaseRepository.delete(phase);
+	}
+
 	// Other Business Methods 
 
 }

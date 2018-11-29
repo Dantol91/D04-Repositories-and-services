@@ -1,3 +1,4 @@
+// Revisar
 
 package services;
 
@@ -36,7 +37,7 @@ public class CurriculumServiceTest extends AbstractTest {
 	// Tests 
 	@Test
 	public void testCreateSaveAndDelete() {
-		this.authenticate("ranger1");
+		this.authenticate("handyWorker1");
 		Curriculum curriculum, curriculumSaved;
 		PersonalRecord pR;
 		Collection<Curriculum> cBefore, cAfter;

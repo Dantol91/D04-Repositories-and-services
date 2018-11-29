@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="MessageServiceTest" project="Acme Handy Worker" tests="4" started="4" failures="0" errors="0" ignored="0">
+  <testsuite name="services.MessageServiceTest" time="19.563">
+    <testcase name="testFindAll" classname="services.MessageServiceTest" time="19.297"/>
+    <testcase name="testFindOne" classname="services.MessageServiceTest" time="0.063"/>
+    <testcase name="SearchMessage" classname="services.MessageServiceTest" time="0.093"/>
+    <testcase name="testDeleteMessageFromTrashBox" classname="services.MessageServiceTest" time="0.11"/>
+  </testsuite>
+</testrun>

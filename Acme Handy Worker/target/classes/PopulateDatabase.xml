@@ -152,7 +152,7 @@
 		</property>
 		<property name="banned" value="false" />
 	</bean>
-	
+
 	<bean id="userAccount12" class="security.UserAccount">
 		<property name="username" value="customer3" />
 		<property name="password" value="175d2e7a63f386554x4dd66e865c3e14" />
@@ -165,8 +165,8 @@
 		</property>
 		<property name="banned" value="false" />
 	</bean>
-	
-	
+
+
 	<bean id="userAccount13" class="security.UserAccount">
 		<property name="username" value="customer4" />
 		<property name="password" value="175d2e7a63f386551a4dd66e865c3e14" />
@@ -179,7 +179,7 @@
 		</property>
 		<property name="banned" value="false" />
 	</bean>
-	
+
 
 	<!-- Administrator -->
 
@@ -286,8 +286,8 @@
 		<property name="expirationYear" value="2022" />
 		<property name="CVV" value="874" />
 	</bean>
-	
-		<!-- Handy Workers -->
+
+	<!-- Handy Workers -->
 
 	<bean id="handyWorker1" class="domain.HandyWorker">
 		<property name="name" value="Sara" />
@@ -340,8 +340,8 @@
 		<property name="userAccount" ref="userAccount11" />
 		<property name="make" value="Make 4" />
 	</bean>
-	
-		<!-- Finder -->
+
+	<!-- Finder -->
 
 	<bean id="finder1" class="domain.Finder">
 		<property name="keyword" value="keyword 1" />
@@ -374,7 +374,7 @@
 		</property>
 		<property name="handyWorker" ref="handyWorker4" />
 	</bean>
-	
+
 	<bean id="finder4" class="domain.Finder">
 		<property name="fixUpTasks">
 			<list>
@@ -384,7 +384,7 @@
 		<property name="handyWorker" ref="handyWorker3" />
 	</bean>
 
-	
+
 
 	<!-- SocialProfiles -->
 
@@ -401,7 +401,7 @@
 		<property name="link" value="http://www.twitter.com/as" />
 		<property name="actor" ref="handyWorker1" />
 	</bean>
-	
+
 
 	<!-- Boxes -->
 
@@ -616,7 +616,7 @@
 		<property name="suspicious" value="false" />
 		<property name="userAccount" ref="userAccount3" />
 	</bean>
-	
+
 	<bean id="customer3" class="domain.Customer">
 		<property name="name" value="Daniel" />
 		<property name="middleName" value="Tole" />
@@ -628,8 +628,8 @@
 		<property name="suspicious" value="false" />
 		<property name="userAccount" ref="userAccount12" />
 	</bean>
-	
-	
+
+
 	<bean id="customer4" class="domain.Customer">
 		<property name="name" value="Maria" />
 		<property name="middleName" value="Luisa" />
@@ -641,7 +641,7 @@
 		<property name="suspicious" value="false" />
 		<property name="userAccount" ref="userAccount13" />
 	</bean>
-	
+
 
 	<!-- Categories -->
 
@@ -899,7 +899,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="fixUpTask3" class="domain.FixUpTask">
 		<property name="ticker" value="181022-ABRF" />
 		<property name="publicationDate" value="14/11/2018" />
@@ -921,8 +921,8 @@
 			</list>
 		</property>
 	</bean>
-	
-		
+
+
 	<bean id="fixUpTask4" class="domain.FixUpTask">
 		<property name="ticker" value="181222-AERF" />
 		<property name="publicationDate" value="13/11/2018" />
@@ -938,15 +938,15 @@
 		</property>
 		<property name="customer" ref="customer1" />
 		<property name="warranty" ref="warranty1" />
-			<property name="applications">
+		<property name="applications">
 			<list>
 				<ref bean="application4" />
 			</list>
 		</property>
 	</bean>
-	
-	
-		
+
+
+
 	<bean id="fixUpTask5" class="domain.FixUpTask">
 		<property name="ticker" value="181022-AXRF" />
 		<property name="publicationDate" value="14/11/2018" />
@@ -967,7 +967,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 
 	<!-- Warranties -->
 
@@ -993,7 +993,7 @@
 		<property name="startMoment" value="14/12/2018" />
 		<property name="endMoment" value="14/12/2019" />
 	</bean>
-	
+
 
 	<!-- Applications -->
 
@@ -1023,7 +1023,7 @@
 		<property name="handyWorker" ref="handyWorker3" />
 		<property name="fixUpTask" ref="fixUpTask3" />
 	</bean>
-	
+
 	<bean id="application4" class="domain.Application">
 		<property name="registerMoment" value="10/05/2016" />
 		<property name="status" value="ACCEPTED" />
@@ -1216,7 +1216,7 @@
 		<property name="report" ref="report2" />
 		<property name="fixUpTask" ref="fixUpTask2" />
 	</bean>
-	
+
 	<bean id="complaint3" class="domain.Complaint">
 		<property name="ticker" value="170325-RSEF" />
 		<property name="moment" value="14/12/2015" />
@@ -1224,7 +1224,7 @@
 		<property name="attachmentLink" value="http://www.attachmentc3.es" />
 		<property name="fixUpTask" ref="fixUpTask3" />
 	</bean>
-	
+
 	<bean id="complaint4" class="domain.Complaint">
 		<property name="ticker" value="170625-RSEF" />
 		<property name="moment" value="12/11/2015" />
@@ -1232,7 +1232,7 @@
 		<property name="attachmentLink" value="http://www.attachmentc4.es" />
 		<property name="fixUpTask" ref="fixUpTask4" />
 	</bean>
-	
+
 
 	<!-- Reports -->
 
@@ -1259,7 +1259,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="report3" class="domain.Report">
 		<property name="moment" value="15/09/2016" />
 		<property name="description" value="Description re3" />
@@ -1284,12 +1284,12 @@
 		<property name="commentCustomer" value="commentCustomer 2" />
 		<property name="commentReferee" value="commentReferee 2" />
 	</bean>
-	
+
 	<bean id="note3" class="domain.Note">
 		<property name="moment" value="13/05/2016" />
 		<property name="commentReferee" value="commentReferee 1" />
 	</bean>
-	
+
 	<bean id="note4" class="domain.Note">
 		<property name="moment" value="10/04/2016" />
 		<property name="commentCustomer" value="commentCustomer 3" />

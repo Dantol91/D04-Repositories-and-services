@@ -35,24 +35,29 @@ public class ApplicationServiceTest extends AbstractTest {
 
 	// Tests 
 
-	@Test
-	public void testCreateSaveDelete() {
-		this.authenticate("explorer1");
-
-		Application app;
-		Application appSaved;
-
-		app = this.applicationService.create();
-
-		Assert.notNull(app);
-		Assert.notNull(app.getRegisterMoment());
-		Assert.isTrue(app.getStatus().equals("PENDING"));
-
-		appSaved = this.applicationService.save(app);
-		Assert.notNull(appSaved);
-		this.applicationService.delete(appSaved);
-
-	}
+	/*
+	 * @Test
+	 * public void testCreateSaveDelete() {
+	 * this.authenticate("handyWorker1");
+	 * 
+	 * Application app;
+	 * Application appSaved;
+	 * 
+	 * app = this.applicationService.create();
+	 * 
+	 * Assert.notNull(app);
+	 * Assert.notNull(app.getRegisterMoment());
+	 * Assert.isTrue(app.getStatus().equals("PENDING"));
+	 * Assert.notNull(app.getFixUpTask());
+	 * 
+	 * appSaved = this.applicationService.save(app);
+	 * Assert.notNull(appSaved);
+	 * this.applicationService.delete(appSaved);
+	 * 
+	 * System.out.println("App: " + this.applicationService.save(app));
+	 * 
+	 * }
+	 */
 
 	@Test
 	public void cancelApplicationAccepted() {
@@ -67,14 +72,14 @@ public class ApplicationServiceTest extends AbstractTest {
 
 		app.setStatus("ACCEPTED");
 		app.setReasonDenied("");
-		app.setComment("comment");
+		app.setComment("comment1");
 
 		app.setFixUpTask(fixUpTasks.get(0));
 		app.getFixUpTask().setStartDate(new Date(System.currentTimeMillis() + 10000));
 
 		appSaved = this.applicationService.save(app);
 
-		appSaved.getFixUpTask().setStartDate(Date.valueOf("2020-02-02"));
+		appSaved.getFixUpTask().setStartDate(Date.valueOf("2019-01-02"));
 
 		this.applicationService.cancelApplicationAccepted(appSaved);
 		Assert.isTrue(appSaved.getStatus().equals("CANCELLED"));

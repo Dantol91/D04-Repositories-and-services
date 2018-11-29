@@ -15,35 +15,66 @@ import utilities.AbstractTest;
 })
 @Transactional
 public class TutorialServiceTest extends AbstractTest {
+
 	/*
+	 * // Service under test
+	 * 
 	 * @Autowired
 	 * private TutorialService tutorialService;
 	 * 
-	 * @Autowired
-	 * private FixUpTaskService fixUpTaskService;
 	 * 
+	 * //Test
 	 * 
 	 * @Test
-	 * public void createSaveAndDelete() {
-	 * this.authenticate("handyWorker1");
+	 * public void testCreate() {
+	 * super.authenticate("handyworker2");
+	 * final Tutorial tutorial;
+	 * HandyWorker handyWorker;
 	 * 
-	 * final Note n;
-	 * Note nSaved;
-	 * final FixUpTask fixUpTasks;
+	 * handyWorker = this.handyWorkerService.findOne(super.getEntityId("handyworker2"));
+	 * tutorial = this.tutorialService.create();
+	 * Assert.notNull(tutorial);
+	 * super.unauthenticate();
+	 * }
 	 * 
-	 * fixUpTasks = (FixUpTask) this.fixUpTaskService.findAll().toArray()[0];
-	 * n = this.noteService.create();
-	 * Assert.notNull(n);
+	 * @Test
+	 * public void testSave() {
+	 * final Tutorial tutorial;
+	 * final Tutorial tutorialSaved;
 	 * 
-	 * //Probamos save
-	 * //f.setFixUpTask(fixUpTasks);
+	 * tutorial = this.tutorialService.findOne(super.getEntityId("tutorial1"));
 	 * 
-	 * nSaved = this.noteService.save(n);
-	 * System.out.println(nSaved);
-	 * final Collection<Note> notesBefore = this.noteService.findAll();
-	 * Assert.isTrue(notesBefore.contains(nSaved));
+	 * tutorial.setTitle("title tutorial");
 	 * 
-	 * super.authenticate(null);
+	 * tutorialSaved = this.tutorialService.save(tutorial);
+	 * 
+	 * Assert.notNull(tutorialSaved);
+	 * }
+	 * 
+	 * @Test
+	 * public void testDelete() {
+	 * 
+	 * final Tutorial tutorial;
+	 * tutorial = this.tutorialService.findOne(super.getEntityId("tutorial1"));
+	 * this.tutorialService.delete(tutorial);
+	 * 
+	 * }
+	 * 
+	 * @Test
+	 * public void testFindAll() {
+	 * Collection<Tutorial> tutorials;
+	 * tutorials = this.tutorialService.findAll();
+	 * Assert.notEmpty(tutorials);
+	 * Assert.notNull(tutorials);
+	 * 
+	 * }
+	 * 
+	 * @Test
+	 * public void testFindOne() {
+	 * Tutorial tutorial;
+	 * 
+	 * tutorial = this.tutorialService.findOne(super.getEntityId("tutorial1"));
+	 * Assert.notNull(tutorial);
 	 * 
 	 * }
 	 */

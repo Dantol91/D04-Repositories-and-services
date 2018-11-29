@@ -1,7 +1,6 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -15,7 +14,6 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Box;
-import domain.Message;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -31,35 +29,41 @@ public class BoxServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreateBox() {
-		this.authenticate("customer1");
-		Box b = null;
-		b = this.boxService.create();
-		Assert.notNull(b);
-		this.authenticate(null);
+		super.authenticate("HandyWorker1");
+		final Box box;
+		box = this.boxService.create();
+		Assert.notNull(box);
+		super.unauthenticate();
+
+		System.out.println("BoxCreate: " + this.boxService.create());
+
 	}
 
 	@Test
 	public void testSaveBox() {
 		this.authenticate("handyWorker1");
-		final Box box;
-		Box saved;
+		final Box box, saved;
+
 		final Collection<Box> boxes;
+
 		box = this.boxService.create();
-		box.setName("box-1");
+		box.setName("box1");
+
 		saved = this.boxService.save(box);
 		boxes = this.boxService.findAll();
 		Assert.isTrue(boxes.contains(saved));
 		this.authenticate(null);
+
 	}
 
 	@Test
 	public void testDeleteBox() {
-		this.authenticate("customer1");
+		this.authenticate("customer2");
 		final Box box;
 		Box saved;
 		final Collection<Box> boxes;
 		box = this.boxService.create();
-		box.setName("box-1");
+		box.setName("b1");
 		saved = this.boxService.save(box);
 		this.boxService.delete(saved);
 		boxes = this.boxService.findAll();
@@ -68,25 +72,24 @@ public class BoxServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void createSaveDelete() {
-		this.authenticate("customer1");
-		Box b;
-		final Box boxSaved;
-		final Collection<Message> messages = new ArrayList<>();
-		b = this.boxService.create();
-		Assert.notNull(b);
+	public void testFindAllBox() {
+		final Collection<Box> boxes;
+		boxes = this.boxService.findAll();
+		Assert.notEmpty(boxes);
+		Assert.notNull(boxes);
 
-		// Probamos save
-		b.setName("name");
-		b.setMessages(messages);
-		boxSaved = this.boxService.save(b);
-		final Integer boxSavedId = boxSaved.getId();
-		Assert.isTrue(this.boxService.findOne(boxSavedId).equals(boxSaved));
+		System.out.println("BoxFindAll: " + this.boxService.findAll());
 
-		// Probamos delete
-		this.boxService.delete(boxSaved);
-		//	final Box b2 = this.boxService.findOne(boxSavedId);
-		Assert.isTrue(this.boxService.findOne(boxSavedId) == null);
+	}
+
+	@Test
+	public void testFindOneBox() {
+		Box box;
+		box = this.boxService.findOne(super.getEntityId("box1.1"));
+		Assert.notNull(box);
+
+		System.out.println("BoxFindOne: " + this.boxService.findOne(super.getEntityId("box1.1")));
+
 	}
 
 }

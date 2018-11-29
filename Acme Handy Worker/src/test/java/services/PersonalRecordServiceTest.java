@@ -27,32 +27,52 @@ public class PersonalRecordServiceTest extends AbstractTest {
 
 
 	@Test
-	public void createSaveDelete() {
-		this.authenticate("ranger2");
+	public void testCreatePersonalRecord() {
+		PersonalRecord personalRecord;
 
-		PersonalRecord edRecord, edSaved;
-		Collection<PersonalRecord> eBefore, eAfter;
+		personalRecord = this.personalRecordService.create();
 
-		edRecord = this.personalRecordService.create();
-		Assert.notNull(edRecord);
+		Assert.notNull(personalRecord);
+		Assert.isNull(personalRecord.getFullName());
+		Assert.isNull(personalRecord.getPhoto());
+		Assert.isNull(personalRecord.getEmail());
+		Assert.isNull(personalRecord.getPhone());
+		Assert.isNull(personalRecord.getLinkedInProfile());
 
-		//Probamos save
-		edRecord.setEmail("email@email.es");
-		edRecord.setFullName("name");
-		edRecord.setPhone("131232");
-		edRecord.setPhoto("http://www.foto.jpg");
-		edRecord.setLinkedInProfile("http://www.foto.jpg");
-		edSaved = this.personalRecordService.save(edRecord);
+	}
 
-		eBefore = this.personalRecordService.findAll();
-		Assert.isTrue(eBefore.contains(edSaved));
+	@Test
+	public void testSavePersonalRecord() {
+		PersonalRecord personalRecord, saved;
+		Collection<PersonalRecord> personalRecords;
+		String fullName;
+		final String photo;
+		String email;
+		final String phone;
+		String linkedInProfile;
 
-		//Probamos delete
-		this.personalRecordService.delete(edSaved);
+		super.authenticate("handyworker1");
+		personalRecord = this.personalRecordService.create();
 
-		eAfter = this.personalRecordService.findAll();
+		fullName = "Manuel";
+		photo = "http://www.ph1.com";
+		email = "mrodo@gmail.com";
+		phone = "668789875";
+		linkedInProfile = "http://www.linkedin.com";
 
-		Assert.isTrue(!eAfter.contains(edSaved));
+		personalRecord.setFullName(fullName);
+		personalRecord.setPhoto(photo);
+		personalRecord.setEmail(email);
+		personalRecord.setPhone(phone);
+		personalRecord.setLinkedInProfile(linkedInProfile);
+
+		saved = this.personalRecordService.save(personalRecord);
+
+		personalRecords = this.personalRecordService.findAll();
+
+		Assert.isTrue(personalRecords.contains(saved));
+
+		super.authenticate(null);
 	}
 
 }

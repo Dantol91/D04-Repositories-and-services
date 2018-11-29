@@ -3,7 +3,6 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,15 +40,22 @@ public class BoxService {
 	public Box create() {
 
 		final Box box = new Box();
+
 		box.setSystemBox(false);
 		box.setMessages(new ArrayList<Message>());
-		//	folder.setNotifications(new ArrayList<Notification>());
+
 		Actor actor;
+
 		actor = this.actorService.findByPrincipal();
+
 		final Collection<Box> actorBoxes = actor.getBoxes();
+
 		actorBoxes.add(box);
+
 		actor.setBoxes(actorBoxes);
+
 		box.setActor(this.actorService.findByPrincipal());
+
 		return box;
 	}
 
@@ -68,63 +74,6 @@ public class BoxService {
 		this.actorService.save(actor);
 
 		return boxSaved;
-
-	}
-
-	public void saveToMove(final Box box, final Box targetBox) {
-
-		Assert.notNull(targetBox);
-		Assert.notNull(box);
-		box.setParentBox(targetBox);
-
-		//		Message copy = message;
-		//		this.messageRepository.delete(message.getId());
-		//		Message savedCopy = this.messageRepository.save(copy);
-		//		Folder currentFolder = folderService.getFolderFromMessageId(copy
-		//				.getId());
-		//		Collection<Message> currentFolderMessages = currentFolder.getMessages();
-		//		currentFolderMessages.remove(copy);
-		//		
-		//		
-		//		currentFolder.setMessages(currentFolderMessages);
-		//		folderService.simpleSave(currentFolder);
-		//
-		//		// Message saved = this.messageRepository.save(message);
-		//		Collection<Message> folderMessages = folder.getMessages();
-		//		folderMessages.add(savedCopy);
-		//		folder.setMessages(folderMessages);
-		//		folderService.simpleSave(folder);
-
-	}
-
-	public Box simpleSave(final Box b) {
-		Assert.notNull(b);
-
-		final Box boxSaved = this.boxRepository.save(b);
-
-		return boxSaved;
-
-	}
-
-	public Box saveNotificationBox(final Box box) {
-		Assert.notNull(box);
-		Assert.isTrue(!box.getSystemBox());
-		Actor actor;
-		actor = this.actorService.findByPrincipal();
-		box.setActor(actor);
-		final Box boxSaved = this.boxRepository.save(box);
-		final Collection<Box> actorFolders = actor.getBoxes();
-		actorFolders.add(boxSaved);
-		actor.setBoxes(actorFolders);
-		this.actorService.save(actor);
-
-		return boxSaved;
-
-	}
-
-	public List<Box> save(final Iterable<Box> boxes) {
-		Assert.notNull(boxes);
-		return this.boxRepository.save(boxes);
 
 	}
 

@@ -19,6 +19,7 @@ import security.UserAccount;
 import security.UserAccountService;
 import utilities.AbstractTest;
 import domain.Actor;
+import domain.Administrator;
 import domain.HandyWorker;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -31,22 +32,24 @@ public class ActorServiceTest extends AbstractTest {
 	// Service under test ---------------------------------
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService			actorService;
 
 	@Autowired
-	private HandyWorkerService	handyWorkerService;
+	private HandyWorkerService		handyWorkerService;
 
 	@Autowired
-	private UserAccountService	userAccountService;
+	private AdministratorService	administratorService;
+
+	@Autowired
+	private UserAccountService		userAccountService;
 
 
 	@Test
 	public void testgetSuspiciousActors() {
-		final Collection<Actor> suspiciusActors = this.actorService.getSuspiciousActors(false);
-		Assert.notEmpty(suspiciusActors);
-		System.out.println("Suspicious: " + this.actorService.getSuspiciousActors(false));
+		final Collection<Actor> suspiciousActors = this.actorService.getSuspiciousActors(false);
+		Assert.notEmpty(suspiciousActors);
+		System.out.println("Suspicious: " + suspiciousActors);
 	}
-
 	@Test
 	public void testFindByPrincipal() {
 		this.authenticate("handyWorker1");
@@ -80,69 +83,67 @@ public class ActorServiceTest extends AbstractTest {
 		Assert.notNull(type);
 		System.out.println("Tipo 1 de actor: " + this.actorService.getType(userAccount));
 	}
-	/*
-	 * @Test
-	 * public void testBan() {
-	 * final Actor pepon = (Actor) this.actorService.findAll().toArray()[0];
-	 * pepon.setSuspicious(true); //debe ser sospechoso para poder ser baneado
-	 * this.actorService.banActor(pepon);
-	 * }
-	 * 
-	 * 
-	 * @Test
-	 * public void testUnBan() {
-	 * final Actor pepon = (Actor) this.actorService.findAll().toArray()[0];
-	 * pepon.getUserAccount().setEnabled(false);
-	 * this.actorService.unbanActor(pepon);
-	 * }
-	 */
 
 	@Test
 	public void updatePhone() {
 
-		final Actor pepon = (Actor) this.actorService.findAll().toArray()[0];
-		System.out.println(pepon.getPhone());
-		pepon.setPhone("+100 (666) 10");
-		System.out.println(pepon.getPhone());
+		final Actor actor = (Actor) this.actorService.findAll().toArray()[0];
+		System.out.println(actor.getPhone());
+		actor.setPhone("+34662178210");
+		System.out.println(actor.getPhone());
 
 	}
 
 	@Test
 	public void testCreateActor() {
 
-		final Actor a = this.handyWorkerService.create();
-		Assert.notNull(a);
+		final Actor actor = this.handyWorkerService.create();
+		Assert.notNull(actor);
+
+		System.out.println("Test Actor: " + actor);
 
 	}
 
 	@Test
 	public void testSaveActor() {
-		final UserAccount u = new UserAccount();
-		final Authority a = new Authority();
-		a.setAuthority("ADMIN");
+		final UserAccount us = new UserAccount();
+		final Authority actor = new Authority();
+
+		actor.setAuthority("ADMIN");
+
 		final Collection<Authority> authorities = new ArrayList<Authority>();
-		authorities.add(a);
-		u.setAuthorities(authorities);
+
+		authorities.add(actor);
+		us.setAuthorities(authorities);
 		Actor saved;
 		Collection<Actor> actors;
-		final HandyWorker m = this.handyWorkerService.create();
-		m.setName("Name1");
-		m.setSurname("Surname1");
-		saved = this.actorService.save(m);
+
+		final Administrator a = this.administratorService.create();
+
+		a.setName("Name1");
+		a.setSurname("Surname1");
+		a.setPhone("6667852541");
+		a.setAddress("calle 1");
+		saved = this.actorService.save(a);
 		actors = this.actorService.findAll();
 		Assert.isTrue(actors.contains(saved));
 
+		System.out.println("Test Actor: " + this.actorService.save(a));
 	}
 
 	@Test
 	public void testFindOneActor() {
 		Actor saved;
-		final HandyWorker m = this.handyWorkerService.create();
-		m.setName("Name1");
-		m.setSurname("Surname1");
-		saved = this.actorService.save(m);
+		final HandyWorker h = this.handyWorkerService.create();
+		h.setName("Name1");
+		h.setSurname("Surname1");
+		h.setScore(5.0);
+		saved = this.actorService.save(h);
 		final int actorId = saved.getId();
 		final Actor a = this.actorService.findOne(actorId);
 		Assert.isTrue(a.equals(saved));
+
+		System.out.println("Test FindOneActor: " + this.handyWorkerService.create());
 	}
+
 }

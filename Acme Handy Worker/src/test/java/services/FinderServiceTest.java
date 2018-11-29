@@ -1,6 +1,9 @@
 
 package services;
 
+import java.util.Collection;
+import java.util.Date;
+
 import javax.transaction.Transactional;
 
 import org.junit.Test;
@@ -26,18 +29,54 @@ public class FinderServiceTest extends AbstractTest {
 
 
 	@Test
-	public void testTodo() {
-		super.authenticate("handyWorker1");
-		Finder er;
-		Finder erSav;
+	public void testCreateFinder() {
+		final Finder finder;
+		finder = this.finderService.create();
+		Assert.notNull(finder);
+	}
 
-		er = this.finderService.create();
-		Assert.notNull(er, "El objeto creado es nulo");
+	@Test
+	public void testSaveFinder() {
+		final Finder finder;
+		final Finder finderSaved;
+		Date dateFinder;
+		Date dateFinderSaved;
 
-		er.setKeyword("aprobado");
-		erSav = this.finderService.save(er);
-		Assert.notNull(erSav, "El objeto guardado es nulo");
-		super.authenticate(null);
+		finder = this.finderService.findOne(super.getEntityId("finder1"));
+		dateFinder = finder.getEndDate();
+
+		finder.setKeyword("fixUpTask");
+		finderSaved = this.finderService.save(finder);
+		dateFinderSaved = finderSaved.getEndDate();
+
+		Assert.isTrue(dateFinder != dateFinderSaved);
+		Assert.notNull(finderSaved);
+	}
+	@Test
+	public void testDeleteFinder() {
+
+		final Finder finder;
+		finder = this.finderService.findOne(super.getEntityId("finder1"));
+		this.finderService.delete(finder);
+
+	}
+
+	@Test
+	public void testFindAllFinder() {
+		Collection<Finder> finders;
+		finders = this.finderService.findAll();
+		Assert.notEmpty(finders);
+		Assert.notNull(finders);
+
+	}
+
+	@Test
+	public void testFindOneFinder() {
+		Finder finder;
+
+		finder = this.finderService.findOne(super.getEntityId("finder1"));
+		Assert.notNull(finder);
+
 	}
 
 }
