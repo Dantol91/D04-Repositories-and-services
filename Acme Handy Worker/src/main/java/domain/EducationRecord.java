@@ -27,7 +27,7 @@ public class EducationRecord extends DomainEntity {
 	}
 
 
-	// Atributes
+	// Attributes
 
 	private String	diplomaTitle;
 	private Date	startDate;

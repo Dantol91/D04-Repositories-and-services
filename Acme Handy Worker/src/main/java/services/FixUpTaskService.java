@@ -109,28 +109,11 @@ public class FixUpTaskService {
 		return result;
 	}
 
-	// C.12.1 Los que pueden borrar sus trips son los managers
-	// El trip no debe haber sido publicado
-	/*
-	 * public void delete(final Trip trip) {
-	 * Assert.notNull(trip);
-	 * Assert.isTrue(trip.getId() != 0);
-	 * Assert.isTrue(trip.getPublicationDate().after(new Date(System.currentTimeMillis())));
-	 * 
-	 * // Eliminamos los stages del trip antes de eliminarlo
-	 * for (final Stage s : new ArrayList<>(trip.getStages())) {
-	 * trip.getStages().remove(s);
-	 * this.stageService.delete(s);
-	 * }
-	 * trip.getLegalText().getTrips().remove(trip);
-	 * trip.getRanger().getTrips().remove(trip);
-	 * 
-	 * final HandyWorker m = (HadnyWorker) this.actorService.findByPrincipal();
-	 * m.getFixUpTasks().remove(fixUpTask);
-	 * 
-	 * this.fixUpTaskRepository.delete(trip);
-	 * }
-	 */
+	public void delete(final FixUpTask fixUpTask) {
+		Assert.notNull(fixUpTask);
+
+		this.fixUpTaskRepository.delete(fixUpTask);
+	}
 
 	// Other Business Methods
 
@@ -262,6 +245,7 @@ public class FixUpTaskService {
 	 * return this.fixUpTaskRepository.getVisibleFixUpTasksByCategory(categoryId);
 	 * }
 	 */
+
 	public Collection<FixUpTask> showAllFixUpTaskByCategory(final int categoryId, final Collection<FixUpTask> result) {
 
 		Category category;
@@ -324,65 +308,4 @@ public class FixUpTaskService {
 		return result;
 	}
 
-	/*-------------------------------------------------------------------------
-
-	
-	// C.3 Algunos trips podrán ser cancelados después de la fecha de
-	// publicación,
-	// en cuyo caso el sistema deberá almacenar el motivo.
-	public void cancelTripAferPublication(final FixUpTask fixUpTask, final String cancelReason) {
-		Assert.notNull(fixUpTask);
-		Assert.isTrue(fixUpTask.getId() != 0);
-		Assert.isTrue(fixUpTask.getPublicationDate().before(new Date(System.currentTimeMillis())));
-		//		trip.setStatus("CANCELLED");
-		//	fixUpTask.setCancelReason(cancelReason);
-	}
-
-	public Collection<FixUpTask> findTripsBySearchCriteria(Double minPrice, Double maxPrice, Date startDate, Date endDate, String keyword) {
-
-		final Collection<FixUpTask> fixUpTasks;
-
-		if (minPrice == null)
-			minPrice = 0.;
-
-		if (maxPrice == null)
-			maxPrice = 999999.;
-
-		if (startDate == null) {
-			startDate = new Date();
-			final String startDateString = "06/06/1000";
-			final DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-			try {
-				startDate = df.parse(startDateString);
-			} catch (final ParseException e) {
-				e.printStackTrace();
-			}
-		}
-
-		if (endDate == null) {
-			endDate = new Date();
-			final String endDateString = "06/06/3000";
-			final DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-			try {
-				endDate = df.parse(endDateString);
-			} catch (final ParseException e) {
-				e.printStackTrace();
-			}
-		}
-
-		if (keyword == null)
-			keyword = "";
-
-		fixUpTasks = this.fixUpTaskRepository.findTripsBySearchCriteria(minPrice, maxPrice, startDate, endDate, keyword);
-		List<FixUpTask> tripsSet = new ArrayList<FixUpTask>(fixUpTasks);
-
-		// Si el número de resultados el mayor del indicado en Configuration,
-		// creamos
-		// una sublista con ese número de resultados
-		if (fixUpTasks.size() > this.configurationService.getConfiguration().getFinderReturn())
-			tripsSet = tripsSet.subList(0, this.configurationService.getConfiguration().getFinderReturn());
-		return tripsSet;
-	}
-
-	 */
 }

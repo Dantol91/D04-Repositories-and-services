@@ -13,8 +13,8 @@ import repositories.CustomerRepository;
 import security.Authority;
 import security.UserAccount;
 import security.UserAccountService;
-import domain.Administrator;
 import domain.Customer;
+import domain.FixUpTask;
 
 @Service
 @Transactional
@@ -36,13 +36,13 @@ public class CustomerService {
 	}
 
 	// Simple CRUD methods
-	public Administrator create() {
+	public Customer create() {
 
-		Administrator a;
+		Customer c;
 		UserAccount ua;
 		Authority auth;
 
-		a = new Administrator();
+		c = new Customer();
 
 		ua = this.userAccountService.create();
 		auth = new Authority();
@@ -50,11 +50,11 @@ public class CustomerService {
 		auth.setAuthority("CUSTOMER");
 		ua.addAuthority(auth);
 
-		a.setUserAccount(ua);
+		c.setUserAccount(ua);
 
-		a.setSuspicious(false);
+		c.setSuspicious(false);
 
-		return a;
+		return c;
 
 	}
 
@@ -65,6 +65,16 @@ public class CustomerService {
 
 		result = this.customerRepository.save(customer);
 
+		return result;
+	}
+
+	public Collection<Customer> findAll() {
+		return this.customerRepository.findAll();
+	}
+
+	public Customer findOne(final int customerId) {
+		Customer result;
+		result = this.customerRepository.findOne(customerId);
 		return result;
 	}
 
@@ -87,6 +97,23 @@ public class CustomerService {
 
 		return this.customerRepository.getCustomerMoreFixUpTasks();
 
+	}
+
+	public Collection<Customer> getEndorseCustomers(final int handyWorkerId) {
+		Collection<Customer> results;
+
+		results = this.customerRepository.getEndorseCustomers(handyWorkerId);
+
+		return results;
+	}
+
+	protected void getFixUpTasksCustomer(final Customer customer, final FixUpTask f) {
+		Collection<FixUpTask> fixUpTasks;
+
+		fixUpTasks = customer.getFixUpTasks();
+		fixUpTasks.add(f);
+
+		customer.setFixUpTasks(fixUpTasks);
 	}
 
 }

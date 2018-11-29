@@ -60,8 +60,8 @@ select count(c)/(select count(f) from FixUpTask f)*1.0 from FixUpTask c where c.
 
 - Query B/4: The top-three customers in terms of complaints.
 
-select c from Customer c join c.fixUpTasks f group by f.customer order by f.complaints.size DESC;
+select f.customer from FixUpTask f group by f.customer order by sum(f.complaints.size);
 
 - Query B/5: The top-three handy workers in terms of complaints.
 
-select h from HandyWorker h join h.applications a join a.fixUpTask f group by a.handyWorker order by f.complaints.size DESC;
+select a.handyWorker from Application a group by a.handyWorker order by sum(a.fixUpTask.complaints.size);

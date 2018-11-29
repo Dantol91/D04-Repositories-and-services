@@ -1,0 +1,109 @@
+
+package services;
+
+import java.util.Collection;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+
+import repositories.CustomerRepository;
+import security.Authority;
+import security.UserAccount;
+import security.UserAccountService;
+import domain.Customer;
+
+@Service
+@Transactional
+public class CustomerService {
+
+	// Managed repository
+	@Autowired
+	private CustomerRepository	customerRepository;
+
+	// Supported services
+
+	@Autowired
+	private UserAccountService	userAccountService;
+
+
+	// Constructor
+	public CustomerService() {
+		super();
+	}
+
+	// Simple CRUD methods
+	public Customer create() {
+
+		Customer c;
+		UserAccount ua;
+		Authority auth;
+
+		c = new Customer();
+
+		ua = this.userAccountService.create();
+		auth = new Authority();
+
+		auth.setAuthority("CUSTOMER");
+		ua.addAuthority(auth);
+
+		c.setUserAccount(ua);
+
+		c.setSuspicious(false);
+
+		return c;
+
+	}
+
+	public Customer save(final Customer customer) {
+		Assert.notNull(customer);
+
+		Customer result;
+
+		result = this.customerRepository.save(customer);
+
+		return result;
+	}
+
+	public Collection<Customer> findAll() {
+		return this.customerRepository.findAll();
+	}
+
+	public Customer findOne(final int customerId) {
+		Customer result;
+		result = this.customerRepository.findOne(customerId);
+		return result;
+	}
+
+	// Other Business Methods
+
+	public Customer getCustomerFromApplicationId(final int applicationId) {
+
+		return this.customerRepository.getCustomerFromApplicationId(applicationId);
+	}
+
+	public Customer getTopThreeCustomersComplaints() {
+
+		return this.customerRepository.getTopThreeCustomersComplaints();
+
+	}
+
+	//The listing of customers who have published at least 10% more fix-up tasks than the average, 
+	//ordered by number of applications.
+	public Collection<Customer> getCustomerMoreFixUpTasks() {
+
+		return this.customerRepository.getCustomerMoreFixUpTasks();
+
+	}
+
+	public Collection<Customer> getEndorseCustomers(final int handyWorkerId) {
+		Collection<Customer> results;
+
+		results = this.customerRepository.getEndorseCustomers(handyWorkerId);
+
+		return results;
+	}
+
+}

@@ -28,7 +28,7 @@ public class SectionServiceTest extends AbstractTest {
 	private SectionService	sectionService;
 
 
-	//Test
+	//Tests
 
 	@Test
 	public void testCreate() {
@@ -36,6 +36,7 @@ public class SectionServiceTest extends AbstractTest {
 		section = this.sectionService.create();
 		Assert.notNull(section);
 	}
+
 	@Test
 	public void testSave() {
 		final Section section;
@@ -47,8 +48,11 @@ public class SectionServiceTest extends AbstractTest {
 
 		sectionSaved = this.sectionService.save(section);
 
+		System.out.println("Section guardada:  " + section);
+
 		Assert.notNull(sectionSaved);
 	}
+
 	@Test
 	public void testDelete() {
 

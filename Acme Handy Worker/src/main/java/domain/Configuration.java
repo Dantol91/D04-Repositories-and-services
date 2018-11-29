@@ -25,7 +25,7 @@ public class Configuration extends DomainEntity {
 	}
 
 
-	// Atributes
+	// Attributes
 
 	private String				bannerURL;
 	private String				welcomeMessageEN;

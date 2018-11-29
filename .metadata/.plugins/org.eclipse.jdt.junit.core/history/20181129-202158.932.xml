@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="MiscellaneousRecordServiceTest.testSaveMiscellaneousRecord" project="Acme Handy Worker" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testcase name="testSaveMiscellaneousRecord" classname="services.MiscellaneousRecordServiceTest" time="19.905"/>
+</testrun>

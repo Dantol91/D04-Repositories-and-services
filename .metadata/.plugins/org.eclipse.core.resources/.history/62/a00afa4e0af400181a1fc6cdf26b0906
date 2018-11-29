@@ -1,0 +1,64 @@
+
+package services;
+
+import javax.transaction.Transactional;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
+
+import security.UserAccount;
+import security.UserAccountService;
+import utilities.AbstractTest;
+import domain.Referee;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {
+	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
+})
+@Transactional
+public class RefereeServiceTest extends AbstractTest {
+
+	@Autowired
+	private RefereeService		refereeService;
+
+	// Service under test 
+
+	@Autowired
+	private UserAccountService	userAccountService;
+
+
+	// Tests 
+
+	@Test
+	public void testCreate() {
+		Referee referee;
+		referee = this.refereeService.create();
+		Assert.notNull(referee);
+	}
+
+	@Test
+	public void testSaveReferee() {
+		Referee referee, saved;
+		UserAccount userAccount;
+
+		userAccount = this.userAccountService.findByUsername("referee2");
+
+		referee = this.refereeService.create();
+		referee.setName("Roberto");
+		referee.setAddress("Calle Referee1 test");
+		referee.setEmail("testReferee@gmail.com>");
+		referee.setMiddleName("Rodriguez");
+		referee.setPhone("+34 662187250");
+		referee.setPhoto("hhtps://phototest.com/dsf");
+		referee.setSurname("Martinez");
+		referee.setUserAccount(userAccount);
+
+		saved = this.refereeService.save(referee);
+		Assert.isTrue(this.refereeService.findOne(saved.getId()).equals(saved));
+	}
+
+}

@@ -10,7 +10,7 @@ import domain.Complaint;
 @Repository
 public interface ComplaintRepository extends JpaRepository<Complaint, Integer> {
 
-	@Query("select min(f.complaints.size), max(f.complaints.size), avg(f.complaints.size), sqrt(sum(f.complaints.size*f.complaints.size)/count(f.complaints.size)-(avg(f.complaints.size)*avg(f.complaints.size))) from FixUpTask f;")
+	@Query("select min(f.complaints.size), max(f.complaints.size), avg(f.complaints.size), sqrt(sum(f.complaints.size*f.complaints.size)/count(f.complaints.size)-(avg(f.complaints.size)*avg(f.complaints.size))) from FixUpTask f")
 	Double[] computeMinMaxAvgStddevComplaintsPerFixUpTasks();
 
 }

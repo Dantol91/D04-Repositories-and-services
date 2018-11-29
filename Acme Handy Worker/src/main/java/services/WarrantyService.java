@@ -63,6 +63,12 @@ public class WarrantyService {
 		return result;
 	}
 
+	public void delete(final Warranty warranty) {
+		Assert.notNull(warranty);
+
+		this.warrantyRepository.delete(warranty);
+	}
+
 	// Other Business Methods 
 
 }

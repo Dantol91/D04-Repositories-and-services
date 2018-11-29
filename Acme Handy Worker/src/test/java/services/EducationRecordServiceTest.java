@@ -41,7 +41,6 @@ public class EducationRecordServiceTest extends AbstractTest {
 		Assert.isNull(educationRecord.getAttachmentLink());
 		Assert.isNull(educationRecord.getComment());
 
-		System.out.println("EducationRecordCreate: " + this.educationRecordService.create());
 	}
 
 	@Test

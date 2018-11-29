@@ -1,0 +1,80 @@
+
+package services;
+
+import javax.transaction.Transactional;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
+
+import security.UserAccount;
+import security.UserAccountService;
+import utilities.AbstractTest;
+import domain.Referee;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {
+	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
+})
+@Transactional
+public class RefereeServiceTest extends AbstractTest {
+
+	@Autowired
+	private RefereeService		refereeService;
+
+
+	// Service under test 
+
+
+	@Autowired
+	private UserAccountService	userAccountService;
+
+
+	// Tests 
+
+	@Test
+	public void testSaveReferee() {
+		Referee referee, saved;
+		UserAccount userAccount;
+
+		userAccount = this.userAccountService.findByUsername("referee2");
+
+		referee = this.refereeService.create();
+		referee.setName("Roberto");
+		referee.setAddress("Calle Referee test");
+		referee.setEmail("testReferee@gmail.com>");
+		referee.setMiddleName("Cuello");
+		referee.setPhone("+34 662187250");
+		referee.setPhoto("hhtps://phototest.com/dsf");
+		referee.setSurname("Martinez");
+		referee.setUserAccount(userAccount);
+
+		saved = this.refereeService.save(referee);
+		Assert.isTrue(this.refereeService.findOne(saved.getId()).equals(saved));
+	}
+
+	/*
+	 * @Test
+	 * public void selfAssignComplaint() {
+	 * int refereeId, complaintsSelfAssigned1, complaintsSelfAssigned2;
+	 * Referee referee1, referee2;
+	 * Complaint complaint;
+	 * 
+	 * complaint = this.createSimpleComplaint();
+	 * refereeId = super.getEntityId("referee1");
+	 * 
+	 * referee1 = this.refereeService.findOne(refereeId);
+	 * complaintsSelfAssigned1 = referee1.getComplaints().size();
+	 * 
+	 * this.refereeService.selfAssignComplaint(referee1, complaint);
+	 * referee2 = this.refereeService.findOne(refereeId);
+	 * complaintsSelfAssigned2 = referee2.getComplaints().size();
+	 * 
+	 * Assert.isTrue(complaintsSelfAssigned1 == complaintsSelfAssigned2 - 1);
+	 * }
+	 */
+
+}

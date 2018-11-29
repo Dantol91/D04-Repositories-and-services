@@ -22,7 +22,7 @@ import domain.Phase;
 @Transactional
 public class PhaseServiceTest extends AbstractTest {
 
-	/// Service under test
+	// Service under test
 
 	@Autowired
 	private PhaseService		phaseService;
@@ -31,72 +31,47 @@ public class PhaseServiceTest extends AbstractTest {
 	private FixUpTaskService	fixUpTaskService;
 
 
+	//Tests
+
 	@Test
-	public void testUpdatePhasePositive() {
+	public void testCreate() {
 		Phase phase;
 
-		phase = this.phaseService.findOne(super.getEntityId("phase8"));
+		phase = this.phaseService.create();
+		Assert.notNull(phase);
+	}
+
+	@Test
+	public void testSavePhase() {
+		Phase phase;
+
+		phase = this.phaseService.findOne(super.getEntityId("phase1"));
 
 		super.authenticate("handyWorker3");
 
-		phase.setTitle("Título modificado");
-		phase.setDescription("Esta fase ha sido modificada para un test");
+		phase.setTitle("Títle");
+		phase.setDescription("phaseDesc");
 		this.phaseService.save(phase);
 
-		super.unauthenticate();
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testUpdateNotOwnedPhase() {
-		Phase phase;
-
-		phase = this.phaseService.findOne(super.getEntityId("phase8"));
-
-		super.authenticate("handyWorker4");
-
-		phase.setTitle("Título modificado");
-		phase.setDescription("Esta fase ha sido modificada para un test");
-		this.phaseService.save(phase);
-
+		System.out.println("Phase guardada:  " + phase);
 		super.unauthenticate();
 	}
 
 	@Test
 	public void testDeletePhase() {
 		Phase phase;
-		FixUpTask referedFUT;
+		FixUpTask f;
 
-		phase = this.phaseService.findOne(super.getEntityId("phase8"));
+		phase = this.phaseService.findOne(super.getEntityId("phase1"));
 
 		super.authenticate("handyWorker3");
 
-		phase.setTitle("Título modificado");
-		phase.setDescription("Esta fase ha sido modificada para un test");
+		phase.setTitle("TítlePhase1");
+		phase.setDescription("DescPhase1");
 		this.phaseService.delete(phase);
 
-		// referedFUT is the FixUpTask which contains phase8
-		referedFUT = this.fixUpTaskService.findOne(super.getEntityId("fixUpTask6"));
-		Assert.isTrue(!referedFUT.getPhases().contains(phase));
-
-		super.unauthenticate();
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testDeleteNotOwnedPhase() {
-		Phase phase;
-		FixUpTask referedFUT;
-
-		phase = this.phaseService.findOne(super.getEntityId("phase8"));
-
-		super.authenticate("handyWorker4");
-
-		phase.setTitle("Título modificado");
-		phase.setDescription("Esta fase ha sido modificada para un test");
-		this.phaseService.delete(phase);
-
-		// referedFUT is the FixUpTask which contains phase8
-		referedFUT = this.fixUpTaskService.findOne(super.getEntityId("fixUpTask6"));
-		Assert.isTrue(!referedFUT.getPhases().contains(phase));
+		f = this.fixUpTaskService.findOne(super.getEntityId("fixUpTask2"));
+		Assert.isTrue(!f.getPhases().contains(phase));
 
 		super.unauthenticate();
 	}

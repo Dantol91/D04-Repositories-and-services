@@ -25,31 +25,30 @@ import domain.Sponsorship;
 @Transactional
 public class SponsorshipServiceTest extends AbstractTest {
 
+	// Service under test
+
 	@Autowired
 	private SponsorService		sponsorService;
 
 	@Autowired
 	private SponsorshipService	sponsorshipService;
 
-	//	@Autowired
-	//	private FixUpTaskService	fixUpTaskService;
-
 	@Autowired
 	private CreditCardService	creditcardService;
 
+
+	//Tests
 
 	@Test
 	public void createAndSaveSponsorship() {
 		this.authenticate("sponsor1");
 
 		final Sponsorship sp = this.sponsorshipService.create();
-		sp.setBannerURL("http://marca.com");
+		sp.setBannerURL("http://as.com");
 
-		//		sp.setFixUpTask(this.fixUpTaskService.findOne(2534));
-
-		final Collection<CreditCard> cred = this.creditcardService.findAll();
-		final List<CreditCard> spp = new ArrayList<CreditCard>(cred);
-		final CreditCard sps = spp.get(0);
+		final Collection<CreditCard> crt = this.creditcardService.findAll();
+		final List<CreditCard> s = new ArrayList<CreditCard>(crt);
+		final CreditCard sps = s.get(0);
 		sp.setCreditCard(this.creditcardService.findOne(sps.getId()));
 		final List<Sponsor> sponsors = new ArrayList<Sponsor>(this.sponsorService.findAll());
 		sp.setSponsor(sponsors.get(0));
@@ -60,24 +59,22 @@ public class SponsorshipServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void searchSponsorship() {
+	public void testFindAllSponsorship() {
 
 		final Collection<Sponsorship> sp = this.sponsorshipService.findAll();
-		final List<Sponsorship> spp = new ArrayList<Sponsorship>(sp);
-		final Sponsorship sps = spp.get(0);
+		final List<Sponsorship> s = new ArrayList<Sponsorship>(sp);
+		final Sponsorship sps = s.get(0);
 		this.sponsorshipService.findOne(sps.getId());
 
 		System.out.println("Search Sponsorship: " + this.sponsorshipService.findOne(sps.getId()));
 	}
 
 	@Test
-	public void deleteSponsorship() {
+	public void testDeleteSponsorship() {
 		final Collection<Sponsorship> sp = this.sponsorshipService.findAll();
-		final List<Sponsorship> spp = new ArrayList<Sponsorship>(sp);
-		final Sponsorship sps = spp.get(0);
+		final List<Sponsorship> s = new ArrayList<Sponsorship>(sp);
+		final Sponsorship sps = s.get(0);
 		this.sponsorshipService.delete(sps);
-
-		System.out.println("Delete Sponsorship :" + spp.get(0));
 
 	}
 }

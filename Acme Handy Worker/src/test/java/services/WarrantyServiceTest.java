@@ -1,14 +1,19 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import domain.Warranty;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -17,36 +22,33 @@ import utilities.AbstractTest;
 @Transactional
 public class WarrantyServiceTest extends AbstractTest {
 
+	// Service under test 
+
 	@Autowired
 	private WarrantyService	warrantyService;
 
-	/*
-	 * @Autowired
-	 * private FixUpTaskService fixUpTaskService;
-	 * 
-	 * 
-	 * @Test
-	 * public void createSaveAndDelete() {
-	 * this.authenticate("handyWorker1");
-	 * 
-	 * final Note n;
-	 * Note nSaved;
-	 * final FixUpTask fixUpTasks;
-	 * 
-	 * fixUpTasks = (FixUpTask) this.fixUpTaskService.findAll().toArray()[0];
-	 * n = this.noteService.create();
-	 * Assert.notNull(n);
-	 * 
-	 * //Probamos save
-	 * //f.setFixUpTask(fixUpTasks);
-	 * 
-	 * nSaved = this.noteService.save(n);
-	 * System.out.println(nSaved);
-	 * final Collection<Note> notesBefore = this.noteService.findAll();
-	 * Assert.isTrue(notesBefore.contains(nSaved));
-	 * 
-	 * super.authenticate(null);
-	 * 
-	 * }
-	 */
+
+	@Test
+	public void testSaveDeleteWarranty() {
+		Warranty warranty, saved;
+		Collection<Warranty> warranties;
+
+		warranty = this.warrantyService.create();
+		warranty.setFinalMode(false);
+		warranty.setLaws("Test laws");
+		warranty.setTerms("Test terms");
+		warranty.setTitle("Test title");
+
+		saved = this.warrantyService.save(warranty);
+		warranties = this.warrantyService.findAll();
+		Assert.isTrue(warranties.contains(saved));
+
+		this.warrantyService.delete(saved);
+		warranties = this.warrantyService.findAll();
+		Assert.isTrue(!warranties.contains(saved));
+
+		System.out.println("Warranty guardada: " + saved);
+
+	}
+
 }

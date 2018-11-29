@@ -26,7 +26,7 @@ public class Curriculum extends DomainEntity {
 	}
 
 
-	// Attributes ----------------------------------------------------------------------
+	// Attributes 
 
 	private String	ticker;
 

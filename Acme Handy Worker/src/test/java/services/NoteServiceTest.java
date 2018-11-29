@@ -13,7 +13,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
-import domain.FixUpTask;
 import domain.Note;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,6 +22,8 @@ import domain.Note;
 @Transactional
 public class NoteServiceTest extends AbstractTest {
 
+	// Service under test 
+
 	@Autowired
 	private NoteService			noteService;
 
@@ -30,27 +31,59 @@ public class NoteServiceTest extends AbstractTest {
 	private FixUpTaskService	fixUpTaskService;
 
 
+	// Tests 
+
+	//Tests
+
 	@Test
-	public void createSaveAndDelete() {
-		this.authenticate("handyWorker1");
+	public void testCreateNote() {
+		Note note;
+		note = this.noteService.create();
+		Assert.notNull(note);
+	}
 
-		final Note n;
-		Note nSaved;
-		final FixUpTask fixUpTasks;
+	/*
+	 * @Test
+	 * public void testSave() {
+	 * final Section section;
+	 * final Section sectionSaved;
+	 * 
+	 * section = this.noteService.findOne(super.getEntityId("note1"));
+	 * 
+	 * section.setTitle("title section");
+	 * 
+	 * sectionSaved = this.noteService.save(note);
+	 * 
+	 * System.out.println("Section guardada:  " + section);
+	 * 
+	 * Assert.notNull(noteSaved);
+	 * }
+	 */
 
-		fixUpTasks = (FixUpTask) this.fixUpTaskService.findAll().toArray()[0];
-		n = this.noteService.create();
-		Assert.notNull(n);
+	@Test
+	public void testDeleteNote() {
 
-		//Probamos save
-		//f.setFixUpTask(fixUpTasks);
+		final Note note;
+		note = this.noteService.findOne(super.getEntityId("note1"));
+		this.noteService.delete(note);
 
-		nSaved = this.noteService.save(n);
-		System.out.println(nSaved);
-		final Collection<Note> notesBefore = this.noteService.findAll();
-		Assert.isTrue(notesBefore.contains(nSaved));
+	}
 
-		super.authenticate(null);
+	@Test
+	public void testFindAllNote() {
+		final Collection<Note> notes;
+		notes = this.noteService.findAll();
+		Assert.notEmpty(notes);
+		Assert.notNull(notes);
+
+	}
+
+	@Test
+	public void testFindOneNote() {
+		Note note;
+
+		note = this.noteService.findOne(super.getEntityId("note1"));
+		Assert.notNull(note);
 
 	}
 

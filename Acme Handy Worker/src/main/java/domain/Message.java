@@ -28,7 +28,7 @@ public class Message extends DomainEntity {
 	}
 
 
-	// Atributes
+	// Attributes
 
 	private Date	moment;
 	private String	subject;

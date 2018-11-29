@@ -49,9 +49,7 @@ public class NoteService {
 		Note note;
 		Date moment;
 		final Collection<Note> notes;
-		//final Referee referee;
 
-		//referee = (Referee) this.actorService.findByPrincipal();
 		note = new Note();
 		moment = new Date(System.currentTimeMillis() - 1);
 
@@ -77,9 +75,6 @@ public class NoteService {
 		notes = new ArrayList<Note>();
 		notes.add(result);
 
-		//Comprobamos si es spam
-		//		this.administratorService.checkIsSpam(note.getRemark());
-
 		return result;
 	}
 
@@ -98,6 +93,12 @@ public class NoteService {
 		Assert.notNull(result);
 
 		return result;
+	}
+
+	public void delete(final Note note) {
+		Assert.notNull(note);
+
+		this.noteRepository.delete(note);
 	}
 
 	// Other Bussines Methods 

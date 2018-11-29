@@ -29,35 +29,34 @@ public class CreditCardServiceTest extends AbstractTest {
 
 
 	@Test
-	public void createSaveAndDelete() {
-		CreditCard cc;
-		CreditCard ccSaved;
-		Collection<CreditCard> ccBefore = new ArrayList<>();
-		Collection<CreditCard> ccAfter = new ArrayList<>();
+	public void createSaveAndDeleteCreditCard() {
+		CreditCard cdc, cdcsaved;
+		Collection<CreditCard> cdcBefore = new ArrayList<>();
+		Collection<CreditCard> cdcAfter = new ArrayList<>();
 
-		cc = this.creditCardService.create();
-		Assert.notNull(cc);
+		cdc = this.creditCardService.create();
+		Assert.notNull(cdc);
 
-		cc.setBrandName("brandName");
-		cc.setCVV(123);
-		cc.setExpirationMonth("7");
-		cc.setExpirationYear("2018");
-		cc.setHolderName("holderName");
-		cc.setNumber("4485545928304054");
+		cdc.setBrandName("brandName1");
+		cdc.setCVV(123);
+		cdc.setExpirationMonth("9");
+		cdc.setExpirationYear("2019");
+		cdc.setHolderName("holderName1");
+		cdc.setNumber("5310536263555044");
 
-		ccSaved = this.creditCardService.save(cc);
-		Assert.notNull(ccSaved);
+		cdcsaved = this.creditCardService.save(cdc);
+		Assert.notNull(cdcsaved);
 
-		ccBefore = this.creditCardService.findAll();
-		Assert.isTrue(ccBefore.contains(ccSaved));
+		cdcBefore = this.creditCardService.findAll();
+		Assert.isTrue(cdcBefore.contains(cdcsaved));
 
-		this.creditCardService.delete(ccSaved);
+		this.creditCardService.delete(cdcsaved);
 
-		ccAfter = this.creditCardService.findAll();
-		Assert.isTrue(!ccAfter.contains(ccSaved));
+		cdcAfter = this.creditCardService.findAll();
+		Assert.isTrue(!cdcAfter.contains(cdcsaved));
 
 		System.out.println("Tarjeta de Crédito Create: " + this.creditCardService.create());
-		System.out.println("Tarjeta de Crédito Save: " + this.creditCardService.save(cc));
+		System.out.println("Tarjeta de Crédito Save: " + this.creditCardService.save(cdc));
 		System.out.println("Tarjeta de Crédito FindAll: " + this.creditCardService.findAll());
 	}
 

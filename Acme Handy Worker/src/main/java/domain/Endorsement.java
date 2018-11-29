@@ -26,7 +26,7 @@ public class Endorsement extends DomainEntity {
 	}
 
 
-	// Atributes
+	// Attributes
 
 	private Date	moment;
 	private String	comment;

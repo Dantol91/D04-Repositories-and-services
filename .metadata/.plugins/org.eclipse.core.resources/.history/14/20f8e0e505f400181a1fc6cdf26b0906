@@ -1,0 +1,88 @@
+
+package services;
+
+import java.util.Collection;
+
+import javax.transaction.Transactional;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
+
+import utilities.AbstractTest;
+import domain.Note;
+import domain.Section;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {
+	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
+})
+@Transactional
+public class NoteServiceTest extends AbstractTest {
+
+	// Service under test 
+
+	@Autowired
+	private NoteService			noteService;
+
+	@Autowired
+	private FixUpTaskService	fixUpTaskService;
+
+
+	// Tests 
+
+	//Tests
+
+	@Test
+	public void testCreate() {
+		Section section;
+		section = this.noteService.create();
+		Assert.notNull(section);
+	}
+
+	@Test
+	public void testSave() {
+		final Section section;
+		final Section sectionSaved;
+
+		section = this.noteService.findOne(super.getEntityId("section1"));
+
+		section.setTitle("title section");
+
+		sectionSaved = this.noteService.save(note);
+
+		System.out.println("Section guardada:  " + section);
+
+		Assert.notNull(sectionSaved);
+	}
+	@Test
+	public void testDelete() {
+
+		final Note note;
+		note = this.noteService.findOne(super.getEntityId("note1"));
+		//		this.noteService.delete(note);
+
+	}
+
+	@Test
+	public void testFindAll() {
+		final Collection<Note> notes;
+		notes = this.noteService.findAll();
+		Assert.notEmpty(notes);
+		Assert.notNull(notes);
+
+	}
+
+	@Test
+	public void testFindOne() {
+		Note note;
+
+		note = this.noteService.findOne(super.getEntityId("note1"));
+		Assert.notNull(note);
+
+	}
+
+}

@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="NoteServiceTest.testFindOneNote" project="Acme Handy Worker" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testcase name="testFindOneNote" classname="services.NoteServiceTest" time="20.938"/>
+</testrun>

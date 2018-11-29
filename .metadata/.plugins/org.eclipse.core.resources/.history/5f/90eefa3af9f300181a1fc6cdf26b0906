@@ -1,0 +1,52 @@
+
+package services;
+
+import javax.transaction.Transactional;
+
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import utilities.AbstractTest;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {
+	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
+})
+@Transactional
+public class WarrantyServiceTest extends AbstractTest {
+
+	@Autowired
+	private WarrantyService	warrantyService;
+
+	/*
+	 * @Autowired
+	 * private FixUpTaskService fixUpTaskService;
+	 * 
+	 * 
+	 * @Test
+	 * public void createSaveAndDelete() {
+	 * this.authenticate("handyWorker1");
+	 * 
+	 * final Note n;
+	 * Note nSaved;
+	 * final FixUpTask fixUpTasks;
+	 * 
+	 * fixUpTasks = (FixUpTask) this.fixUpTaskService.findAll().toArray()[0];
+	 * n = this.noteService.create();
+	 * Assert.notNull(n);
+	 * 
+	 * //Probamos save
+	 * //f.setFixUpTask(fixUpTasks);
+	 * 
+	 * nSaved = this.noteService.save(n);
+	 * System.out.println(nSaved);
+	 * final Collection<Note> notesBefore = this.noteService.findAll();
+	 * Assert.isTrue(notesBefore.contains(nSaved));
+	 * 
+	 * super.authenticate(null);
+	 * 
+	 * }
+	 */
+}

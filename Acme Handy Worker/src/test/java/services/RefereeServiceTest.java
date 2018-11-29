@@ -1,14 +1,19 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import domain.Referee;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -17,59 +22,54 @@ import utilities.AbstractTest;
 @Transactional
 public class RefereeServiceTest extends AbstractTest {
 
-	@Autowired
-	private RefereeService		refereeService;
+	// Service under test 
 
 	@Autowired
-	private SponsorshipService	sponsorshipService;
+	private RefereeService	refereeService;
 
-	//	@Autowired
-	//	private FixUpTaskService	fixUpTaskService;
 
-	@Autowired
-	private CreditCardService	creditcardService;
+	// Tests 
 
-	/*
-	 * @Test
-	 * public void createAndSaveSponsorship() {
-	 * this.authenticate("sponsor1");
-	 * 
-	 * final Sponsorship sp = this.sponsorshipService.create();
-	 * sp.setBannerURL("http://marca.com");
-	 * 
-	 * // sp.setFixUpTask(this.fixUpTaskService.findOne(2534));
-	 * 
-	 * final Collection<CreditCard> cred = this.creditcardService.findAll();
-	 * final List<CreditCard> spp = new ArrayList<CreditCard>(cred);
-	 * final CreditCard sps = spp.get(0);
-	 * sp.setCreditCard(this.creditcardService.findOne(sps.getId()));
-	 * final List<Sponsor> sponsors = new ArrayList<Sponsor>(this.refereeService.findAll());
-	 * sp.setSponsor(sponsors.get(0));
-	 * 
-	 * this.sponsorshipService.save(sp);
-	 * 
-	 * }
-	 * 
-	 * @Test
-	 * public void searchSponsorship() {
-	 * 
-	 * final Collection<Sponsorship> sp = this.sponsorshipService.findAll();
-	 * final List<Sponsorship> spp = new ArrayList<Sponsorship>(sp);
-	 * final Sponsorship sps = spp.get(0);
-	 * this.sponsorshipService.findOne(sps.getId());
-	 * 
-	 * }
-	 * 
-	 * @Test
-	 * public void deleteSponsorship() {
-	 * final Collection<Sponsorship> sp = this.sponsorshipService.findAll();
-	 * final List<Sponsorship> spp = new ArrayList<Sponsorship>(sp);
-	 * final Sponsorship sps = spp.get(0);
-	 * this.sponsorshipService.delete(sps);
-	 * 
-	 * final Collection<Sponsorship> collafter = this.sponsorshipService.findAll();
-	 * Assert.isTrue(!collafter.contains(sps));
-	 * 
-	 * }
-	 */
+	@Test
+	public void testCreate() {
+		Referee referee;
+		referee = this.refereeService.create();
+		Assert.notNull(referee);
+	}
+
+	@Test
+	public void testSaveReferee() {
+		super.authenticate("referee1");
+		final Referee referee, refereeSaved;
+
+		referee = this.refereeService.findOne(super.getEntityId("referee1"));
+
+		referee.setAddress("Pasaje de Huelva, Bloque 1, 1B");
+		referee.setEmail("darex@gmail.com");
+		referee.setSurname("Toledo");
+
+		refereeSaved = this.refereeService.save(referee);
+
+		Assert.notNull(refereeSaved);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void testDelete() {
+
+		final Referee referee;
+		referee = this.refereeService.findOne(super.getEntityId("referee1"));
+		this.refereeService.delete(referee);
+
+	}
+
+	@Test
+	public void testFindAll() {
+		Collection<Referee> referees;
+		referees = this.refereeService.findAll();
+		Assert.notEmpty(referees);
+		Assert.notNull(referees);
+
+	}
+
 }

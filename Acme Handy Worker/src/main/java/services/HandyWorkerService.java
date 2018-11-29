@@ -18,6 +18,7 @@ import security.UserAccount;
 import security.UserAccountService;
 import domain.Finder;
 import domain.HandyWorker;
+import domain.Phase;
 import domain.SocialProfile;
 
 @Service
@@ -116,12 +117,12 @@ public class HandyWorkerService {
 
 	}
 
-	public HandyWorker findOne(final int explorerId) {
-		Assert.notNull(explorerId);
+	public HandyWorker findOne(final int handyWorkerId) {
+		Assert.notNull(handyWorkerId);
 
 		final HandyWorker h;
 
-		h = this.handyWorkerRepository.findOne(explorerId);
+		h = this.handyWorkerRepository.findOne(handyWorkerId);
 
 		return h;
 	}
@@ -173,6 +174,22 @@ public class HandyWorkerService {
 
 		return this.handyWorkerRepository.getHandyWorkerApplications();
 
+	}
+
+	public Collection<HandyWorker> getEndorseHandyWorkers(final int customerId) {
+		Collection<HandyWorker> handyWorkers;
+
+		handyWorkers = this.handyWorkerRepository.getEndorseHandyWorkers(customerId);
+
+		return handyWorkers;
+	}
+
+	public int findPhaseCreator(final Phase phase) {
+		int result;
+
+		result = this.handyWorkerRepository.getPhaseByHandyWorkerId(phase);
+
+		return result;
 	}
 
 }

@@ -32,7 +32,7 @@ public class FixUpTask extends DomainEntity {
 	}
 
 
-	// Atributes
+	// Attributes
 
 	private String	ticker;
 	private Date	publicationDate;

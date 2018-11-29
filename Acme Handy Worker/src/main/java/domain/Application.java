@@ -28,7 +28,7 @@ public class Application extends DomainEntity {
 	}
 
 
-	// Attributes ----------------------------------------------------------------------
+	// Attributes 
 
 	private Date	registerMoment;
 	private String	status;

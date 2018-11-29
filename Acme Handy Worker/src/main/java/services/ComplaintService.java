@@ -4,11 +4,15 @@ package services;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ComplaintRepository;
 import domain.Complaint;
 
+@Service
+@Transactional
 public class ComplaintService {
 
 	// Managed repository 
@@ -59,6 +63,13 @@ public class ComplaintService {
 
 		return result;
 	}
+
+	public void delete(final Complaint complaint) {
+		Assert.notNull(complaint);
+
+		this.complaintRepository.delete(complaint);
+	}
+
 	// Other Business Methods 
 
 	public Double[] computeMinMaxAvgStddevComplaintsPerFixUpTasks() {
