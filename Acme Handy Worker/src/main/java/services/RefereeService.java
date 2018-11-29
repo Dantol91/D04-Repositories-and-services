@@ -16,6 +16,7 @@ import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
 import domain.Box;
+import domain.Complaint;
 import domain.Referee;
 import domain.SocialProfile;
 
@@ -141,6 +142,11 @@ public class RefereeService {
 
 	public Referee findByUserAccountId(final int userAccountId) {
 		return this.refereeRepository.findByUserAccountId(userAccountId);
+	}
+
+	public void selfAssignedComplaint(final Referee referee, final Complaint complaint) {
+
+		referee.getComplaints().add(complaint);
 	}
 
 }

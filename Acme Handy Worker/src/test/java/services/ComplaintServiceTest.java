@@ -37,26 +37,6 @@ public class ComplaintServiceTest extends AbstractTest {
 		Assert.notNull(complaint);
 	}
 
-	/*
-	 * @Test
-	 * public void testSaveComplaint() {
-	 * final Finder finder;
-	 * final Finder finderSaved;
-	 * Date dateFinder;
-	 * Date dateFinderSaved;
-	 * 
-	 * finder = this.complaintService.findOne(super.getEntityId("finder1"));
-	 * dateFinder = finder.getEndDate();
-	 * 
-	 * finder.setKeyword("Complaint");
-	 * finderSaved = this.complaintService.save(finder);
-	 * dateFinderSaved = finderSaved.getEndDate();
-	 * 
-	 * Assert.isTrue(dateFinder != dateFinderSaved);
-	 * Assert.notNull(finderSaved);
-	 * }
-	 */
-
 	@Test
 	public void testDeleteComplaint() {
 

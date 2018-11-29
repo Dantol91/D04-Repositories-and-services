@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="SponsorServiceTest.testSaveSponsor" project="Acme Handy Worker" tests="1" started="1" failures="0" errors="0" ignored="0">
-  <testcase name="testSaveSponsor" classname="services.SponsorServiceTest" time="19.609"/>
-</testrun>

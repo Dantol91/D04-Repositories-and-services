@@ -40,14 +40,19 @@ public class SponsorshipService {
 	}
 
 	// Simple CRUD methods
+
 	public Sponsorship create() {
 		Sponsorship result;
 		Sponsor s;
+		final CreditCard creditCard;
 
 		result = new Sponsorship();
 		s = (Sponsor) this.actorService.findByPrincipal();
+		creditCard = new CreditCard();
 
 		result.setSponsor(s);
+		result.setCreditCard(creditCard);
+		Assert.notNull(creditCard);
 
 		return result;
 	}

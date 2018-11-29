@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="38" version="2.0">
+<workbench progressCount="25" version="2.0">
 <workbenchAdvisor/>
 <window height="768" maximized="true" width="951" x="320" y="75">
 <fastViewData fastViewLocation="1024"/>
@@ -14,8 +14,8 @@
 <coolItem id="org.eclipse.jdt.ui.JavaElementCreationActionSet" itemType="typeToolBarContribution" x="75" y="22"/>
 <coolItem id="org.eclipse.jst.j2ee.J2eeMainActionSet" itemType="typeToolBarContribution" x="88" y="22"/>
 <coolItem id="org.eclipse.mylyn.java.actionSet.browsing" itemType="typeToolBarContribution" x="39" y="22"/>
-<coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="121" y="22"/>
-<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="131" y="22"/>
+<coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="98" y="22"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="62" y="22"/>
 <coolItem id="org.eclipse.wst.jsdt.ui.JavaElementCreationActionSet" itemType="typeToolBarContribution" x="62" y="22"/>
 <coolItem id="org.eclipse.wst.server.ui.internal.webbrowser.actionSet" itemType="typeToolBarContribution" x="39" y="22"/>
 <coolItem id="org.eclipse.wst.ws.explorer.explorer" itemType="typeToolBarContribution" x="39" y="22"/>
@@ -33,9 +33,9 @@
 <coolItem id="org.eclipse.datatools.sqltools.data.internal.ui.editor.tableDataEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.jpt.jpa.ui.internal.editors.PersistenceEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.ui.DefaultTextEditor" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.m2e.editor.MavenPomEditor" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
@@ -44,47 +44,24 @@
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-<part id="1"/>
-<part id="2"/>
-<part id="3"/>
-<part id="4"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BoxServiceTest.java" partName="BoxServiceTest.java" path="E:/D04-Repositories-and-services/Acme Handy Worker/src/test/java/services/BoxServiceTest.java" title="BoxServiceTest.java" tooltip="Acme Handy Worker/src/test/java/services/BoxServiceTest.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Acme Handy Worker/src/test/java/services/BoxServiceTest.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="947" selectionTopPixel="7"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="FixUpTaskRepository.java" partName="FixUpTaskRepository.java" path="E:/D04-Repositories-and-services/Acme Handy Worker/src/main/java/repositories/FixUpTaskRepository.java" title="FixUpTaskRepository.java" tooltip="Acme Handy Worker/src/main/java/repositories/FixUpTaskRepository.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Acme Handy Worker/src/main/java/repositories/FixUpTaskRepository.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2183" selectionTopPixel="52"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="QueryDatabase.java" partName="QueryDatabase.java" path="E:/D04-Repositories-and-services/Acme Handy Worker/src/main/java/utilities/QueryDatabase.java" title="QueryDatabase.java" tooltip="Acme Handy Worker/src/main/java/utilities/QueryDatabase.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Acme Handy Worker/src/main/java/utilities/QueryDatabase.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4" selectionTopPixel="0"/>
-</editor>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="PopulateDatabase.java" partName="PopulateDatabase.java" path="E:/D04-Repositories-and-services/Acme Handy Worker/src/main/java/utilities/PopulateDatabase.java" title="PopulateDatabase.java" tooltip="Acme Handy Worker/src/main/java/utilities/PopulateDatabase.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Acme Handy Worker/src/main/java/utilities/PopulateDatabase.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="518" selectionTopPixel="0"/>
-</editor>
-<editor id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" name="PopulateDatabase.xml" partName="PopulateDatabase.xml" path="E:/D04-Repositories-and-services/Acme Handy Worker/src/main/resources/PopulateDatabase.xml" title="PopulateDatabase.xml" tooltip="Acme Handy Worker/src/main/resources/PopulateDatabase.xml" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Acme Handy Worker/src/main/resources/PopulateDatabase.xml"/>
-</editor>
 </editors>
 <views>
 <view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
 <viewState CommonNavigator.LINKING_ENABLED="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0"/>
 </view>
 <view id="org.eclipse.jdt.junit.ResultView" partName="JUnit">
-<viewState failuresOnly="false" layout="1" orientation="2" ratio="151" scroll="false" time="true"/>
+<viewState failuresOnly="false" layout="1" orientation="2" ratio="500" scroll="false" time="true"/>
 </view>
 <view id="org.eclipse.jdt.ui.TypeHierarchy" partName="Type Hierarchy">
-<viewState hidefields="false" hidelocaltypes="false" hidenonpublic="false" hidestatic="false" link_editors="0" mv_vertical_scroll="0" orientation="3" qualified_names="0" ratio="350" showinherited="false" sortbydefiningtype="false" vertical_scroll="0" view="2" workingSetName=""/>
+<viewState hidefields="false" hidelocaltypes="false" hidenonpublic="false" hidestatic="false" input="=Acme Handy Worker/src\/test\/java&lt;services{SocialProfileServiceTest.java[SocialProfileServiceTest" link_editors="0" mv_vertical_scroll="0" orientation="3" qualified_names="0" ratio="350" selection="=Acme Handy Worker/src\/test\/java&lt;services{SocialProfileServiceTest.java[SocialProfileServiceTest" showinherited="false" sortbydefiningtype="false" vertical_scroll="0" view="2" workingSetName=""/>
 </view>
-<view id="org.eclipse.wst.jsdt.ui.JavadocView" partName="Documentation"/>
+<view id="org.eclipse.wst.jsdt.ui.JavadocView" partName="Documentation">
+<viewState/>
+</view>
 <view id="org.eclipse.jdt.ui.MembersView" partName="Members">
 <viewState hidefields="false" hidelocaltypes="false" hidenonpublic="false" hidestatic="false" org.eclipse.jdt.ui.browsing.memberstoeditor="1">
 <customFilters userDefinedPatternsEnabled="false">&#x0A;<xmlDefinedFilters>&#x0A;<child filterId="org.eclipse.jdt.ui.MembersView.SyntheticMembersFilter" isEnabled="true"/>
@@ -106,6 +83,11 @@
 </view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
+<expanded>
+<category IMemento.internal.id="Warnings (10 items)"/>
+<category IMemento.internal.id="Warnings"/>
+<category IMemento.internal.id="Errors"/>
+</expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="219" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
@@ -128,9 +110,6 @@
 </customFilters>
 </viewState>
 </view>
-<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
-<viewState/>
-</view>
 <view id="org.eclipse.wst.jsdt.ui.PackageExplorer" partName="Script Explorer">
 <viewState group_libraries="1" isWindowWorkingSet="false" layout="1" linkWithEditor="0" rootMode="1" workingSetName="">
 <customFilters userDefinedPatternsEnabled="false">
@@ -148,6 +127,9 @@
 </customFilters>
 </viewState>
 </view>
+<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
+<viewState/>
+</view>
 <view id="org.eclipse.jdt.ui.PackagesView" partName="Packages">
 <viewState org.eclipse.jdt.ui.PackagesView.viewState="0" org.eclipse.jdt.ui.browsing.packagestoeditor="1" workingSetName="">
 <customFilters userDefinedPatternsEnabled="false">&#x0A;<xmlDefinedFilters>&#x0A;<child filterId="org.eclipse.jdt.internal.ui.PackagesView.EmptyPackageFilter" isEnabled="false"/>
@@ -158,7 +140,7 @@
 </viewState>
 </view>
 </views>
-<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.wst.jsdt.ui.JavaPerspective">
+<perspectives activePart="org.eclipse.wst.jsdt.ui.PackageExplorer" activePerspective="org.eclipse.wst.jsdt.ui.JavaPerspective">
 <perspective editorAreaTrimState="0" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.jst.j2ee.internal.perspective.J2EEPerspective" id="org.eclipse.jst.j2ee.J2EEPerspective" label="Java EE"/>
 <alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
@@ -507,7 +489,7 @@
 </mainWindow>
 </layout>
 </perspective>
-<perspective editorAreaTrimState="1" editorAreaVisible="1" fixed="0" version="0.016">
+<perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.wst.jsdt.internal.ui.JavaPerspectiveFactory" id="org.eclipse.wst.jsdt.ui.JavaPerspective" label="JavaScript"/>
 <alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
 <alwaysOnActionSet id="org.eclipse.mylyn.doc.actionSet"/>
@@ -550,35 +532,24 @@
 <perspective_action id="org.eclipse.ui.resourcePerspective"/>
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
-<fastViewBars>
-<fastViewBar fastViewLocation="131072" id="org.eclipse.ui.internal.ViewStack@69928a21" orientation="256" selectedTabId="org.eclipse.ui.views.ContentOutline" style="1">
-<fastViews>
-<view id="org.eclipse.ui.views.ContentOutline" ratio="0.3"/>
-</fastViews>
-</fastViewBar>
-<fastViewBar fastViewLocation="1024" id="bottom" orientation="256" selectedTabId="org.eclipse.ui.console.ConsoleView" style="1">
-<fastViews>
-<view id="org.eclipse.ui.views.ProblemView" ratio="0.3"/>
-<view id="org.eclipse.wst.jsdt.ui.JavadocView" ratio="0.3"/>
-<view id="org.eclipse.jdt.junit.ResultView" ratio="0.4"/>
-<view id="org.eclipse.ui.console.ConsoleView" ratio="0.2998761"/>
-</fastViews>
-</fastViewBar>
-<fastViewBar fastViewLocation="16384" id="left" orientation="512" selectedTabId="org.eclipse.wst.jsdt.ui.PackageExplorer" style="1">
-<fastViews>
-<view id="org.eclipse.wst.jsdt.ui.PackageExplorer" ratio="0.3"/>
-</fastViews>
-</fastViewBar>
-</fastViewBars>
+<view id="org.eclipse.ui.views.ProblemView"/>
+<view id="org.eclipse.wst.jsdt.ui.JavadocView"/>
+<view id="org.eclipse.jdt.junit.ResultView"/>
+<view id="org.eclipse.ui.console.ConsoleView"/>
+<view id="org.eclipse.wst.jsdt.ui.PackageExplorer"/>
+<view id="org.eclipse.ui.views.ContentOutline"/>
+<fastViewBars/>
 <layout>
 <mainWindow>
 <info folder="true" part="left">
-<folder appearance="2" expanded="0">
-<page content="org.eclipse.wst.jsdt.ui.PackageExplorer" label="LabelNotFound"/>
+<folder activePageID="org.eclipse.wst.jsdt.ui.PackageExplorer" appearance="2" expanded="2">
+<page content="org.eclipse.wst.jsdt.ui.PackageExplorer" label="Script Explorer"/>
 <page content="org.eclipse.ui.navigator.ProjectExplorer" label="LabelNotFound"/>
 <page content="org.eclipse.wst.jsdt.ui.TypeHierarchy" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
 </folder>
 </info>
 <info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="1434" ratioRight="478" relationship="2" relative="left">
@@ -588,13 +559,13 @@
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
 </folder>
 </info>
-<info part="org.eclipse.ui.editorss" ratio="0.1278156" ratioLeft="244" ratioRight="1665" relationship="2" relative="left"/>
+<info part="org.eclipse.ui.editorss" ratio="0.26820326" ratioLeft="512" ratioRight="1397" relationship="2" relative="left"/>
 <info folder="true" part="bottom" ratio="0.5833333" ratioLeft="469" ratioRight="335" relationship="4" relative="org.eclipse.ui.editorss">
-<folder appearance="2" expanded="0">
-<page content="org.eclipse.ui.views.ProblemView" label="LabelNotFound"/>
-<page content="org.eclipse.wst.jsdt.ui.JavadocView" label="LabelNotFound"/>
-<page content="org.eclipse.jdt.junit.ResultView" label="LabelNotFound"/>
-<page content="org.eclipse.ui.console.ConsoleView" label="LabelNotFound"/>
+<folder activePageID="org.eclipse.jdt.junit.ResultView" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
+<page content="org.eclipse.wst.jsdt.ui.JavadocView" label="Documentation"/>
+<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<page content="org.eclipse.jdt.junit.ResultView" label="JUnit"/>
 <page content="org.eclipse.wst.jsdt.ui.SourceView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.texteditor.TemplatesView" label="LabelNotFound"/>
 <page content="org.eclipse.search.ui.views.SearchView" label="LabelNotFound"/>
@@ -602,13 +573,21 @@
 <page content="org.eclipse.ui.views.ProgressView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.TaskList" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.PropertySheet" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+<page content="org.eclipse.jdt.ui.TypeHierarchy" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+<part id="3"/>
+</presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@69928a21" ratio="0.7496513" ratioLeft="1075" ratioRight="359" relationship="2" relative="org.eclipse.ui.editorss">
-<folder appearance="2" expanded="0">
-<page content="org.eclipse.ui.views.ContentOutline" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@69928a21" ratio="0.854994" ratioLeft="1421" ratioRight="241" relationship="2" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
 </folder>
 </info>
 </mainWindow>
@@ -616,178 +595,7 @@
 </perspective>
 </perspectives>
 <workingSets/>
-<navigationHistory>
-<editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/test/java/services/BoxServiceTest.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/utilities/PopulateDatabase.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/repositories/FixUpTaskRepository.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/services/FixUpTaskService.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/domain/FixUpTask.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/repositories/ApplicationRepository.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/services/ApplicationService.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/repositories/FixUpTaskRepository.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/domain/Category.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/repositories/CategoryRepository.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/domain/FixUpTask.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" path="/Acme Handy Worker/src/main/resources/PopulateDatabase.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/utilities/PopulateDatabase.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/test/java/services/BoxServiceTest.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/utilities/QueryDatabase.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/utilities/PopulateDatabase.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" path="/Acme Handy Worker/src/main/resources/PopulateDatabase.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme Handy Worker/src/main/java/domain/Complaint.java"/>
-</editors>
-<item historyLabel="FixUpTaskRepository.java" index="2">
-<position info="not_deleted" x="1588" y="0"/>
-</item>
-<item historyLabel="FixUpTaskService.java" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="FixUpTaskRepository.java" index="2">
-<position info="not_deleted" x="1588" y="0"/>
-</item>
-<item historyLabel="FixUpTaskService.java" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="FixUpTaskRepository.java" index="2">
-<position info="not_deleted" x="1588" y="0"/>
-</item>
-<item historyLabel="FixUpTaskService.java" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="PopulateDatabase.java" index="1">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="FixUpTaskRepository.java" index="2">
-<position info="not_deleted" x="1588" y="0"/>
-</item>
-<item historyLabel="FixUpTask.java" index="4">
-<position info="not_deleted" x="2749" y="10"/>
-</item>
-<item historyLabel="FixUpTaskService.java" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="FixUpTaskRepository.java" index="2">
-<position info="not_deleted" x="2280" y="0"/>
-</item>
-<item historyLabel="BoxServiceTest.java" index="0">
-<position info="not_deleted" x="778" y="5"/>
-</item>
-<item historyLabel="ApplicationRepository.java" index="5">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="ApplicationService.java" index="6">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="FixUpTaskService.java" index="3">
-<position/>
-</item>
-<item historyLabel="FixUpTaskRepository.java" index="2">
-<position info="not_deleted" x="2295" y="0"/>
-</item>
-<item historyLabel="FixUpTaskService.java" index="3">
-<position info="not_deleted" x="8025" y="0"/>
-</item>
-<item historyLabel="BoxServiceTest.java" index="0">
-<position info="not_deleted" x="778" y="5"/>
-</item>
-<item historyLabel="FixUpTaskRepository.java" index="7">
-<position info="not_deleted" x="2764" y="0"/>
-</item>
-<item historyLabel="BoxServiceTest.java" index="0">
-<position info="not_deleted" x="778" y="5"/>
-</item>
-<item historyLabel="FixUpTaskRepository.java" index="7">
-<position info="not_deleted" x="2724" y="0"/>
-</item>
-<item historyLabel="BoxServiceTest.java" index="0">
-<position info="not_deleted" x="778" y="5"/>
-</item>
-<item historyLabel="Category.java" index="8">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="CategoryRepository.java" index="9">
-<position info="not_deleted" x="550" y="0"/>
-</item>
-<item historyLabel="Category.java" index="8">
-<position info="not_deleted" x="812" y="0"/>
-</item>
-<item historyLabel="FixUpTask.java" index="10">
-<position info="not_deleted" x="3770" y="0"/>
-</item>
-<item historyLabel="CategoryRepository.java" index="9">
-<position info="not_deleted" x="550" y="0"/>
-</item>
-<item historyLabel="PopulateDatabase.xml" index="11">
-<position info="not_deleted" x="25870" y="0"/>
-</item>
-<item historyLabel="PopulateDatabase.java" index="12">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="CategoryRepository.java" index="9">
-<position info="not_deleted" x="550" y="0"/>
-</item>
-<item historyLabel="PopulateDatabase.java" index="12">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="PopulateDatabase.xml" index="11">
-<position info="not_deleted" x="25870" y="0"/>
-</item>
-<item historyLabel="FixUpTask.java" index="10">
-<position info="not_deleted" x="3770" y="0"/>
-</item>
-<item historyLabel="BoxServiceTest.java" index="0">
-<position info="not_deleted" x="778" y="5"/>
-</item>
-<item historyLabel="FixUpTaskRepository.java" index="7">
-<position info="not_deleted" x="2289" y="0"/>
-</item>
-<item historyLabel="BoxServiceTest.java" index="0">
-<position info="not_deleted" x="778" y="5"/>
-</item>
-<item historyLabel="FixUpTaskRepository.java" index="7">
-<position info="not_deleted" x="2500" y="0"/>
-</item>
-<item historyLabel="BoxServiceTest.java" index="0">
-<position info="not_deleted" x="947" y="0"/>
-</item>
-<item historyLabel="FixUpTaskRepository.java" index="7">
-<position info="not_deleted" x="2500" y="0"/>
-</item>
-<item historyLabel="BoxServiceTest.java" index="13">
-<position info="not_deleted" x="947" y="0"/>
-</item>
-<item historyLabel="QueryDatabase.java" index="14">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="PopulateDatabase.java" index="15">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="QueryDatabase.java" index="14">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="PopulateDatabase.java" index="15">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="PopulateDatabase.xml" index="16">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Complaint.java" index="17">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="PopulateDatabase.xml" index="16">
-<position info="not_deleted" x="35321" y="0"/>
-</item>
-<item historyLabel="PopulateDatabase.java" index="15">
-<position info="not_deleted" x="518" y="0"/>
-</item>
-<item historyLabel="PopulateDatabase.xml" index="16">
-<position info="not_deleted" x="35321" y="0"/>
-</item>
-<item active="true" historyLabel="PopulateDatabase.java" index="15">
-<position info="not_deleted" x="518" y="0"/>
-</item>
-</navigationHistory>
+<navigationHistory/>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>
@@ -798,6 +606,7 @@
 </trimArea>
 <trimArea IMemento.internal.id="131072">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@69928a21"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.editorss"/>
 </trimArea>
 <trimArea IMemento.internal.id="128">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
@@ -812,50 +621,50 @@
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Complaint.java" tooltip="Acme Handy Worker/src/main/java/domain/Complaint.java">
-<persistable path="/Acme Handy Worker/src/main/java/domain/Complaint.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="EndorsementServiceTest.java" tooltip="Acme Handy Worker/src/test/java/services/EndorsementServiceTest.java">
+<persistable path="/Acme Handy Worker/src/test/java/services/EndorsementServiceTest.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" name="PopulateDatabase.xml" tooltip="Acme Handy Worker/src/main/resources/PopulateDatabase.xml">
-<persistable path="/Acme Handy Worker/src/main/resources/PopulateDatabase.xml"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="EndorserRecordServiceTest.java" tooltip="Acme Handy Worker/src/test/java/services/EndorserRecordServiceTest.java">
+<persistable path="/Acme Handy Worker/src/test/java/services/EndorserRecordServiceTest.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="PopulateDatabase.java" tooltip="Acme Handy Worker/src/main/java/utilities/PopulateDatabase.java">
-<persistable path="/Acme Handy Worker/src/main/java/utilities/PopulateDatabase.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="EndorseService.java" tooltip="Acme Handy Worker/src/main/java/services/EndorseService.java">
+<persistable path="/Acme Handy Worker/src/main/java/services/EndorseService.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="QueryDatabase.java" tooltip="Acme Handy Worker/src/main/java/utilities/QueryDatabase.java">
-<persistable path="/Acme Handy Worker/src/main/java/utilities/QueryDatabase.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="EndorsementService.java" tooltip="Acme Handy Worker/src/main/java/services/EndorsementService.java">
+<persistable path="/Acme Handy Worker/src/main/java/services/EndorsementService.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CategoryRepository.java" tooltip="Acme Handy Worker/src/main/java/repositories/CategoryRepository.java">
-<persistable path="/Acme Handy Worker/src/main/java/repositories/CategoryRepository.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="EndorseRepository.java" tooltip="Acme Handy Worker/src/main/java/repositories/EndorseRepository.java">
+<persistable path="/Acme Handy Worker/src/main/java/repositories/EndorseRepository.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Category.java" tooltip="Acme Handy Worker/src/main/java/domain/Category.java">
-<persistable path="/Acme Handy Worker/src/main/java/domain/Category.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="EndorsementRepository.java" tooltip="Acme Handy Worker/src/main/java/repositories/EndorsementRepository.java">
+<persistable path="/Acme Handy Worker/src/main/java/repositories/EndorsementRepository.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="FixUpTask.java" tooltip="Acme Handy Worker/src/main/java/domain/FixUpTask.java">
-<persistable path="/Acme Handy Worker/src/main/java/domain/FixUpTask.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ConfigurationRepository.java" tooltip="Acme Handy Worker/src/main/java/repositories/ConfigurationRepository.java">
+<persistable path="/Acme Handy Worker/src/main/java/repositories/ConfigurationRepository.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Endorsement.java" tooltip="Acme Handy Worker/src/main/java/domain/Endorsement.java">
+<persistable path="/Acme Handy Worker/src/main/java/domain/Endorsement.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="EndorseServiceTest.java" tooltip="Acme Handy Worker/src/test/java/services/EndorseServiceTest.java">
+<persistable path="/Acme Handy Worker/src/test/java/services/EndorseServiceTest.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RefereeService.java" tooltip="Acme Handy Worker/src/main/java/services/RefereeService.java">
+<persistable path="/Acme Handy Worker/src/main/java/services/RefereeService.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RefereeRepository.java" tooltip="Acme Handy Worker/src/main/java/repositories/RefereeRepository.java">
+<persistable path="/Acme Handy Worker/src/main/java/repositories/RefereeRepository.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ComplaintRepository.java" tooltip="Acme Handy Worker/src/main/java/repositories/ComplaintRepository.java">
+<persistable path="/Acme Handy Worker/src/main/java/repositories/ComplaintRepository.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="FixUpTaskRepository.java" tooltip="Acme Handy Worker/src/main/java/repositories/FixUpTaskRepository.java">
 <persistable path="/Acme Handy Worker/src/main/java/repositories/FixUpTaskRepository.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ApplicationService.java" tooltip="Acme Handy Worker/src/main/java/services/ApplicationService.java">
-<persistable path="/Acme Handy Worker/src/main/java/services/ApplicationService.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CurriculumRepository.java" tooltip="Acme Handy Worker/src/main/java/repositories/CurriculumRepository.java">
+<persistable path="/Acme Handy Worker/src/main/java/repositories/CurriculumRepository.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ApplicationRepository.java" tooltip="Acme Handy Worker/src/main/java/repositories/ApplicationRepository.java">
-<persistable path="/Acme Handy Worker/src/main/java/repositories/ApplicationRepository.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="FixUpTaskService.java" tooltip="Acme Handy Worker/src/main/java/services/FixUpTaskService.java">
-<persistable path="/Acme Handy Worker/src/main/java/services/FixUpTaskService.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HandyWorkerRepository.java" tooltip="Acme Handy Worker/src/main/java/repositories/HandyWorkerRepository.java">
-<persistable path="/Acme Handy Worker/src/main/java/repositories/HandyWorkerRepository.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HandyWorkerService.java" tooltip="Acme Handy Worker/src/main/java/services/HandyWorkerService.java">
-<persistable path="/Acme Handy Worker/src/main/java/services/HandyWorkerService.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HandyWorker.java" tooltip="Acme Handy Worker/src/main/java/domain/HandyWorker.java">
-<persistable path="/Acme Handy Worker/src/main/java/domain/HandyWorker.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Finder.java" tooltip="Acme Handy Worker/src/main/java/domain/Finder.java">
-<persistable path="/Acme Handy Worker/src/main/java/domain/Finder.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ConfigurationService.java" tooltip="Acme Handy Worker/src/main/java/services/ConfigurationService.java">
+<persistable path="/Acme Handy Worker/src/main/java/services/ConfigurationService.java"/>
 </file>
 </mruList>
 </workbench>

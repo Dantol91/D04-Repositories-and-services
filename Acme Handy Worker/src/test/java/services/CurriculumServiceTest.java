@@ -15,11 +15,6 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Curriculum;
-import domain.EducationRecord;
-import domain.EndorserRecord;
-import domain.MiscellaneousRecord;
-import domain.PersonalRecord;
-import domain.ProfessionalRecord;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -31,10 +26,7 @@ public class CurriculumServiceTest extends AbstractTest {
 	// Service under test 
 
 	@Autowired
-	private CurriculumService		curriculumService;
-
-	@Autowired
-	private PersonalRecordService	personalRecordService;
+	private CurriculumService	curriculumService;
 
 
 	// Tests 
@@ -59,63 +51,6 @@ public class CurriculumServiceTest extends AbstractTest {
 		Assert.notNull(curriculum.getProfessionalRecords());
 		Assert.notNull(curriculum.getEndorserRecords());
 		Assert.notNull(curriculum.getMiscellaneousRecords());
-
-	}
-
-	@Test
-	public void testSaveCurriculum() {
-		final Curriculum curriculum, saved;
-		//final Collection<Curriculum> curriculums;
-		final Collection<EducationRecord> educationRecords;
-		final Collection<ProfessionalRecord> professionalRecords;
-		final Collection<EndorserRecord> endorserRecords;
-		final Collection<MiscellaneousRecord> miscellaneousRecords;
-		final EducationRecord educationRecord;
-		final ProfessionalRecord professionalRecord;
-		final EndorserRecord endorserRecord;
-		final MiscellaneousRecord miscellaneousRecord;
-		final PersonalRecord personalRecord;
-
-		super.authenticate("handyworker1");
-
-		curriculum = this.curriculumService.create();
-
-		//	educationRecord = this.educationRecordService.findOne(super.getEntityId("educationRecord1"));
-		//	professionalRecord = this.professionalRecordService.findOne(super.getEntityId("professionalRecord1"));
-		//	endorserRecord = this.endorserRecordService.findOne(super.getEntityId("endorserRecord1"));
-		//	personalRecord = this.personalRecordService.findOne(super.getEntityId("personalRecord1"));
-		//	miscellaneousRecord = this.miscellaneousRecordService.findOne(super.getEntityId("miscellaneousRecord1"));
-
-		educationRecords = curriculum.getEducationRecords();
-		endorserRecords = curriculum.getEndorserRecords();
-		professionalRecords = curriculum.getProfessionalRecords();
-		miscellaneousRecords = curriculum.getMiscellaneousRecords();
-
-		//	Assert.isTrue(!educationRecords.contains(educationRecord));
-		//	Assert.isTrue(!professionalRecords.contains(professionalRecord));
-		//	Assert.isTrue(!endorserRecords.contains(endorserRecord));
-		//	Assert.isTrue(!miscellaneousRecords.contains(miscellaneousRecord));
-
-		//	this.curriculumService.addEducationRecord(curriculum, educationRecord);
-		//	this.curriculumService.addEndorserRecord(curriculum, endorserRecord);
-		//	this.curriculumService.addMiscellaneousRecord(curriculum, miscellaneousRecord);
-		//	this.curriculumService.addProfessionalRecord(curriculum, professionalRecord);
-		//	this.curriculumService.setPersonalRecord(curriculum, personalRecord);
-
-		//		Assert.isTrue(curriculum.getEducationRecords().contains(educationRecord));
-		//		Assert.isTrue(curriculum.getProfessionalRecords().contains(professionalRecord));
-		//		Assert.isTrue(curriculum.getEndorserRecords().contains(endorserRecord));
-		//		Assert.isTrue(curriculum.getMiscellaneousRecords().contains(miscellaneousRecord));
-
-		saved = this.curriculumService.save(curriculum);
-
-		//curriculums = this.curriculumService.findAll();
-
-		//Assert.isTrue(curriculums.contains(saved));
-
-		Assert.notNull(this.curriculumService.findOne(saved.getId()));
-
-		super.authenticate(null);
 
 	}
 

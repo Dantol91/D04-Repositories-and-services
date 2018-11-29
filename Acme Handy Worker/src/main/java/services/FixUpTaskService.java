@@ -173,7 +173,7 @@ public class FixUpTaskService {
 		return this.fixUpTaskRepository.getAcceptedApplicationsByHandyWorkerId(handyWorkerId, fixUpTaskId);
 	}
 
-	// C.11.2 Buscar trips por palabra clave, que debe estar contenida en
+	// C.11.2 Buscar fixUpTasks por palabra clave, que debe estar contenida en
 	// su ticker, description o address
 
 	public Collection<FixUpTask> getFixUpTasksByKeyWord(final String keyWord) {
@@ -239,12 +239,10 @@ public class FixUpTaskService {
 		return this.fixUpTaskRepository.getEndedFixUpTasks();
 
 	}
-	/*
-	 * public Collection<FixUpTask> getVisibleFixUpTasksByCategory(final int categoryId) {
-	 * 
-	 * return this.fixUpTaskRepository.getVisibleFixUpTasksByCategory(categoryId);
-	 * }
-	 */
+	public Collection<FixUpTask> getVisibleFixUpTasksByCategory(final int categoryId) {
+
+		return this.fixUpTaskRepository.getVisibleFixUpTasksByCategory(categoryId);
+	}
 
 	public Collection<FixUpTask> showAllFixUpTaskByCategory(final int categoryId, final Collection<FixUpTask> result) {
 

@@ -34,26 +34,6 @@ public class ReportServiceTest extends AbstractTest {
 		Assert.notNull(report);
 	}
 
-	/*
-	 * @Test
-	 * public void testSavereport() {
-	 * final Finder finder;
-	 * final Finder finderSaved;
-	 * Date dateFinder;
-	 * Date dateFinderSaved;
-	 * 
-	 * finder = this.reportService.findOne(super.getEntityId("finder1"));
-	 * dateFinder = finder.getEndDate();
-	 * 
-	 * finder.setKeyword("report");
-	 * finderSaved = this.reportService.save(finder);
-	 * dateFinderSaved = finderSaved.getEndDate();
-	 * 
-	 * Assert.isTrue(dateFinder != dateFinderSaved);
-	 * Assert.notNull(finderSaved);
-	 * }
-	 */
-
 	@Test
 	public void testDeleteReport() {
 

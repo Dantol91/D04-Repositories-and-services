@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="ProfessionalRecordServiceTest" project="Acme Handy Worker" tests="2" started="2" failures="0" errors="0" ignored="0">
-  <testsuite name="services.ProfessionalRecordServiceTest" time="20.859">
-    <testcase name="testCreateProfessionalRecord" classname="services.ProfessionalRecordServiceTest" time="20.141"/>
-    <testcase name="testDeleteProfessionalRecord" classname="services.ProfessionalRecordServiceTest" time="0.718"/>
-  </testsuite>
-</testrun>

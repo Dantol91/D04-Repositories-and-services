@@ -28,7 +28,7 @@ public class MessageServiceTest extends AbstractTest {
 
 
 	@Test
-	public void testCreate() {
+	public void testCreateMessage() {
 		super.authenticate("HandyWorker1");
 		final Message message;
 		message = this.messageService.create();
@@ -39,7 +39,7 @@ public class MessageServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testFindOne() {
+	public void testFindOneMessage() {
 		Message message;
 		message = this.messageService.findOne(super.getEntityId("message2"));
 		Assert.notNull(message);
@@ -48,7 +48,7 @@ public class MessageServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testFindAll() {
+	public void testFindAllMessage() {
 		Collection<Message> messages;
 		messages = this.messageService.findAll();
 		Assert.notEmpty(messages);
@@ -58,7 +58,7 @@ public class MessageServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void SearchMessage() {
+	public void testSearchMessage() {
 		final Collection<Message> messages = this.messageService.findAll();
 
 		final Message message = this.messageService.findOne(1692);

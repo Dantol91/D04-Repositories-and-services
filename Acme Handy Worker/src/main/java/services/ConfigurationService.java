@@ -78,6 +78,14 @@ public class ConfigurationService {
 		return this.configurationRepository.getSpamWords();
 	}
 
+	public Collection<String> getPositiveWords() {
+		return this.configurationRepository.getPositiveWords();
+	}
+
+	public Collection<String> getNegativeWords() {
+		return this.configurationRepository.getNegativeWords();
+	}
+
 	public double getTax() {
 		return this.configurationRepository.getTax();
 	}
@@ -98,10 +106,4 @@ public class ConfigurationService {
 		return tlf;
 
 	}
-
-	// B.17 Los resultados del Finder se almacenan en caché durante una hora por defecto.
-	//El administrator debe poder configurar este tiempo.El minimo es una hora y el máximo es 24 horas.
-
-	// B.17 El máximo numero de resultados que un finder devuelve es 10 por defecto. El admin
-	//debe poder cambiar este parametro. El maximo es 100 resultados.
 }

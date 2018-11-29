@@ -25,10 +25,7 @@ public class NoteServiceTest extends AbstractTest {
 	// Service under test 
 
 	@Autowired
-	private NoteService			noteService;
-
-	@Autowired
-	private FixUpTaskService	fixUpTaskService;
+	private NoteService	noteService;
 
 
 	// Tests 
@@ -41,24 +38,6 @@ public class NoteServiceTest extends AbstractTest {
 		note = this.noteService.create();
 		Assert.notNull(note);
 	}
-
-	/*
-	 * @Test
-	 * public void testSave() {
-	 * final Section section;
-	 * final Section sectionSaved;
-	 * 
-	 * section = this.noteService.findOne(super.getEntityId("note1"));
-	 * 
-	 * section.setTitle("title section");
-	 * 
-	 * sectionSaved = this.noteService.save(note);
-	 * 
-	 * System.out.println("Section guardada:  " + section);
-	 * 
-	 * Assert.notNull(noteSaved);
-	 * }
-	 */
 
 	@Test
 	public void testDeleteNote() {

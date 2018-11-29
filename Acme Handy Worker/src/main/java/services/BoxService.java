@@ -62,15 +62,20 @@ public class BoxService {
 	public Box save(final Box box) {
 		Assert.notNull(box);
 		Assert.isTrue(!box.getSystemBox());
+
 		if (box.getId() != 0)
 			this.checkPrincipal(box);
+
 		Actor actor;
 		actor = this.actorService.findByPrincipal();
+
 		box.setActor(actor);
+
 		final Box boxSaved = this.boxRepository.save(box);
-		final Collection<Box> actorFolders = actor.getBoxes();
-		actorFolders.add(boxSaved);
-		actor.setBoxes(actorFolders);
+		final Collection<Box> actorBoxes = actor.getBoxes();
+
+		actorBoxes.add(boxSaved);
+		actor.setBoxes(actorBoxes);
 		this.actorService.save(actor);
 
 		return boxSaved;
